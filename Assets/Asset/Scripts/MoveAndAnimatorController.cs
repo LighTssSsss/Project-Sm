@@ -417,12 +417,12 @@ public class MoveAndAnimatorController : MonoBehaviour
         if(isCrouchPressed && isMovementPressed && !isCrouchMovement)
         {
             animator.SetBool(isMoveCrouchHash, true);
-            animator.SetBool(isCrouchHash, false);
+            
             Debug.Log("agachate y muevete");
             
         }
 
-        else
+        else if(isCrouchPressed && !isMovementPressed)
         {
             animator.SetBool(isMoveCrouchHash, false);
             Debug.Log("dejalo");
