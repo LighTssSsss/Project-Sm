@@ -71,6 +71,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""InteractAndDrop"",
+                    ""type"": ""Button"",
+                    ""id"": ""92ef3411-fd00-4269-9545-a9c4bca0df9a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -205,6 +214,17 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""action"": ""Crounch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""03a36306-ec99-41eb-ab7a-43cc8eac5ca0"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InteractAndDrop"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -224,6 +244,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_Movement_Jump = m_Movement.FindAction("Jump", throwIfNotFound: true);
         m_Movement_Leave = m_Movement.FindAction("Leave", throwIfNotFound: true);
         m_Movement_Crounch = m_Movement.FindAction("Crounch", throwIfNotFound: true);
+        m_Movement_InteractAndDrop = m_Movement.FindAction("InteractAndDrop", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -290,6 +311,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_Movement_Jump;
     private readonly InputAction m_Movement_Leave;
     private readonly InputAction m_Movement_Crounch;
+    private readonly InputAction m_Movement_InteractAndDrop;
     public struct MovementActions
     {
         private @PlayerInputs m_Wrapper;
@@ -299,6 +321,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_Movement_Jump;
         public InputAction @Leave => m_Wrapper.m_Movement_Leave;
         public InputAction @Crounch => m_Wrapper.m_Movement_Crounch;
+        public InputAction @InteractAndDrop => m_Wrapper.m_Movement_InteractAndDrop;
         public InputActionMap Get() { return m_Wrapper.m_Movement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -323,6 +346,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Crounch.started += instance.OnCrounch;
             @Crounch.performed += instance.OnCrounch;
             @Crounch.canceled += instance.OnCrounch;
+            @InteractAndDrop.started += instance.OnInteractAndDrop;
+            @InteractAndDrop.performed += instance.OnInteractAndDrop;
+            @InteractAndDrop.canceled += instance.OnInteractAndDrop;
         }
 
         private void UnregisterCallbacks(IMovementActions instance)
@@ -342,6 +368,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Crounch.started -= instance.OnCrounch;
             @Crounch.performed -= instance.OnCrounch;
             @Crounch.canceled -= instance.OnCrounch;
+            @InteractAndDrop.started -= instance.OnInteractAndDrop;
+            @InteractAndDrop.performed -= instance.OnInteractAndDrop;
+            @InteractAndDrop.canceled -= instance.OnInteractAndDrop;
         }
 
         public void RemoveCallbacks(IMovementActions instance)
@@ -375,5 +404,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnLeave(InputAction.CallbackContext context);
         void OnCrounch(InputAction.CallbackContext context);
+        void OnInteractAndDrop(InputAction.CallbackContext context);
     }
 }
