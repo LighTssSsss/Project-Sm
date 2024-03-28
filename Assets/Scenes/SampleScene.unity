@@ -1972,6 +1972,7 @@ MonoBehaviour:
   isFallingg: 0
   isClimbing: 0
   isLeavePressed: 0
+  isCrouchPressed: 0
   playerControl: 1
   isJumpPressed: 0
   isJumping: 0

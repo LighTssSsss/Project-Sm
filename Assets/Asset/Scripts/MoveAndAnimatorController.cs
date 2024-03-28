@@ -18,6 +18,8 @@ public class MoveAndAnimatorController : MonoBehaviour
     int isJumpingHash;
     int isFallingHash;
     int isLandingHash;
+    int isCrouchHash;
+    int isMoveCrouchHash;
 
 
     Vector2 currentMovementInput;
@@ -31,11 +33,14 @@ public class MoveAndAnimatorController : MonoBehaviour
     bool isSprint;
     bool isJump;
     bool isCrouch;
+
     public bool playerInAction { get; private set; }
     public bool isJumpAnimation = false;
     public bool isFallingg;
     public bool isClimbing;
     public bool isLeavePressed;
+    public bool isCrouchPressed;
+
     bool isLanding;
     public bool playerControl = true;
     Quaternion requiredRotation;
@@ -111,6 +116,8 @@ public class MoveAndAnimatorController : MonoBehaviour
         isJumpingHash = Animator.StringToHash("isJumping");
         isFallingHash = Animator.StringToHash("isFalling");
         isLandingHash = Animator.StringToHash("isLanding");
+        isCrouchHash = Animator.StringToHash("isCrounch");
+        isMoveCrouchHash = Animator.StringToHash("isMoveCrouch");
 
         playerInputs.Movement.Move.started += OnMovementInput;
         playerInputs.Movement.Move.performed += OnMovementInput;
@@ -120,13 +127,13 @@ public class MoveAndAnimatorController : MonoBehaviour
         playerInputs.Movement.Leave.canceled -= OnLeave;
 
         playerInputs.Movement.Run.started += OnRun;
-        playerInputs.Movement.Run.canceled -= OnRun;
+        playerInputs.Movement.Run.canceled += OnRun;
 
-        playerInputs.Movement.Crounch.started += OnCrouch;
-        playerInputs.Movement.Crounch.canceled -= OnCrouch;
+        playerInputs.Movement.Crounch.performed += OnCrouch;
+        playerInputs.Movement.Crounch.canceled += OnCrouch;
 
         playerInputs.Movement.Jump.performed += OnJump;
-        playerInputs.Movement.Jump.canceled -= OnJump;
+        playerInputs.Movement.Jump.canceled += OnJump;
 
         cameraObject = Camera.main.transform;
 
@@ -174,8 +181,12 @@ public class MoveAndAnimatorController : MonoBehaviour
         cameraForward.y = 0;
         cameraForward.Normalize();
 
-        currentMovement = cameraForward * currentMovementInput.y + cameraObject.right * currentMovementInput.x;
-        currentMovement.Normalize();
+        if (!playerInAction)
+        {
+            currentMovement = cameraForward * currentMovementInput.y + cameraObject.right * currentMovementInput.x;
+            currentMovement.Normalize();
+        }
+         
 
         currentRunMovement = currentMovement * runMultiplier;
 
@@ -257,7 +268,7 @@ public class MoveAndAnimatorController : MonoBehaviour
 
     void OnCrouch(InputAction.CallbackContext context)
     {
-        isCrouch = context.ReadValueAsButton();
+        isCrouchPressed = context.ReadValueAsButton();
     }
 
 
@@ -331,6 +342,7 @@ public class MoveAndAnimatorController : MonoBehaviour
         bool isWalking = animator.GetBool(isWalkingHash);
         bool isRunning = animator.GetBool(isRunnigHash);
         bool isSprinting = animator.GetBool(isSprintigHash);
+        bool isCrouchMovement = animator.GetBool(isMoveCrouchHash);
 
 
 
@@ -389,6 +401,34 @@ public class MoveAndAnimatorController : MonoBehaviour
             timeSprint = 0;
             isSprint = false;
         }
+
+        if(isCrouchPressed)
+        {
+            animator.SetBool(isCrouchHash, true);
+            Debug.Log("agachate");
+        }
+
+        else
+        {
+            animator.SetBool(isCrouchHash, false);
+            Debug.Log("parate");
+        }
+
+        if(isCrouchPressed && isMovementPressed && !isCrouchMovement)
+        {
+            animator.SetBool(isMoveCrouchHash, true);
+            animator.SetBool(isCrouchHash, false);
+            Debug.Log("agachate y muevete");
+            
+        }
+
+        else
+        {
+            animator.SetBool(isMoveCrouchHash, false);
+            Debug.Log("dejalo");
+        }
+
+       
 
     }
 
@@ -617,6 +657,7 @@ public class MoveAndAnimatorController : MonoBehaviour
             animator.SetBool(isWalkingHash, false);
             animator.SetBool(isFallingHash, false);
             animator.SetBool(isLandingHash, false);
+            animator.SetBool(isCrouchHash, false);
 
             requiredRotation = transform.rotation;
         }
