@@ -14,7 +14,8 @@ public class CheckerEnviroment : MonoBehaviour
     public LayerMask obstacleLayer;
     public bool obstacleCollision;
     public float heightRayDistance;
-
+    public float rayLength = 5f;
+    public bool pushInteract;
 
 
     [Header("Climbing Check")]
@@ -44,6 +45,7 @@ public class CheckerEnviroment : MonoBehaviour
             obstacleCollision = false;
         }*/
 
+        CheckInteract();
        
 
     }
@@ -124,6 +126,26 @@ public class CheckerEnviroment : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    public void CheckInteract()
+    {
+        Vector3 rayOrigin = transform.position ;
+        RaycastHit hit ;
+
+        if (Physics.Raycast(rayOrigin, transform.forward, out hit, rayLength, LayerMask.GetMask("InteractPush")))
+        {
+            Debug.Log(" Se acerco a empujar");
+            pushInteract = true;
+           
+        }
+        else
+        {
+            Debug.Log("Se alejo al objeto a empujar");
+            pushInteract = false;
+        }
+
+        Debug.DrawRay(rayOrigin, transform.forward * rayLength, (hit.collider != null) ? Color.yellow : Color.green);
     }
 
 }

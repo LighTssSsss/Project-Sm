@@ -20,7 +20,8 @@ public class MoveAndAnimatorController : MonoBehaviour
     int isLandingHash;
     int isCrouchHash;
     int isMoveCrouchHash;
-
+    int isPushHash;
+    int isPushMoveHash;
 
     Vector2 currentMovementInput;
     Vector3 currentMovement;
@@ -33,6 +34,8 @@ public class MoveAndAnimatorController : MonoBehaviour
     bool isSprint;
     bool isJump;
     bool isCrouch;
+    bool push;
+    bool interactPush;
 
     public bool playerInAction { get; private set; }
     public bool isJumpAnimation = false;
@@ -40,6 +43,9 @@ public class MoveAndAnimatorController : MonoBehaviour
     public bool isClimbing;
     public bool isLeavePressed;
     public bool isCrouchPressed;
+    public bool isInteractPressed;
+    public float pushForce;
+
 
     bool isLanding;
     public bool playerControl = true;
@@ -84,8 +90,14 @@ public class MoveAndAnimatorController : MonoBehaviour
 
 
     //private EnviromentChecker checkers;
+    [Header("References")]
     private CheckerEnviroment checks;
     private ClimbingSystem climb;
+    private MoveableObject moveObject;
+
+
+    [Header("Variable references")]
+    public bool pushObject;
 
     // private MoveAndAnimatorController movement;
 
@@ -108,7 +120,7 @@ public class MoveAndAnimatorController : MonoBehaviour
         animator = GetComponent<Animator>();
         checks = GetComponent<CheckerEnviroment>();
         climb = GetComponent<ClimbingSystem>();
-
+        moveObject = GetComponent<MoveableObject>();
 
         isWalkingHash = Animator.StringToHash("isWalking");
         isRunnigHash = Animator.StringToHash("isRunning");
@@ -118,6 +130,9 @@ public class MoveAndAnimatorController : MonoBehaviour
         isLandingHash = Animator.StringToHash("isLanding");
         isCrouchHash = Animator.StringToHash("isCrounch");
         isMoveCrouchHash = Animator.StringToHash("isMoveCrouch");
+        isPushHash = Animator.StringToHash("isPush");
+        isPushMoveHash = Animator.StringToHash("isPushMove");
+
 
         playerInputs.Movement.Move.started += OnMovementInput;
         playerInputs.Movement.Move.performed += OnMovementInput;
@@ -134,6 +149,9 @@ public class MoveAndAnimatorController : MonoBehaviour
 
         playerInputs.Movement.Jump.performed += OnJump;
         playerInputs.Movement.Jump.canceled += OnJump;
+
+        playerInputs.Movement.InteractAndDrop.performed += OnInteract;
+        playerInputs.Movement.InteractAndDrop.canceled += OnInteract;
 
         cameraObject = Camera.main.transform;
 
@@ -269,6 +287,11 @@ public class MoveAndAnimatorController : MonoBehaviour
     void OnCrouch(InputAction.CallbackContext context)
     {
         isCrouchPressed = context.ReadValueAsButton();
+    }
+
+    void OnInteract(InputAction.CallbackContext context)
+    {
+        isInteractPressed = context.ReadValueAsButton();
     }
 
 
@@ -426,6 +449,35 @@ public class MoveAndAnimatorController : MonoBehaviour
         {
             animator.SetBool(isMoveCrouchHash, false);
             Debug.Log("dejalo");
+        }
+
+        if(isInteractPressed && checks.pushInteract)
+        {
+            animator.SetBool(isPushHash, true);
+            playerInAction = true;
+
+            if (isMovementPressed)
+            {
+                animator.SetBool(isPushMoveHash, true);
+                pushObject = true;
+               
+
+            }
+
+            else
+            {
+                animator.SetBool(isPushMoveHash, false);
+                pushObject = false;
+            }
+
+        }
+
+        else
+        {
+            animator.SetBool(isPushHash, false);
+            animator.SetBool(isPushMoveHash, false);
+            pushObject = false;
+            playerInAction = false;
         }
 
        
@@ -675,7 +727,21 @@ public class MoveAndAnimatorController : MonoBehaviour
 
 
 
-    
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        Rigidbody rigg = hit.collider.attachedRigidbody;
+
+        if (rigg != null )
+        {
+            Vector3 forceDirection = hit.gameObject.transform.position - transform.position;
+            forceDirection.y = 0;
+            forceDirection.Normalize();
+
+            rigg.AddForceAtPosition(forceDirection * pushForce, transform.position, ForceMode.Impulse);
+        }
+    }
+
+
 
 }
 
