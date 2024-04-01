@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class ObjectInteract : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+   public GameObject objects;
+   public Transform hand;
+
+
+    private void Awake()
+    {
+        GameObject handOb = GameObject.FindGameObjectWithTag("Hand");
+
+        hand = handOb.GetComponent<Transform>();
+    }
+
+    private void Update()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

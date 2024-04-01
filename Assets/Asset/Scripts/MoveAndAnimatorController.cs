@@ -22,6 +22,7 @@ public class MoveAndAnimatorController : MonoBehaviour
     int isMoveCrouchHash;
     int isPushHash;
     int isPushMoveHash;
+    int isDropHash;
 
     Vector2 currentMovementInput;
     Vector3 currentMovement;
@@ -36,6 +37,7 @@ public class MoveAndAnimatorController : MonoBehaviour
     bool isCrouch;
     bool push;
     bool interactPush;
+    bool dropObject;
 
     public bool playerInAction { get; private set; }
     public bool isJumpAnimation = false;

@@ -12,16 +12,19 @@ public class CheckerEnviroment : MonoBehaviour
     public float heightRaylenght = 6f;
     public float jumpRayLength = 6f;
     public LayerMask obstacleLayer;
-    public bool obstacleCollision;
     public float heightRayDistance;
     public float rayLength = 5f;
-    public bool pushInteract;
-
-
+   
     [Header("Climbing Check")]
     [SerializeField] private float climbingRayLength = 1.6f;
     [SerializeField] private LayerMask climbingLayer;
-    public int numberOfRays = 12; 
+    public int numberOfRays = 12;
+
+    [Header("Touch or not object")]
+    public bool obstacleCollision;
+    public bool pushInteract;
+    public bool objectInteract;
+    public bool objectInHand;
 
     private void Update()
     {
@@ -135,17 +138,31 @@ public class CheckerEnviroment : MonoBehaviour
 
         if (Physics.Raycast(rayOrigin, transform.forward, out hit, rayLength, LayerMask.GetMask("InteractPush")))
         {
-            Debug.Log(" Se acerco a empujar");
+            Debug.Log(" Se acerco, ahora lo puede empujar");
             pushInteract = true;
            
         }
         else
         {
-            Debug.Log("Se alejo al objeto a empujar");
+            Debug.Log("Se alejo, ya no lo puede empujar");
             pushInteract = false;
         }
 
-        Debug.DrawRay(rayOrigin, transform.forward * rayLength, (hit.collider != null) ? Color.yellow : Color.green);
+        if(Physics.Raycast(rayOrigin, transform.forward, out hit, rayLength, LayerMask.GetMask("InteractObject")) && objectInHand == false)
+        {
+            objectInteract = true;
+            Debug.Log(" Se acerco, ahora lo puede tomar");
+        }
+
+        else
+        {
+            objectInteract = false;
+            Debug.Log(" Se alejo, ya no lo puede tomar");
+        }
+
+
+
+            Debug.DrawRay(rayOrigin, transform.forward * rayLength, (hit.collider != null) ? Color.yellow : Color.red);
     }
 
 }

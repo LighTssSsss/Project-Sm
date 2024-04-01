@@ -2055,15 +2055,17 @@ MonoBehaviour:
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 512
-  obstacleCollision: 0
   heightRayDistance: 0
   rayLength: 0.4
-  pushInteract: 0
   climbingRayLength: 1.6
   climbingLayer:
     serializedVersion: 2
     m_Bits: 1024
   numberOfRays: 12
+  obstacleCollision: 0
+  pushInteract: 0
+  objectInteract: 0
+  objectInHand: 0
 --- !u!114 &383612704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2092,7 +2094,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb7dd858d9c23c541a7692dd660a5ba1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pushForce: 0.5
+  pushForce: 0.2
   move: {fileID: 0}
 --- !u!1 &410087039
 GameObject:
@@ -7687,6 +7689,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e13233fbb655c234fbe722ffa7b00ea0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objects: {fileID: 1921077050}
+  hand: {fileID: 0}
 --- !u!135 &1921077052
 SphereCollider:
   m_ObjectHideFlags: 0
