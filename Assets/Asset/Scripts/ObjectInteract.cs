@@ -6,7 +6,8 @@ public class ObjectInteract : MonoBehaviour
 {
    public GameObject objects;
    public Transform hand;
-
+   public bool tomo;
+    
 
     private void Awake()
     {
@@ -17,7 +18,13 @@ public class ObjectInteract : MonoBehaviour
 
     private void Update()
     {
-        
+        if( tomo == true)
+        {
+
+        }
     }
+
+
+
 
 }

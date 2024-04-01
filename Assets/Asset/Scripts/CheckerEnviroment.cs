@@ -25,7 +25,10 @@ public class CheckerEnviroment : MonoBehaviour
     public bool pushInteract;
     public bool objectInteract;
     public bool objectInHand;
+    public ObjectInteract interact;
 
+
+    
     private void Update()
     {
         Vector3 rayOrigin2 = transform.position + rayOffset;
@@ -148,17 +151,18 @@ public class CheckerEnviroment : MonoBehaviour
             pushInteract = false;
         }
 
-        if(Physics.Raycast(rayOrigin, transform.forward, out hit, rayLength, LayerMask.GetMask("InteractObject")) && objectInHand == false)
+      /*  if(Physics.Raycast(rayOrigin, transform.forward, out hit, rayLength, LayerMask.GetMask("InteractObject")) && objectInHand == false)
         {
             objectInteract = true;
+            interact = hit.collider.GetComponent<ObjectInteract>();
             Debug.Log(" Se acerco, ahora lo puede tomar");
         }
 
         else
         {
-            objectInteract = false;
+            interact = null;
             Debug.Log(" Se alejo, ya no lo puede tomar");
-        }
+        }*/
 
 
 

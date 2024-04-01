@@ -96,7 +96,7 @@ public class MoveAndAnimatorController : MonoBehaviour
     private CheckerEnviroment checks;
     private ClimbingSystem climb;
     private MoveableObject moveObject;
-
+    private AreaInteract areaInt;
 
     [Header("Variable references")]
     public bool pushObject;
@@ -480,6 +480,12 @@ public class MoveAndAnimatorController : MonoBehaviour
             animator.SetBool(isPushMoveHash, false);
             pushObject = false;
             playerInAction = false;
+        }
+
+        if(isInteractPressed && checks.objectInteract && areaInt.puedoTomarlo == true)
+        {
+            // Animacion de tomar
+            areaInt.objetInter.tomo = true;
         }
 
        
