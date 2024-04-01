@@ -7,6 +7,8 @@ TagManager:
   - Barrier
   - Barrier2
   - ParedAlta
+  - Ground
+  - Hand
   layers:
   - Default
   - TransparentFX
@@ -20,7 +22,7 @@ TagManager:
   - Obstacles
   - Climb
   - InteractPush
-  - 
+  - InteractObject
   - 
   - 
   - 
