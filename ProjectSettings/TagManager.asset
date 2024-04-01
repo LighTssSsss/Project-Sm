@@ -9,8 +9,8 @@ TagManager:
   - ParedAlta
   - Ground
   - Hand
-  - Object
   - AreaCollision
+  - Object
   layers:
   - Default
   - TransparentFX

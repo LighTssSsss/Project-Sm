@@ -482,10 +482,11 @@ public class MoveAndAnimatorController : MonoBehaviour
             playerInAction = false;
         }
 
-        if(isInteractPressed && checks.objectInteract && areaInt.puedoTomarlo == true)
+        if(isInteractPressed && areaInt.puedoTomarlo == true)
         {
             // Animacion de tomar
             areaInt.objetInter.tomo = true;
+            Debug.Log("Lo tomo");
         }
 
        

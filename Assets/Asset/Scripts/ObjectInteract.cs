@@ -20,7 +20,9 @@ public class ObjectInteract : MonoBehaviour
     {
         if( tomo == true)
         {
-
+            objects.transform.SetParent(hand);
+            objects.transform.position = hand.position;
+            objects.GetComponent<Rigidbody>().isKinematic = true;
         }
     }
 
