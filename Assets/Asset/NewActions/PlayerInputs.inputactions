@@ -51,9 +51,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "InteractAndDrop",
+                    "name": "InteractObject",
                     "type": "Button",
                     "id": "92ef3411-fd00-4269-9545-a9c4bca0df9a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "DropObject",
+                    "type": "Button",
+                    "id": "a8bfe4b1-4d8e-42b3-8f2e-026fe5e0de76",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -200,7 +209,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "InteractAndDrop",
+                    "action": "InteractObject",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f57376f1-fff0-4112-8cf2-7e16c4c57faf",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DropObject",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

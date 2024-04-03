@@ -25,7 +25,7 @@ public class CheckerEnviroment : MonoBehaviour
     public bool pushInteract;
     public bool objectInteract;
     public bool objectInHand;
-    public ObjectInteract interact;
+   // public AreaInteract interact;
 
 
     

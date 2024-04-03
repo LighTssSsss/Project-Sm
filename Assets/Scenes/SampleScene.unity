@@ -315,6 +315,8 @@ MonoBehaviour:
   objects: {fileID: 34747544}
   hand: {fileID: 0}
   tomo: 0
+  loTiene: 0
+  losuelta: 0
 --- !u!135 &34747546
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2198,6 +2200,7 @@ MonoBehaviour:
   isLeavePressed: 0
   isCrouchPressed: 0
   isInteractPressed: 0
+  isDropPressed: 0
   pushForce: 0
   playerControl: 1
   isJumpPressed: 0
@@ -2219,6 +2222,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 776
   minFallHeightForAnimation: 5
+  areaInt: {fileID: 2110094341}
   pushObject: 0
 --- !u!114 &383612699
 MonoBehaviour:
@@ -2269,7 +2273,6 @@ MonoBehaviour:
   pushInteract: 0
   objectInteract: 0
   objectInHand: 0
-  interact: {fileID: 0}
 --- !u!114 &383612704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7569,7 +7572,7 @@ Transform:
   m_GameObject: {fileID: 1797518397}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0, y: 0.096, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7928,6 +7931,8 @@ MonoBehaviour:
   objects: {fileID: 1921077050}
   hand: {fileID: 0}
   tomo: 0
+  loTiene: 0
+  losuelta: 0
 --- !u!135 &1921077052
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -8619,6 +8624,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   puedoTomarlo: 0
   objetInter: {fileID: 0}
+  loToma: 0
 --- !u!1 &2130273436
 GameObject:
   m_ObjectHideFlags: 0

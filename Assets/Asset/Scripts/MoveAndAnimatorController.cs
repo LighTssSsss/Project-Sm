@@ -46,6 +46,7 @@ public class MoveAndAnimatorController : MonoBehaviour
     public bool isLeavePressed;
     public bool isCrouchPressed;
     public bool isInteractPressed;
+    public bool isDropPressed;
     public float pushForce;
 
 
@@ -96,7 +97,7 @@ public class MoveAndAnimatorController : MonoBehaviour
     private CheckerEnviroment checks;
     private ClimbingSystem climb;
     private MoveableObject moveObject;
-    private AreaInteract areaInt;
+    public AreaInteract areaInt;
 
     [Header("Variable references")]
     public bool pushObject;
@@ -152,8 +153,11 @@ public class MoveAndAnimatorController : MonoBehaviour
         playerInputs.Movement.Jump.performed += OnJump;
         playerInputs.Movement.Jump.canceled += OnJump;
 
-        playerInputs.Movement.InteractAndDrop.performed += OnInteract;
-        playerInputs.Movement.InteractAndDrop.canceled += OnInteract;
+        playerInputs.Movement.InteractObject.performed += OnInteract;
+        playerInputs.Movement.InteractObject.canceled += OnInteract;
+
+        playerInputs.Movement.DropObject.performed += OnDrop;
+        playerInputs.Movement.DropObject.canceled += OnDrop;
 
         cameraObject = Camera.main.transform;
 
@@ -206,7 +210,7 @@ public class MoveAndAnimatorController : MonoBehaviour
             currentMovement = cameraForward * currentMovementInput.y + cameraObject.right * currentMovementInput.x;
             currentMovement.Normalize();
         }
-         
+
 
         currentRunMovement = currentMovement * runMultiplier;
 
@@ -283,7 +287,7 @@ public class MoveAndAnimatorController : MonoBehaviour
     void OnJump(InputAction.CallbackContext context)
     {
         isJumpPressed = context.ReadValueAsButton();
-       // Debug.Log(isJumpPressed);
+        // Debug.Log(isJumpPressed);
     }
 
     void OnCrouch(InputAction.CallbackContext context)
@@ -294,6 +298,11 @@ public class MoveAndAnimatorController : MonoBehaviour
     void OnInteract(InputAction.CallbackContext context)
     {
         isInteractPressed = context.ReadValueAsButton();
+    }
+
+    void OnDrop(InputAction.CallbackContext context)
+    {
+        isDropPressed = context.ReadValueAsButton();
     }
 
 
@@ -308,28 +317,28 @@ public class MoveAndAnimatorController : MonoBehaviour
           else if(!isJumpPressed && isJumping && characterController.isGrounded)
           {
               isJumping = false;
-          }*/        
-            if (!isJumping && characterController.isGrounded && isJumpPressed && canJump && checks.obstacleCollision == false && isClimbing == false)
-           {
-                animator.SetBool(isJumpingHash, true);
-                isJumpAnimation = true;
-                velocityG = jumpPower;
-                StartCoroutine(WaitJump(jumpCooldown));
-                isJumping = true;
-                canJump = false;
+          }*/
+        if (!isJumping && characterController.isGrounded && isJumpPressed && canJump && checks.obstacleCollision == false && isClimbing == false)
+        {
+            animator.SetBool(isJumpingHash, true);
+            isJumpAnimation = true;
+            velocityG = jumpPower;
+            StartCoroutine(WaitJump(jumpCooldown));
+            isJumping = true;
+            canJump = false;
 
-            }
+        }
 
-            else if (isJumping && !isJumpPressed && characterController.isGrounded)
-            {
-                isJumping = false; // El jugador ya no está en el aire
-                animator.SetBool(isJumpingHash, false);
-                isJumpAnimation = false;
-               checks.obstacleCollision = false;
-            }
+        else if (isJumping && !isJumpPressed && characterController.isGrounded)
+        {
+            isJumping = false; // El jugador ya no está en el aire
+            animator.SetBool(isJumpingHash, false);
+            isJumpAnimation = false;
+            checks.obstacleCollision = false;
+        }
 
-        
-        
+
+
 
     }
 
@@ -339,7 +348,7 @@ public class MoveAndAnimatorController : MonoBehaviour
         animator.SetBool(isJumpingHash, false);
         canJump = true; // Habilitar el salto después del tiempo de espera
         isLanding = false;
-       
+
     }
 
 
@@ -358,7 +367,7 @@ public class MoveAndAnimatorController : MonoBehaviour
             transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, rotationFactorPerFrame * Time.deltaTime);
 
         }
-       
+
     }
 
 
@@ -394,7 +403,7 @@ public class MoveAndAnimatorController : MonoBehaviour
         else if ((!isMovementPressed || !isRunPressed) && isRunning)
         {
             animator.SetBool(isRunnigHash, false);
-      
+
 
         }
 
@@ -417,7 +426,7 @@ public class MoveAndAnimatorController : MonoBehaviour
         if (isRunPressed)
         {
             timeSprint += Time.deltaTime;
-            
+
         }
 
 
@@ -427,7 +436,7 @@ public class MoveAndAnimatorController : MonoBehaviour
             isSprint = false;
         }
 
-        if(isCrouchPressed)
+        if (isCrouchPressed)
         {
             animator.SetBool(isCrouchHash, true);
             Debug.Log("agachate");
@@ -439,21 +448,22 @@ public class MoveAndAnimatorController : MonoBehaviour
             Debug.Log("parate");
         }
 
-        if(isCrouchPressed && isMovementPressed && !isCrouchMovement)
+        if (isCrouchPressed && isMovementPressed && !isCrouchMovement)
         {
             animator.SetBool(isMoveCrouchHash, true);
-            
+
             Debug.Log("agachate y muevete");
-            
+
         }
 
-        else if(isCrouchPressed && !isMovementPressed)
+        else if (isCrouchPressed && !isMovementPressed)
         {
             animator.SetBool(isMoveCrouchHash, false);
             Debug.Log("dejalo");
         }
 
-        if(isInteractPressed && checks.pushInteract)
+
+        if (isInteractPressed && checks.pushInteract)
         {
             animator.SetBool(isPushHash, true);
             playerInAction = true;
@@ -462,7 +472,7 @@ public class MoveAndAnimatorController : MonoBehaviour
             {
                 animator.SetBool(isPushMoveHash, true);
                 pushObject = true;
-               
+
 
             }
 
@@ -474,6 +484,8 @@ public class MoveAndAnimatorController : MonoBehaviour
 
         }
 
+     
+
         else
         {
             animator.SetBool(isPushHash, false);
@@ -482,14 +494,24 @@ public class MoveAndAnimatorController : MonoBehaviour
             playerInAction = false;
         }
 
-        if(isInteractPressed && areaInt.puedoTomarlo == true)
+        if (isInteractPressed && checks.pushInteract == false && areaInt.puedoTomarlo == true && areaInt != null && areaInt.objetInter.loTiene == false)
         {
             // Animacion de tomar
             areaInt.objetInter.tomo = true;
+            areaInt.loToma = true;
             Debug.Log("Lo tomo");
         }
 
-       
+        if(isDropPressed &&  areaInt.objetInter != null &&  areaInt.objetInter.loTiene == true )
+        {
+            areaInt.objetInter.tomo = false;
+            areaInt.objetInter.losuelta = true;
+            areaInt.loToma = false;
+           
+            Debug.Log("Solto");
+        }
+
+
 
     }
 
