@@ -73,18 +73,27 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""InteractObject"",
+                    ""name"": ""DropObject"",
                     ""type"": ""Button"",
-                    ""id"": ""92ef3411-fd00-4269-9545-a9c4bca0df9a"",
+                    ""id"": ""8162da10-f2c7-4429-9a52-ea59efacc993"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""DropObject"",
+                    ""name"": ""Lauch"",
                     ""type"": ""Button"",
-                    ""id"": ""a8bfe4b1-4d8e-42b3-8f2e-026fe5e0de76"",
+                    ""id"": ""7a38e1b3-adcf-41cd-b38f-699cd6ea0483"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""InteractObject"",
+                    ""type"": ""Button"",
+                    ""id"": ""268ce99d-c3d7-4446-80d9-65fed54545f9"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -226,18 +235,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""03a36306-ec99-41eb-ab7a-43cc8eac5ca0"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""InteractObject"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""f57376f1-fff0-4112-8cf2-7e16c4c57faf"",
+                    ""id"": ""7f9f7719-2ea4-48cd-bd5c-4ed2e7c7839a"",
                     ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -245,8 +243,36 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""action"": ""DropObject"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f7889ecd-abcd-4d2a-858d-b1ad6e7ed72e"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Lauch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c57f79ff-50f0-4dc3-8d6d-92f4e6addaeb"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InteractObject"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Actions"",
+            ""id"": ""d053d81e-fc6f-4db8-a5d9-1ad9909c8750"",
+            ""actions"": [],
+            ""bindings"": []
         }
     ],
     ""controlSchemes"": [
@@ -264,8 +290,11 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_Movement_Jump = m_Movement.FindAction("Jump", throwIfNotFound: true);
         m_Movement_Leave = m_Movement.FindAction("Leave", throwIfNotFound: true);
         m_Movement_Crounch = m_Movement.FindAction("Crounch", throwIfNotFound: true);
-        m_Movement_InteractObject = m_Movement.FindAction("InteractObject", throwIfNotFound: true);
         m_Movement_DropObject = m_Movement.FindAction("DropObject", throwIfNotFound: true);
+        m_Movement_Lauch = m_Movement.FindAction("Lauch", throwIfNotFound: true);
+        m_Movement_InteractObject = m_Movement.FindAction("InteractObject", throwIfNotFound: true);
+        // Actions
+        m_Actions = asset.FindActionMap("Actions", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -332,8 +361,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_Movement_Jump;
     private readonly InputAction m_Movement_Leave;
     private readonly InputAction m_Movement_Crounch;
-    private readonly InputAction m_Movement_InteractObject;
     private readonly InputAction m_Movement_DropObject;
+    private readonly InputAction m_Movement_Lauch;
+    private readonly InputAction m_Movement_InteractObject;
     public struct MovementActions
     {
         private @PlayerInputs m_Wrapper;
@@ -343,8 +373,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_Movement_Jump;
         public InputAction @Leave => m_Wrapper.m_Movement_Leave;
         public InputAction @Crounch => m_Wrapper.m_Movement_Crounch;
-        public InputAction @InteractObject => m_Wrapper.m_Movement_InteractObject;
         public InputAction @DropObject => m_Wrapper.m_Movement_DropObject;
+        public InputAction @Lauch => m_Wrapper.m_Movement_Lauch;
+        public InputAction @InteractObject => m_Wrapper.m_Movement_InteractObject;
         public InputActionMap Get() { return m_Wrapper.m_Movement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -369,12 +400,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Crounch.started += instance.OnCrounch;
             @Crounch.performed += instance.OnCrounch;
             @Crounch.canceled += instance.OnCrounch;
-            @InteractObject.started += instance.OnInteractObject;
-            @InteractObject.performed += instance.OnInteractObject;
-            @InteractObject.canceled += instance.OnInteractObject;
             @DropObject.started += instance.OnDropObject;
             @DropObject.performed += instance.OnDropObject;
             @DropObject.canceled += instance.OnDropObject;
+            @Lauch.started += instance.OnLauch;
+            @Lauch.performed += instance.OnLauch;
+            @Lauch.canceled += instance.OnLauch;
+            @InteractObject.started += instance.OnInteractObject;
+            @InteractObject.performed += instance.OnInteractObject;
+            @InteractObject.canceled += instance.OnInteractObject;
         }
 
         private void UnregisterCallbacks(IMovementActions instance)
@@ -394,12 +428,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Crounch.started -= instance.OnCrounch;
             @Crounch.performed -= instance.OnCrounch;
             @Crounch.canceled -= instance.OnCrounch;
-            @InteractObject.started -= instance.OnInteractObject;
-            @InteractObject.performed -= instance.OnInteractObject;
-            @InteractObject.canceled -= instance.OnInteractObject;
             @DropObject.started -= instance.OnDropObject;
             @DropObject.performed -= instance.OnDropObject;
             @DropObject.canceled -= instance.OnDropObject;
+            @Lauch.started -= instance.OnLauch;
+            @Lauch.performed -= instance.OnLauch;
+            @Lauch.canceled -= instance.OnLauch;
+            @InteractObject.started -= instance.OnInteractObject;
+            @InteractObject.performed -= instance.OnInteractObject;
+            @InteractObject.canceled -= instance.OnInteractObject;
         }
 
         public void RemoveCallbacks(IMovementActions instance)
@@ -417,6 +454,44 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         }
     }
     public MovementActions @Movement => new MovementActions(this);
+
+    // Actions
+    private readonly InputActionMap m_Actions;
+    private List<IActionsActions> m_ActionsActionsCallbackInterfaces = new List<IActionsActions>();
+    public struct ActionsActions
+    {
+        private @PlayerInputs m_Wrapper;
+        public ActionsActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
+        public InputActionMap Get() { return m_Wrapper.m_Actions; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(ActionsActions set) { return set.Get(); }
+        public void AddCallbacks(IActionsActions instance)
+        {
+            if (instance == null || m_Wrapper.m_ActionsActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_ActionsActionsCallbackInterfaces.Add(instance);
+        }
+
+        private void UnregisterCallbacks(IActionsActions instance)
+        {
+        }
+
+        public void RemoveCallbacks(IActionsActions instance)
+        {
+            if (m_Wrapper.m_ActionsActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IActionsActions instance)
+        {
+            foreach (var item in m_Wrapper.m_ActionsActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_ActionsActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public ActionsActions @Actions => new ActionsActions(this);
     private int m_PCandGamepadSchemeIndex = -1;
     public InputControlScheme PCandGamepadScheme
     {
@@ -433,7 +508,11 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnLeave(InputAction.CallbackContext context);
         void OnCrounch(InputAction.CallbackContext context);
-        void OnInteractObject(InputAction.CallbackContext context);
         void OnDropObject(InputAction.CallbackContext context);
+        void OnLauch(InputAction.CallbackContext context);
+        void OnInteractObject(InputAction.CallbackContext context);
+    }
+    public interface IActionsActions
+    {
     }
 }

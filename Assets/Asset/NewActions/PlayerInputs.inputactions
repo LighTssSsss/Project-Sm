@@ -51,18 +51,27 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "InteractObject",
+                    "name": "DropObject",
                     "type": "Button",
-                    "id": "92ef3411-fd00-4269-9545-a9c4bca0df9a",
+                    "id": "8162da10-f2c7-4429-9a52-ea59efacc993",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "DropObject",
+                    "name": "Lauch",
                     "type": "Button",
-                    "id": "a8bfe4b1-4d8e-42b3-8f2e-026fe5e0de76",
+                    "id": "7a38e1b3-adcf-41cd-b38f-699cd6ea0483",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "InteractObject",
+                    "type": "Button",
+                    "id": "268ce99d-c3d7-4446-80d9-65fed54545f9",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -204,18 +213,7 @@
                 },
                 {
                     "name": "",
-                    "id": "03a36306-ec99-41eb-ab7a-43cc8eac5ca0",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "InteractObject",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "f57376f1-fff0-4112-8cf2-7e16c4c57faf",
+                    "id": "7f9f7719-2ea4-48cd-bd5c-4ed2e7c7839a",
                     "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
@@ -223,8 +221,36 @@
                     "action": "DropObject",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f7889ecd-abcd-4d2a-858d-b1ad6e7ed72e",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Lauch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c57f79ff-50f0-4dc3-8d6d-92f4e6addaeb",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "InteractObject",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Actions",
+            "id": "d053d81e-fc6f-4db8-a5d9-1ad9909c8750",
+            "actions": [],
+            "bindings": []
         }
     ],
     "controlSchemes": [

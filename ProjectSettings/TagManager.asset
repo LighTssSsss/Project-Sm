@@ -11,6 +11,8 @@ TagManager:
   - Hand
   - AreaCollision
   - Object
+  - Medicine
+  - Enemy
   layers:
   - Default
   - TransparentFX

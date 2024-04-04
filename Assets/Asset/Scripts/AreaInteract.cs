@@ -5,8 +5,10 @@ using UnityEngine;
 public class AreaInteract : MonoBehaviour
 {
    public bool puedoTomarlo;
+    public bool puedTomarMedicina;
    public ObjectInteract objetInter;
    public bool loToma;
+   
 
     private void OnTriggerEnter(Collider other)
     {
@@ -14,6 +16,12 @@ public class AreaInteract : MonoBehaviour
         {
             puedoTomarlo = true;
             objetInter = other.GetComponent<ObjectInteract>();
+        }
+
+        if (other.CompareTag("Medicine"))
+        {
+            puedTomarMedicina = true;
+            Debug.Log("Medicina");
         }
     }
 
@@ -33,6 +41,11 @@ public class AreaInteract : MonoBehaviour
             puedoTomarlo = false;
             objetInter = null;
             
+        }
+
+        if (other.CompareTag("Medicine"))
+        {
+            puedTomarMedicina = false;
         }
     }
   

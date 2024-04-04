@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -47,6 +48,7 @@ public class MoveAndAnimatorController : MonoBehaviour
     public bool isCrouchPressed;
     public bool isInteractPressed;
     public bool isDropPressed;
+    public bool isLauchPressed;
     public float pushForce;
 
 
@@ -98,9 +100,12 @@ public class MoveAndAnimatorController : MonoBehaviour
     private ClimbingSystem climb;
     private MoveableObject moveObject;
     public AreaInteract areaInt;
+    private HealthSystem healthSyst;
 
     [Header("Variable references")]
     public bool pushObject;
+    public Camera cam;
+    public float forceLauch;
 
     // private MoveAndAnimatorController movement;
 
@@ -124,6 +129,7 @@ public class MoveAndAnimatorController : MonoBehaviour
         checks = GetComponent<CheckerEnviroment>();
         climb = GetComponent<ClimbingSystem>();
         moveObject = GetComponent<MoveableObject>();
+        healthSyst = GetComponent<HealthSystem>();
 
         isWalkingHash = Animator.StringToHash("isWalking");
         isRunnigHash = Animator.StringToHash("isRunning");
@@ -158,6 +164,9 @@ public class MoveAndAnimatorController : MonoBehaviour
 
         playerInputs.Movement.DropObject.performed += OnDrop;
         playerInputs.Movement.DropObject.canceled += OnDrop;
+
+        playerInputs.Movement.Lauch.performed += OnLauch;
+        playerInputs.Movement.Lauch.performed -= OnLauch;
 
         cameraObject = Camera.main.transform;
 
@@ -303,6 +312,11 @@ public class MoveAndAnimatorController : MonoBehaviour
     void OnDrop(InputAction.CallbackContext context)
     {
         isDropPressed = context.ReadValueAsButton();
+    }
+
+    void OnLauch(InputAction.CallbackContext context)
+    {
+        isLauchPressed = context.ReadValueAsButton();
     }
 
 
@@ -484,7 +498,7 @@ public class MoveAndAnimatorController : MonoBehaviour
 
         }
 
-     
+
 
         else
         {
@@ -494,7 +508,7 @@ public class MoveAndAnimatorController : MonoBehaviour
             playerInAction = false;
         }
 
-        if (isInteractPressed && checks.pushInteract == false && areaInt.puedoTomarlo == true && areaInt != null && areaInt.objetInter.loTiene == false)
+        if (isInteractPressed && areaInt != null && checks.pushInteract == false && areaInt.puedoTomarlo == true  && areaInt.objetInter.loTiene == false)
         {
             // Animacion de tomar
             areaInt.objetInter.tomo = true;
@@ -502,13 +516,32 @@ public class MoveAndAnimatorController : MonoBehaviour
             Debug.Log("Lo tomo");
         }
 
-        if(isDropPressed &&  areaInt.objetInter != null &&  areaInt.objetInter.loTiene == true )
+        if(isDropPressed && areaInt.objetInter != null &&  areaInt.objetInter.loTiene == true )
         {
             areaInt.objetInter.tomo = false;
             areaInt.objetInter.losuelta = true;
             areaInt.loToma = false;
-           
+           // areaInt.objetInter = null;
             Debug.Log("Solto");
+        }
+
+        if(isLauchPressed && areaInt.objetInter != null && areaInt.objetInter.loTiene == true )
+        {
+            areaInt.objetInter.tomo = false;
+            areaInt.objetInter.losuelta = true;
+            Debug.Log("Lanzo");
+            areaInt.objetInter.objects.transform.SetParent(null);
+            areaInt.objetInter.GetComponent<Rigidbody>().isKinematic = false;
+            areaInt.objetInter.GetComponent<Rigidbody>().AddForce(cam.transform.forward, ForceMode.Impulse);
+
+        }
+
+        if (isInteractPressed && checks.pushInteract == false && areaInt.puedTomarMedicina == true && areaInt != null)
+        {
+            // Animacion de tomar
+            healthSyst.recupera = true;
+            areaInt.puedTomarMedicina = false;
+            Debug.Log("Tomo Medicina");
         }
 
 
