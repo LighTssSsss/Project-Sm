@@ -53,28 +53,28 @@ public class MoveAndAnimatorController : MonoBehaviour
     public bool isLauchPressed;
     public bool playerControl = true;
     public bool isJumpPressed = false;
-
+    public bool isJumping = false;
 
 
     public float pushForce;
+    public float rotationFactorPerFrame;
+    public float runMultiplier;
+    public float multiplierSprint;
+    public float maxRayDistance;
 
 
-   
-   
+
     Quaternion requiredRotation;
 
    
     float initialJumpVelocity;
     //public float maxJumpHeight = 1;
     // public float maxJumpTime = 0.5f;
-    public bool isJumping = false;
+   
     public float timeSprint;
     Vector3 initialPosition;
 
-    public float rotationFactorPerFrame;
-    public float runMultiplier;
-    public float multiplierSprint;
-    public float maxRayDistance;
+    
 
 
     [Header("Gravity Setting")]

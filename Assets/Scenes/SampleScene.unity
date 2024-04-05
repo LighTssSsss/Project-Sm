@@ -2355,13 +2355,13 @@ MonoBehaviour:
   isLauchPressed: 0
   playerControl: 1
   isJumpPressed: 0
-  pushForce: 0
   isJumping: 0
-  timeSprint: 0
+  pushForce: 0
   rotationFactorPerFrame: 10
   runMultiplier: 4.5
   multiplierSprint: 2
   maxRayDistance: 1.11
+  timeSprint: 0
   gravity: -8.9
   gravityMultiplier: 1
   jumpPower: 4
@@ -3207,7 +3207,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 88
   m_CollisionDetection: 0
 --- !u!65 &523495084
 BoxCollider:
@@ -3289,7 +3289,7 @@ Transform:
   m_GameObject: {fileID: 523495082}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -16.44, y: 1.0166, z: 5.13}
+  m_LocalPosition: {x: -16.78, y: 1.0166, z: 5.13}
   m_LocalScale: {x: 2, y: 2.033345, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4985,7 +4985,7 @@ Transform:
   m_GameObject: {fileID: 902241312}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -19.48, y: 0.93, z: 5}
+  m_LocalPosition: {x: -20.48, y: 0.93, z: 5}
   m_LocalScale: {x: 0.9494622, y: 0.9494622, z: 0.9494622}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6064,9 +6064,11 @@ GameObject:
   - component: {fileID: 1344576906}
   - component: {fileID: 1344576905}
   - component: {fileID: 1344576904}
+  - component: {fileID: 1344576909}
+  - component: {fileID: 1344576908}
   m_Layer: 0
-  m_Name: Cube
-  m_TagString: Untagged
+  m_Name: Medicina Botiquin
+  m_TagString: Medicine
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6112,7 +6114,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: e69d41e1b405af643a0579832d9c0fa2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6157,6 +6159,47 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &1344576908
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344576903}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
+--- !u!114 &1344576909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344576903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 224f43b1d6becbf4f9009fd52ddd9f13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  recoverAmount: 0.5
+  healthRecover: 100
 --- !u!1 &1371394829
 GameObject:
   m_ObjectHideFlags: 0
@@ -9877,7 +9920,7 @@ SceneRoots:
   - {fileID: 425860140}
   - {fileID: 1921077055}
   - {fileID: 34747549}
-  - {fileID: 223955325}
   - {fileID: 1673081852}
   - {fileID: 902241317}
+  - {fileID: 223955325}
   - {fileID: 1344576907}
