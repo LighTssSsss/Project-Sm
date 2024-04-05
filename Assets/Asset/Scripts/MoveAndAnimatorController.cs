@@ -39,6 +39,8 @@ public class MoveAndAnimatorController : MonoBehaviour
     bool push;
     bool interactPush;
     bool dropObject;
+    bool isLanding;
+
 
     public bool playerInAction { get; private set; }
     public bool isJumpAnimation = false;
@@ -49,14 +51,19 @@ public class MoveAndAnimatorController : MonoBehaviour
     public bool isInteractPressed;
     public bool isDropPressed;
     public bool isLauchPressed;
+    public bool playerControl = true;
+    public bool isJumpPressed = false;
+
+
+
     public float pushForce;
 
 
-    bool isLanding;
-    public bool playerControl = true;
+   
+   
     Quaternion requiredRotation;
 
-    public bool isJumpPressed = false;
+   
     float initialJumpVelocity;
     //public float maxJumpHeight = 1;
     // public float maxJumpTime = 0.5f;
@@ -254,6 +261,7 @@ public class MoveAndAnimatorController : MonoBehaviour
         if (characterController.isGrounded && velocityG < 0.0f)
         {
             velocityG = -1.0f;
+            isClimbing = false;
             if (isJumpAnimation)
             {
                 animator.SetBool(isJumpingHash, false);
