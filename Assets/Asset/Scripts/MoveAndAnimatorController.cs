@@ -54,14 +54,14 @@ public class MoveAndAnimatorController : MonoBehaviour
     public bool playerControl = true;
     public bool isJumpPressed = false;
     public bool isJumping = false;
-
+    public bool playerHaging { get; set; }
 
     public float pushForce;
     public float rotationFactorPerFrame;
     public float runMultiplier;
     public float multiplierSprint;
     public float maxRayDistance;
-
+    public float timeSprint;
 
 
     Quaternion requiredRotation;
@@ -71,7 +71,7 @@ public class MoveAndAnimatorController : MonoBehaviour
     //public float maxJumpHeight = 1;
     // public float maxJumpTime = 0.5f;
    
-    public float timeSprint;
+   
     Vector3 initialPosition;
 
     
@@ -82,18 +82,16 @@ public class MoveAndAnimatorController : MonoBehaviour
     [SerializeField] private float gravityMultiplier = 3.0f;
 
 
-    public bool playerHaging { get; set; }
+    
 
     [Header("Jump")]
     [SerializeField] private float jumpPower;
-    public bool canJump = true;
-
     [SerializeField] private float jumpCooldown;
-
     private float velocityG;
     public float timeInAir;
     public float minTimeInAirForFall;
     public float landingAnimationDuration;
+    public bool canJump = true;
 
     [Header("Fall and Land")]
     public LayerMask groundLayer;
