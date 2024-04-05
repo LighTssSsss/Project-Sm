@@ -16,10 +16,10 @@ MonoBehaviour:
   barrierTag: 
   minimumHeight: 2
   maximumHeight: 3
-  lookAtObstacle: 1
+  lookAtObstacle: 0
   parkourActionDelay: 0.6
   allowTargetMatching: 1
   comparedBodyPart: 5
-  compareStartTime: 0.08
+  compareStartTime: 0
   compareEndTime: 0.28
-  comparePositionWeight: {x: 0, y: 1, z: 2}
+  comparePositionWeight: {x: 0, y: 3, z: 1}
