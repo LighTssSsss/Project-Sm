@@ -22,11 +22,11 @@ public class NewParkour : ScriptableObject
 
 
     [Header("Target Matching")]
-    [SerializeField] bool allowTargetMatching = true;
+    [SerializeField] bool allowTargetMatching = true; // Permite la coincidencia de obstaculo con la animacion
     [SerializeField] AvatarTarget comparedBodyPart; //Comparo con que parte del cuerpo empieza la anmiacion para hacer coincidir con el objeto
     [SerializeField] float compareStartTime; //Comienza la coincidencia de la animacion
     [SerializeField] float compareEndTime;
-    [SerializeField] Vector3 comparePositionWeight = new Vector3(0, 1, 0);
+    [SerializeField] Vector3 comparePositionWeight = new Vector3(0, 1, 0); // solo lo mueve la coincidencia en y
 
 
     public Vector3 comparePosition { get; set; }
@@ -56,12 +56,13 @@ public class NewParkour : ScriptableObject
 
         if (allowTargetMatching)
         {
-            comparePosition = hitData.heightInfo.point;
+            comparePosition = hitData.heightInfo.point; //Saltara un poco lejos del borde
         }
 
         return true;
     }
 
+    //Forma de acceder a los valores
     public string AnimationName => animationName;
     public bool LookAtObstacle => lookAtObstacle;
     public float ParkourActionDelay => parkourActionDelay;

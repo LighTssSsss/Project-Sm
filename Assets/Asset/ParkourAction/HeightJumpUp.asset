@@ -17,9 +17,9 @@ MonoBehaviour:
   minimumHeight: 0.9
   maximumHeight: 1.2
   lookAtObstacle: 1
-  parkourActionDelay: 0
+  parkourActionDelay: 0.2
   allowTargetMatching: 1
   comparedBodyPart: 3
-  compareStartTime: 0.1
-  compareEndTime: 0.99
-  comparePositionWeight: {x: 0, y: 1, z: 1}
+  compareStartTime: 0.02
+  compareEndTime: 0.65
+  comparePositionWeight: {x: 3, y: 7, z: 5.5}

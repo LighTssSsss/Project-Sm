@@ -20,6 +20,6 @@ MonoBehaviour:
   parkourActionDelay: 0.6
   allowTargetMatching: 1
   comparedBodyPart: 5
-  compareStartTime: 0
-  compareEndTime: 0.28
-  comparePositionWeight: {x: 0, y: 3, z: 1}
+  compareStartTime: 0.13
+  compareEndTime: 0.51
+  comparePositionWeight: {x: 0, y: 6, z: 6}

@@ -722,7 +722,7 @@ public class MoveAndAnimatorController : MonoBehaviour
 
             float normalizedTimerCounter = timerCounter / animationState.length;
 
-            //Make player to look towards the obstacle
+            //Hace que el jugador mire directo al obsatculo donde hace parkour
             if (LookAtObstacle && normalizedTimerCounter > rotateStartTime)
             {
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, RequiredRotation, rotationFactorPerFrame * Time.deltaTime);
