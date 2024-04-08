@@ -1061,7 +1061,7 @@ Transform:
   m_GameObject: {fileID: 190341463}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -3.91, y: 0.516, z: 5.3}
+  m_LocalPosition: {x: -3.808, y: 0.516, z: 5.3}
   m_LocalScale: {x: 1.2487255, y: 1.011224, z: 1.634205}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1136,8 +1136,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.0000002, y: 1, z: 1.0000002}
-  m_Center: {x: 0, y: 0.000000029802322, z: 0}
+  m_Size: {x: 1.0650469, y: 1.0052698, z: 1.0497812}
+  m_Center: {x: -0.0010631911, y: 0.0026349318, z: 0.0032143446}
 --- !u!1 &198544959
 GameObject:
   m_ObjectHideFlags: 0
@@ -1746,12 +1746,12 @@ PrefabInstance:
     - target: {fileID: 8400911300605901019, guid: af3971560504fdf4c97362554c762241,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.5687629
+      value: 1.531763
       objectReference: {fileID: 0}
     - target: {fileID: 8400911300605901019, guid: af3971560504fdf4c97362554c762241,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.659203
+      value: -2.6592033
       objectReference: {fileID: 0}
     - target: {fileID: 8400911300605901019, guid: af3971560504fdf4c97362554c762241,
         type: 3}
@@ -2010,7 +2010,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0.054950185, y: 0, z: 0, w: 0.99848914}
-  m_LocalPosition: {x: 0.5380559, y: 1.5687629, z: -2.659203}
+  m_LocalPosition: {x: 0.5380559, y: 1.531763, z: -2.6592033}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2157,7 +2157,7 @@ GameObject:
   - component: {fileID: 353173634}
   - component: {fileID: 353173633}
   m_Layer: 9
-  m_Name: ClimbUp Tall
+  m_Name: ClimbUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2393,10 +2393,10 @@ MonoBehaviour:
   check: {fileID: 383612702}
   animator: {fileID: 383612695}
   newParkours:
-  - {fileID: 11400000, guid: 4aac8b2796de57346b6726976456aef8, type: 2}
-  - {fileID: 11400000, guid: f9524320db57428459a861fc239f9e90, type: 2}
   - {fileID: 11400000, guid: 1975e3f5a576b2540a81630ec40b153c, type: 2}
   - {fileID: 11400000, guid: aeece515339fce24681d0397bf293a27, type: 2}
+  - {fileID: 11400000, guid: 4aac8b2796de57346b6726976456aef8, type: 2}
+  - {fileID: 11400000, guid: f9524320db57428459a861fc239f9e90, type: 2}
 --- !u!114 &383612702
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9019,7 +9019,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2110094337
 Transform:
   m_ObjectHideFlags: 0
@@ -9281,7 +9281,7 @@ PrefabInstance:
     - target: {fileID: 1761458234417863275, guid: 4af9496f9f9d63145b31e3b758043d8f,
         type: 3}
       propertyPath: m_Height
-      value: 2.082603
+      value: 1.2623852
       objectReference: {fileID: 0}
     - target: {fileID: 1761458234417863275, guid: 4af9496f9f9d63145b31e3b758043d8f,
         type: 3}
@@ -9291,7 +9291,7 @@ PrefabInstance:
     - target: {fileID: 1761458234417863275, guid: 4af9496f9f9d63145b31e3b758043d8f,
         type: 3}
       propertyPath: m_Center.y
-      value: 1.08
+      value: 0.71
       objectReference: {fileID: 0}
     - target: {fileID: 1761458234417863275, guid: 4af9496f9f9d63145b31e3b758043d8f,
         type: 3}
@@ -9571,7 +9571,7 @@ PrefabInstance:
     - target: {fileID: 8538632649522369993, guid: 4af9496f9f9d63145b31e3b758043d8f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.029
+      value: -0.008
       objectReference: {fileID: 0}
     - target: {fileID: 8538632649522369993, guid: 4af9496f9f9d63145b31e3b758043d8f,
         type: 3}

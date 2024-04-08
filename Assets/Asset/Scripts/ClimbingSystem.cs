@@ -28,6 +28,10 @@ public class ClimbingSystem : MonoBehaviour
         character = GetComponent<CharacterController>();
     }
 
+    private void FixedUpdate()
+    {
+        
+    }
 
     private void Update()
     {
@@ -83,6 +87,8 @@ public class ClimbingSystem : MonoBehaviour
        
       
     }
+
+   
 
     IEnumerator PerformParkourAction(NewParkour action)
     {

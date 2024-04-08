@@ -26,7 +26,7 @@ public class NewParkour : ScriptableObject
     [SerializeField] AvatarTarget comparedBodyPart; //Comparo con que parte del cuerpo empieza la anmiacion para hacer coincidir con el objeto
     [SerializeField] float compareStartTime; //Comienza la coincidencia de la animacion
     [SerializeField] float compareEndTime;
-    [SerializeField] Vector3 comparePositionWeight = new Vector3(0, 1, 0); // solo lo mueve la coincidencia en y
+    [SerializeField] Vector3 comparePositionWeight = new Vector3(0, 0, 0); // solo lo mueve la coincidencia en y
 
 
     public Vector3 comparePosition { get; set; }

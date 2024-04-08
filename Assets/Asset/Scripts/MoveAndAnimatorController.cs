@@ -251,6 +251,8 @@ public class MoveAndAnimatorController : MonoBehaviour
 
     }
 
+   
+
 
     private void Gravity()
     {
@@ -597,7 +599,7 @@ public class MoveAndAnimatorController : MonoBehaviour
 
 
         // Verifica si el personaje está cayendo
-        bool isFallingg = characterController.velocity.y < 0 && !characterController.isGrounded;
+      //  bool isFallingg = characterController.velocity.y < 0 && !characterController.isGrounded;
 
         // Si el personaje ha estado en el aire durante un tiempo prolongado, también activa isFallingg
 
@@ -606,10 +608,10 @@ public class MoveAndAnimatorController : MonoBehaviour
             timeInAir += Time.deltaTime;
             if (timeInAir >= minTimeInAirForFall)
             {
-                isFallingg = true;
+                //isFallingg = true;
                 Debug.Log("Callo");
-                isLanding = true;
-                animator.SetBool(isFallingHash, true);
+               // isLanding = true;
+               // animator.SetBool(isFallingHash, true);
             }
         }
         else
