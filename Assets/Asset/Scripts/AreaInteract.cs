@@ -5,7 +5,7 @@ using UnityEngine;
 public class AreaInteract : MonoBehaviour
 {
    public bool puedoTomarlo;
-    public bool puedTomarMedicina;
+   public bool puedTomarMedicina;
    public ObjectInteract objetInter;
    public bool loToma;
    
@@ -25,14 +25,14 @@ public class AreaInteract : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay(Collider other)
+   /* private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Object"))
         {
             puedoTomarlo = true;
             objetInter = other.GetComponent<ObjectInteract>();
         }
-    }
+    }*/
 
     private void OnTriggerExit(Collider other)
     {

@@ -82,7 +82,16 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Lauch"",
+                    ""name"": ""InteractObject"",
+                    ""type"": ""Button"",
+                    ""id"": ""268ce99d-c3d7-4446-80d9-65fed54545f9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Release"",
                     ""type"": ""Button"",
                     ""id"": ""7a38e1b3-adcf-41cd-b38f-699cd6ea0483"",
                     ""expectedControlType"": ""Button"",
@@ -91,9 +100,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""InteractObject"",
+                    ""name"": ""Projectile"",
                     ""type"": ""Button"",
-                    ""id"": ""268ce99d-c3d7-4446-80d9-65fed54545f9"",
+                    ""id"": ""a0ced7b2-c07e-4097-aa81-8632fe3cfd3f"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -251,7 +260,18 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Lauch"",
+                    ""action"": ""Release"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2ab02d9d-5f18-4a8b-8e2a-858fc9221733"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Projectile"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -291,8 +311,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_Movement_Leave = m_Movement.FindAction("Leave", throwIfNotFound: true);
         m_Movement_Crounch = m_Movement.FindAction("Crounch", throwIfNotFound: true);
         m_Movement_DropObject = m_Movement.FindAction("DropObject", throwIfNotFound: true);
-        m_Movement_Lauch = m_Movement.FindAction("Lauch", throwIfNotFound: true);
         m_Movement_InteractObject = m_Movement.FindAction("InteractObject", throwIfNotFound: true);
+        m_Movement_Release = m_Movement.FindAction("Release", throwIfNotFound: true);
+        m_Movement_Projectile = m_Movement.FindAction("Projectile", throwIfNotFound: true);
         // Actions
         m_Actions = asset.FindActionMap("Actions", throwIfNotFound: true);
     }
@@ -362,8 +383,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_Movement_Leave;
     private readonly InputAction m_Movement_Crounch;
     private readonly InputAction m_Movement_DropObject;
-    private readonly InputAction m_Movement_Lauch;
     private readonly InputAction m_Movement_InteractObject;
+    private readonly InputAction m_Movement_Release;
+    private readonly InputAction m_Movement_Projectile;
     public struct MovementActions
     {
         private @PlayerInputs m_Wrapper;
@@ -374,8 +396,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         public InputAction @Leave => m_Wrapper.m_Movement_Leave;
         public InputAction @Crounch => m_Wrapper.m_Movement_Crounch;
         public InputAction @DropObject => m_Wrapper.m_Movement_DropObject;
-        public InputAction @Lauch => m_Wrapper.m_Movement_Lauch;
         public InputAction @InteractObject => m_Wrapper.m_Movement_InteractObject;
+        public InputAction @Release => m_Wrapper.m_Movement_Release;
+        public InputAction @Projectile => m_Wrapper.m_Movement_Projectile;
         public InputActionMap Get() { return m_Wrapper.m_Movement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -403,12 +426,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @DropObject.started += instance.OnDropObject;
             @DropObject.performed += instance.OnDropObject;
             @DropObject.canceled += instance.OnDropObject;
-            @Lauch.started += instance.OnLauch;
-            @Lauch.performed += instance.OnLauch;
-            @Lauch.canceled += instance.OnLauch;
             @InteractObject.started += instance.OnInteractObject;
             @InteractObject.performed += instance.OnInteractObject;
             @InteractObject.canceled += instance.OnInteractObject;
+            @Release.started += instance.OnRelease;
+            @Release.performed += instance.OnRelease;
+            @Release.canceled += instance.OnRelease;
+            @Projectile.started += instance.OnProjectile;
+            @Projectile.performed += instance.OnProjectile;
+            @Projectile.canceled += instance.OnProjectile;
         }
 
         private void UnregisterCallbacks(IMovementActions instance)
@@ -431,12 +457,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @DropObject.started -= instance.OnDropObject;
             @DropObject.performed -= instance.OnDropObject;
             @DropObject.canceled -= instance.OnDropObject;
-            @Lauch.started -= instance.OnLauch;
-            @Lauch.performed -= instance.OnLauch;
-            @Lauch.canceled -= instance.OnLauch;
             @InteractObject.started -= instance.OnInteractObject;
             @InteractObject.performed -= instance.OnInteractObject;
             @InteractObject.canceled -= instance.OnInteractObject;
+            @Release.started -= instance.OnRelease;
+            @Release.performed -= instance.OnRelease;
+            @Release.canceled -= instance.OnRelease;
+            @Projectile.started -= instance.OnProjectile;
+            @Projectile.performed -= instance.OnProjectile;
+            @Projectile.canceled -= instance.OnProjectile;
         }
 
         public void RemoveCallbacks(IMovementActions instance)
@@ -509,8 +538,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         void OnLeave(InputAction.CallbackContext context);
         void OnCrounch(InputAction.CallbackContext context);
         void OnDropObject(InputAction.CallbackContext context);
-        void OnLauch(InputAction.CallbackContext context);
         void OnInteractObject(InputAction.CallbackContext context);
+        void OnRelease(InputAction.CallbackContext context);
+        void OnProjectile(InputAction.CallbackContext context);
     }
     public interface IActionsActions
     {

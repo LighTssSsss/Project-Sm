@@ -9,13 +9,14 @@ public class ObjectInteract : MonoBehaviour
    public bool tomo;
    public bool loTiene;
    public bool losuelta;
-    
+   public Rigidbody rigidObject;
 
     private void Awake()
     {
         GameObject handOb = GameObject.FindGameObjectWithTag("Hand");
 
         hand = handOb.GetComponent<Transform>();
+        rigidObject = GetComponent<Rigidbody>();
     }
 
     private void Update()

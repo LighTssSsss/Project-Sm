@@ -60,7 +60,16 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Lauch",
+                    "name": "InteractObject",
+                    "type": "Button",
+                    "id": "268ce99d-c3d7-4446-80d9-65fed54545f9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Release",
                     "type": "Button",
                     "id": "7a38e1b3-adcf-41cd-b38f-699cd6ea0483",
                     "expectedControlType": "Button",
@@ -69,9 +78,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "InteractObject",
+                    "name": "Projectile",
                     "type": "Button",
-                    "id": "268ce99d-c3d7-4446-80d9-65fed54545f9",
+                    "id": "a0ced7b2-c07e-4097-aa81-8632fe3cfd3f",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -229,7 +238,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Lauch",
+                    "action": "Release",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2ab02d9d-5f18-4a8b-8e2a-858fc9221733",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Projectile",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

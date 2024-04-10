@@ -4,7 +4,6 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem;
 using UnityEngine.TextCore.Text;
 
 public class MoveAndAnimatorController : MonoBehaviour
@@ -30,8 +29,8 @@ public class MoveAndAnimatorController : MonoBehaviour
     Vector3 currentRunMovement;
     Transform cameraObject;
 
-    bool isMovementPressed;
-    bool isRunPressed;
+    public bool isFallingg;
+    public bool isClimbing;
     bool isSprintTime;
     bool isSprint;
     bool isJump;
@@ -40,17 +39,18 @@ public class MoveAndAnimatorController : MonoBehaviour
     bool interactPush;
     bool dropObject;
     bool isLanding;
+    bool isMovementPressed;
+    bool isRunPressed;
+    bool isTrajectoryPressed;
 
 
     public bool playerInAction { get; private set; }
-    public bool isJumpAnimation = false;
-    public bool isFallingg;
-    public bool isClimbing;
+    public bool isJumpAnimation = false;  
     public bool isLeavePressed;
     public bool isCrouchPressed;
     public bool isInteractPressed;
     public bool isDropPressed;
-    public bool isLauchPressed;
+    public bool isReleasePressed;
     public bool playerControl = true;
     public bool isJumpPressed = false;
     public bool isJumping = false;
@@ -106,6 +106,22 @@ public class MoveAndAnimatorController : MonoBehaviour
     private MoveableObject moveObject;
     public AreaInteract areaInt;
     private HealthSystem healthSyst;
+
+
+    [Header("Trajectory")]
+    [SerializeField] private LineRenderer lineRenderer;
+    [SerializeField] private Transform releasePosition;
+    [SerializeField] private LayerMask collisionMask;
+
+
+    [Header("Display Controls")]
+    [SerializeField]
+    [Range(10, 100)]
+    private int linePoints = 25;
+    [SerializeField]
+    [Range(0.01f, 0.25f)]
+    private float timeBetweenPoint = 0.1f;
+    private float throwStrength = 10f;
 
     [Header("Variable references")]
     public bool pushObject;
@@ -170,13 +186,27 @@ public class MoveAndAnimatorController : MonoBehaviour
         playerInputs.Movement.DropObject.performed += OnDrop;
         playerInputs.Movement.DropObject.canceled += OnDrop;
 
-        playerInputs.Movement.Lauch.performed += OnLauch;
-        playerInputs.Movement.Lauch.performed -= OnLauch;
+        playerInputs.Movement.Release.performed += OnRelease;
+        playerInputs.Movement.Release.canceled += OnRelease;
+
+        playerInputs.Movement.Projectile.started += OnTrajectory;
+        playerInputs.Movement.Projectile.canceled += OnTrajectory;
+
 
         cameraObject = Camera.main.transform;
 
         isFallingg = false;
 
+        /*
+        int objectLayer = areaInt.objetInter.objects.layer;
+
+        for (int i = 0; i < 32; i++)
+        {
+            if (!Physics.GetIgnoreLayerCollision(objectLayer, i))
+            {
+                collisionMask |= 1 << i;
+            }
+        }*/
 
     }
 
@@ -232,6 +262,17 @@ public class MoveAndAnimatorController : MonoBehaviour
          {
              return;
          }*/
+
+        if(isTrajectoryPressed == true && areaInt.loToma == true)
+        {
+            DrawProjection();
+            Debug.Log("Aparece");
+        }
+
+        else
+        {
+            lineRenderer.enabled = false;
+        }
 
 
 
@@ -322,9 +363,14 @@ public class MoveAndAnimatorController : MonoBehaviour
         isDropPressed = context.ReadValueAsButton();
     }
 
-    void OnLauch(InputAction.CallbackContext context)
+    void OnRelease(InputAction.CallbackContext context)
     {
-        isLauchPressed = context.ReadValueAsButton();
+        isReleasePressed = context.ReadValueAsButton();
+    }
+
+    void OnTrajectory(InputAction.CallbackContext context)
+    {
+        isTrajectoryPressed = context.ReadValueAsButton();
     }
 
 
@@ -533,14 +579,17 @@ public class MoveAndAnimatorController : MonoBehaviour
             Debug.Log("Solto");
         }
 
-        if(isLauchPressed && areaInt.objetInter != null && areaInt.objetInter.loTiene == true )
+        if(isReleasePressed && areaInt.objetInter != null && areaInt.objetInter.loTiene == true )
         {
-            areaInt.objetInter.tomo = false;
+            /*areaInt.objetInter.tomo = false;
             areaInt.objetInter.losuelta = true;
             Debug.Log("Lanzo");
             areaInt.objetInter.objects.transform.SetParent(null);
             areaInt.objetInter.GetComponent<Rigidbody>().isKinematic = false;
-            areaInt.objetInter.GetComponent<Rigidbody>().AddForce(cam.transform.forward, ForceMode.Impulse);
+            areaInt.objetInter.GetComponent<Rigidbody>().AddForce(cam.transform.forward, ForceMode.Impulse);*/
+
+            ReleaseObject();
+            Debug.Log("Presiono");
 
         }
 
@@ -795,6 +844,63 @@ public class MoveAndAnimatorController : MonoBehaviour
     public void ResetRequiredRotation()
     {
         requiredRotation = transform.rotation;
+    }
+
+
+    private void DrawProjection()
+    {
+        lineRenderer.enabled = true;
+        lineRenderer.positionCount = Mathf.CeilToInt(linePoints / timeBetweenPoint) + 1;
+
+        Vector3 startPosition = releasePosition.position;
+        Vector3 startvelocity = throwStrength * cam.transform.forward; // añadir division object.mass
+        int i = 0;
+        lineRenderer.SetPosition(i, startPosition);
+
+        for(float time = 0; time < linePoints; time += timeBetweenPoint)
+        {
+            i++;
+            Vector3 point = startPosition + time * startvelocity;
+            point.y = startPosition.y + startvelocity.y * time + (Physics.gravity.y / 2f * time * time);
+
+            lineRenderer.SetPosition(i, point);
+
+            Vector3 lastPosition = lineRenderer.GetPosition(i - 1);
+
+            if(Physics.Raycast(lastPosition,(point - lastPosition).normalized, out RaycastHit hit, (point - lastPosition).magnitude, collisionMask))
+            {
+                lineRenderer.SetPosition(i, hit.point);
+                lineRenderer.positionCount = i + 1;
+                return;
+            }
+        }
+
+
+    }
+
+    private void ReleaseObject()
+    {
+        /*areaInt.objetInter.tomo = false;
+           areaInt.objetInter.losuelta = true;
+           Debug.Log("Lanzo");
+           areaInt.objetInter.objects.transform.SetParent(null);
+           areaInt.objetInter.GetComponent<Rigidbody>().isKinematic = false;
+           areaInt.objetInter.GetComponent<Rigidbody>().AddForce(cam.transform.forward, ForceMode.Impulse);*/
+        /*
+        Grenade.velocity = Vector3.zero;
+        Grenade.angularVelocity = Vector3.zero;
+        Grenade.isKinematic = false;
+        Grenade.freezeRotation = false;
+        Grenade.transform.SetParent(null, true);
+        Grenade.AddForce(Camera.transform.forward * ThrowStrength, ForceMode.Impulse);*/
+
+        Debug.Log("Lanza el objeto");
+        areaInt.objetInter.losuelta = true;
+        areaInt.objetInter.rigidObject.isKinematic = false;
+        areaInt.objetInter.rigidObject.freezeRotation = false;
+        areaInt.objetInter.objects.transform.SetParent(null);
+        areaInt.objetInter.rigidObject.angularVelocity = Vector3.zero;
+        areaInt.objetInter.rigidObject.AddForce(cam.transform.forward * throwStrength, ForceMode.Impulse);
     }
 
 
