@@ -8,8 +8,8 @@ using UnityEngine.TextCore.Text;
 
 public class MoveAndAnimatorController : MonoBehaviour
 {
-    PlayerInputs playerInputs;
     public CharacterController characterController;
+    PlayerInputs playerInputs;
     Animator animator;
 
     int isWalkingHash;
@@ -68,8 +68,7 @@ public class MoveAndAnimatorController : MonoBehaviour
 
    
     float initialJumpVelocity;
-    //public float maxJumpHeight = 1;
-    // public float maxJumpTime = 0.5f;
+    
    
    
     Vector3 initialPosition;
@@ -77,7 +76,7 @@ public class MoveAndAnimatorController : MonoBehaviour
     
 
 
-    [Header("Gravity Setting")]
+    [Header("Gravity Setting")] // Cambiar
     [SerializeField] private float gravity = -9.81f;
     [SerializeField] private float gravityMultiplier = 3.0f;
 
