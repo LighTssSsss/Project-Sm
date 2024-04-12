@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class FieldOfView : MonoBehaviour
 {
@@ -14,18 +15,21 @@ public class FieldOfView : MonoBehaviour
     public LayerMask obstructionMask;
 
     public bool canSeePlayer;
+    public bool estadoPersecusion;
+
+    [SerializeField] private NavMeshAgent agent;
+    [SerializeField] private Transform target;
+
     // Start is called before the first frame update
     void Start()
     {
         playerReft = GameObject.FindGameObjectWithTag("Player");
+        target = GameObject.FindWithTag("Player").transform;
         StartCoroutine(FOVRoutine());
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 
 
     private IEnumerator FOVRoutine()
@@ -63,23 +67,44 @@ public class FieldOfView : MonoBehaviour
                 if(!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstructionMask))
                 {
                     canSeePlayer = true;
+                    estadoPersecusion = true;
                 }
 
                 else
                 {
                     canSeePlayer = false;
+                    estadoPersecusion = false;
                 }
             }
 
             else
             {
                 canSeePlayer = false;
+                estadoPersecusion = false;
             }
         }
 
         else if (canSeePlayer)
         {
             canSeePlayer = false;
+            estadoPersecusion = false;
+        }
+    }
+
+
+    void Update()
+    {
+        if (estadoPersecusion == false)
+        {
+            return;
+        }
+
+        else
+        {
+            if(Vector3.Distance(transform.position,target.position ) < angle)
+            {
+                agent.SetDestination(target.position);
+            }
         }
     }
 }

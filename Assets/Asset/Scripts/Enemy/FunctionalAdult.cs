@@ -16,6 +16,7 @@ public class FunctionalAdult : MonoBehaviour,  IHears
         {
             Debug.LogWarning(name + "No tiene la IA agente");
         }
+       
     }
 
     public void RespondToSound(SoundChecker soundCheck)
