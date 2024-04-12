@@ -31,6 +31,16 @@ namespace GamePlay
             sound.soundType = SoundChecker.SoundType.Insteresting;
             SoundsCh.MakeSound(sound);
         }
+
+        private void OnDrawGizmos()
+        {
+             Gizmos.color = Color.red;
+
+            Gizmos.DrawWireSphere(transform.position,soundRange);
+
+        }
     }
+
+    
 }
 
