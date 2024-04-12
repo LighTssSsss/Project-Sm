@@ -20,6 +20,7 @@ public class FunctionalAdult : MonoBehaviour,  IHears
 
     public void RespondToSound(SoundChecker soundCheck)
     {
+        
         if(soundCheck.soundType == SoundChecker.SoundType.Insteresting)
         {
             MoveTo(soundCheck.pos);
@@ -30,8 +31,8 @@ public class FunctionalAdult : MonoBehaviour,  IHears
             Vector3 dir = (soundCheck.pos - transform.position).normalized;
             MoveTo(transform.position - (dir * 10f));
         }
-
-       // Debug.Log(name + " responde al sonido de "+ soundCheck.pos);
+        
+        Debug.Log(name + " responde al sonido de "+ soundCheck.pos);
     }
 
     private void MoveTo(Vector3 posi)
