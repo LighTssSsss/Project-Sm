@@ -824,6 +824,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         areaInt.objetInter.objects.transform.SetParent(null);
         areaInt.objetInter.rigidObject.angularVelocity = Vector3.zero;
         areaInt.objetInter.rigidObject.AddForce(cam.transform.forward * throwStrength, ForceMode.Impulse);
+        areaInt.objetInter.objectBroke.isRelease = true;
     }
 
 

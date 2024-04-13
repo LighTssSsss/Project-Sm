@@ -10,11 +10,12 @@ public class ObjectInteract : MonoBehaviour
    public bool loTiene;
    public bool losuelta;
    public Rigidbody rigidObject;
+    public ObjectBroke objectBroke;
 
     private void Awake()
     {
         GameObject handOb = GameObject.FindGameObjectWithTag("Hand");
-
+        objectBroke = GetComponent<ObjectBroke>();
         hand = handOb.GetComponent<Transform>();
         rigidObject = GetComponent<Rigidbody>();
     }
