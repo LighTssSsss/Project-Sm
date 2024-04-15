@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animationName: VaulJump
   barrierTag: Barrier
-  minimumHeight: 0.8
-  maximumHeight: 1.05
+  minimumHeight: 0.9
+  maximumHeight: 1.26
   lookAtObstacle: 1
   parkourActionDelay: 0
   allowTargetMatching: 1

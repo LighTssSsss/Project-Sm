@@ -27,12 +27,13 @@ public class MoveableObject : MonoBehaviour
 
         if(rigg != null && check.pushInteract == true && move.pushObject)
         {
-            Vector3 forceDirection = hit.gameObject.transform.position - transform.position;
+            Vector3 forceDirection = hit.transform.position - transform.position;
             forceDirection.y = 0;
             forceDirection.Normalize();
-            rigg.AddForceAtPosition(forceDirection * pushForce, transform.position, ForceMode.Impulse);
+            // rigg.AddForceAtPosition(forceDirection * pushForce, transform.position, ForceMode.Impulse);
+            rigg.AddForce(forceDirection * pushForce, ForceMode.Impulse);
 
-           
+
         }
     }
 }

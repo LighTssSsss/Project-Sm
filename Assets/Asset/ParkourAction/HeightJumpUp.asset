@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animationName: Running Jump
   barrierTag: 
-  minimumHeight: 1
-  maximumHeight: 1.2
+  minimumHeight: 1.3
+  maximumHeight: 1.5
   lookAtObstacle: 1
   parkourActionDelay: -0.12
   allowTargetMatching: 1

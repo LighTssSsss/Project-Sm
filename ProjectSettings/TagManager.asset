@@ -14,6 +14,8 @@ TagManager:
   - Medicine
   - Enemy
   - Push
+  - Mecanismo
+  - MetaCine
   layers:
   - Default
   - TransparentFX
