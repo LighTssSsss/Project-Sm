@@ -8218,8 +8218,8 @@ GameObject:
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!65 &1537860332
 BoxCollider:
@@ -8301,8 +8301,8 @@ Transform:
   m_GameObject: {fileID: 1537860331}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -19.97, y: 1.37, z: 0.42}
-  m_LocalScale: {x: 1.0151699, y: 2.5635, z: 0.7788}
+  m_LocalPosition: {x: -20.1212, y: 1.37, z: 0.42}
+  m_LocalScale: {x: 1.3175889, y: 2.5635, z: 0.7788}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -9514,8 +9514,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8462c12f3573051488577620ccee72bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 7
-  angle: 72
+  radius: 6.02
+  angle: 115
   playerReft: {fileID: 0}
   targetMask:
     serializedVersion: 2
@@ -9744,8 +9744,8 @@ GameObject:
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!65 &1918384970
 BoxCollider:
@@ -9827,8 +9827,8 @@ Transform:
   m_GameObject: {fileID: 1918384969}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -22.2924, y: 1.37, z: 0.42}
-  m_LocalScale: {x: 1.0151699, y: 2.5635, z: 0.7788}
+  m_LocalPosition: {x: -22.7347, y: 1.37, z: 0.42}
+  m_LocalScale: {x: 1.8998904, y: 2.5635, z: 0.7788}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
