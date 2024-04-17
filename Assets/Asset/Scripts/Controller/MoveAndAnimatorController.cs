@@ -9,6 +9,8 @@ using UnityEngine.TextCore.Text;
 public partial class MoveAndAnimatorController : MonoBehaviour
 {
     public CharacterController characterController;
+    public Collider sphereHead;
+    public CollisionHead colisionHead;
     PlayerInputs playerInputs;
     Animator animator;
 
@@ -42,6 +44,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
     bool isMovementPressed;
     bool isRunPressed;
     bool isTrajectoryPressed;
+    bool isActionPushin;
 
 
     public bool playerInAction { get; private set; }
@@ -150,6 +153,8 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         climb = GetComponent<ClimbingSystem>();
         moveObject = GetComponent<MoveableObject>();
         healthSyst = GetComponent<HealthSystem>();
+        
+
 
         isWalkingHash = Animator.StringToHash("isWalking");
         isRunnigHash = Animator.StringToHash("isRunning");
@@ -167,6 +172,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         cameraObject = Camera.main.transform;
 
         isFallingg = false;
+        sphereHead.enabled = false;
 
         /*
         int objectLayer = areaInt.objetInter.objects.layer;
@@ -309,7 +315,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
           {
               isJumping = false;
           }*/
-        if (!isJumping && characterController.isGrounded && isJumpPressed && canJump && checks.obstacleCollision == false && isClimbing == false)
+        if (!isJumping && characterController.isGrounded && isJumpPressed && canJump && checks.obstacleCollision == false && isClimbing == false && isActionPushin == false)
         {
             animator.SetBool(isJumpingHash, true);
             isJumpAnimation = true;
@@ -430,16 +436,28 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         if (isCrouchPressed)
         {
             animator.SetBool(isCrouchHash, true);
+            characterController.center = new Vector3(0, 0.58f, 0);
+            characterController.radius = 0.1846104f;
+            characterController.height = 1.043544f;
+
             Debug.Log("agachate");
+            sphereHead.enabled = true;
         }
 
-        else
+         else
         {
+            if(colisionHead.obstaculoencima == false)
+
             animator.SetBool(isCrouchHash, false);
             Debug.Log("parate");
+            
+            characterController.center = new Vector3(0, 0.84f, 0);
+            characterController.radius = 0.1846104f;
+            characterController.height = 1.61f;
+            sphereHead.enabled = false;
         }
 
-        if (isCrouchPressed && isMovementPressed && !isCrouchMovement)
+        if (isCrouchPressed && isMovementPressed && !isCrouchMovement || isMovementPressed && colisionHead.obstaculoencima == true)
         {
             animator.SetBool(isMoveCrouchHash, true);
 
@@ -457,13 +475,14 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         if (isInteractPressed && checks.pushInteract)
         {
             animator.SetBool(isPushHash, true);
-            playerInAction = true;
+            //playerInAction = true;
+            isActionPushin = true;
 
             if (isMovementPressed)
             {
                 animator.SetBool(isPushMoveHash, true);
                 pushObject = true;
-
+               // isActionPushin = true;
 
             }
 
@@ -471,6 +490,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             {
                 animator.SetBool(isPushMoveHash, false);
                 pushObject = false;
+               // isActionPushin = false;
             }
 
         }
@@ -483,6 +503,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             animator.SetBool(isPushMoveHash, false);
             pushObject = false;
             playerInAction = false;
+            isActionPushin = false;
         }
 
         if (isInteractPressed && areaInt != null && checks.pushInteract == false && areaInt.puedoTomarlo == true  && areaInt.objetInter.loTiene == false)
@@ -842,6 +863,9 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             rigg.AddForceAtPosition(forceDirection * pushForce, transform.position, ForceMode.Impulse);
         }
     }
+
+
+    
 
 
 

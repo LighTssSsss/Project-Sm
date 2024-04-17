@@ -7,11 +7,14 @@ public class MoveableObject : MonoBehaviour
     public float pushForce;
     private CheckerEnviroment check;
     public MoveAndAnimatorController move;
+    [SerializeField] Vector3 pushdir;
+    [SerializeField] private CharacterController ch;
 
     private void Awake()
     {
         check = GetComponent<CheckerEnviroment>();
         move = GetComponent<MoveAndAnimatorController>();
+        ch = GetComponent<CharacterController>();
     }
 
 
@@ -23,9 +26,9 @@ public class MoveableObject : MonoBehaviour
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        Rigidbody rigg = hit.collider.attachedRigidbody;
+        Rigidbody body = hit.collider.attachedRigidbody;
 
-        if(rigg != null && check.pushInteract == true && move.pushObject)
+      /*  if(body != null && check.pushInteract == true && move.pushObject)
         {
             Vector3 forceDirection = hit.transform.position - transform.position;
             forceDirection.y = 0;
@@ -34,6 +37,27 @@ public class MoveableObject : MonoBehaviour
             rigg.AddForce(forceDirection * pushForce, ForceMode.Impulse);
 
 
+        }*/
+
+        if(body == null || body.isKinematic)
+        {
+            return;
         }
+
+        if(hit.moveDirection.y < -0.3f)
+        {
+            return;
+        }
+
+        if(check.pushInteract == true && move.pushObject)
+        {
+            pushdir = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
+            //body.velocity = pushDir * pushPower;
+            Vector3 collisionPoint = hit.point;
+
+            body.AddForceAtPosition(pushdir * pushForce, collisionPoint, ForceMode.Impulse);
+        }
+
+       
     }
 }

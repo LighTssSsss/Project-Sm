@@ -9,7 +9,7 @@ using UnityEngine.AI; // Para usar el NavMesh Agente
 public class FunctionalAdult : MonoBehaviour,  IHears
 {
     [SerializeField] private NavMeshAgent agent = null;
-
+    public bool cambio;
     private void Awake()
     {
         if(!TryGetComponent(out agent))
@@ -19,12 +19,21 @@ public class FunctionalAdult : MonoBehaviour,  IHears
        
     }
 
+    private void Update()
+    {
+        if (cambio)
+        {
+            StartCoroutine(Vuelve());
+        }
+    }
+
     public void RespondToSound(SoundChecker soundCheck)
     {
         
         if(soundCheck.soundType == SoundChecker.SoundType.Insteresting)
         {
             MoveTo(soundCheck.pos);
+            cambio = true;
         }
 
         else if(soundCheck.soundType == SoundChecker.SoundType.RespondPlayer)
@@ -40,5 +49,13 @@ public class FunctionalAdult : MonoBehaviour,  IHears
     {
         agent.SetDestination(posi);
        // agent.isStopped = false;
+    }
+
+
+
+    IEnumerator Vuelve()
+    {
+        yield return new WaitForSeconds(5f);
+        cambio = false;
     }
 }
