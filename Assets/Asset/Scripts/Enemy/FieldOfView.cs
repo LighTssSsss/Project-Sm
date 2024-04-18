@@ -67,27 +67,32 @@ public class FieldOfView : MonoBehaviour
                 if(!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstructionMask))
                 {
                     canSeePlayer = true;
+                    agent.speed = 5f;
                     estadoPersecusion = true;
                 }
 
                 else
                 {
-                    canSeePlayer = false;
-                    estadoPersecusion = false;
+                    StartCoroutine(LostObjectTime());
+                   // canSeePlayer = false;
+                   // estadoPersecusion = false;
                 }
             }
 
             else
             {
-                canSeePlayer = false;
-                estadoPersecusion = false;
+                //canSeePlayer = false;
+                StartCoroutine(LostObjectTime());
+                //estadoPersecusion = false;
             }
         }
 
         else if (canSeePlayer)
         {
-            canSeePlayer = false;
-            estadoPersecusion = false;
+            //canSeePlayer = false;
+            StartCoroutine(LostObjectTime());
+            agent.speed = 3.5f;
+            //estadoPersecusion = false;
         }
     }
 
@@ -99,6 +104,11 @@ public class FieldOfView : MonoBehaviour
             return;
         }
 
+        if(target == null)
+        {
+            return;
+        }
+
         else
         {
             if(Vector3.Distance(transform.position,target.position ) < angle)
@@ -106,5 +116,12 @@ public class FieldOfView : MonoBehaviour
                 agent.SetDestination(target.position);
             }
         }
+    }
+
+    IEnumerator LostObjectTime()
+    {
+        yield return new WaitForSeconds(5);
+        canSeePlayer = false;
+        estadoPersecusion = false;
     }
 }

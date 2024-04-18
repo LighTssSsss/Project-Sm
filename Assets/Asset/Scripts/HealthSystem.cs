@@ -7,6 +7,14 @@ public class HealthSystem : MonoBehaviour
     public float health;
     public bool recupera;
 
+    private void Update()
+    {
+        if(health <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
     public void SetRecoverHealth(float recover)
     {
         if(health < 85f)
