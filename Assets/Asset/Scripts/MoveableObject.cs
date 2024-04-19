@@ -7,6 +7,7 @@ public class MoveableObject : MonoBehaviour
     public float pushForce;
     private CheckerEnviroment check;
     public MoveAndAnimatorController move;
+    [SerializeField] private AreaInteract areint;
     [SerializeField] Vector3 pushdir;
     [SerializeField] private CharacterController ch;
 
@@ -49,7 +50,7 @@ public class MoveableObject : MonoBehaviour
             return;
         }
 
-        if(check.pushInteract == true && move.pushObject)
+        if(check.pushInteract == true && move.pushObject && areint.loToma == false)
         {
             pushdir = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
             //body.velocity = pushDir * pushPower;

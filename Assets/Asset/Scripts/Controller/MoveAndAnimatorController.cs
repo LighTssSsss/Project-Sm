@@ -465,7 +465,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         }
 
 
-        if (isInteractPressed && checks.pushInteract)
+        if (isInteractPressed && checks.pushInteract && areaInt.loToma == false)
         {
             animator.SetBool(isPushHash, true);
             //playerInAction = true;
@@ -516,7 +516,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             //Debug.Log("Solto");
         }
 
-        if(isReleasePressed && areaInt.objetInter != null && areaInt.objetInter.loTiene == true )
+        if(isReleasePressed && areaInt.objetInter != null && areaInt.objetInter.loTiene == true)
         {
             /*areaInt.objetInter.tomo = false;
             areaInt.objetInter.losuelta = true;
