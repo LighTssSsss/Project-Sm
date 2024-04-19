@@ -46,7 +46,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
     bool isTrajectoryPressed;
     bool isActionPushin;
 
-
+    public bool inParkour;
     public bool playerInAction { get; private set; }
     public bool isJumpAnimation = false;  
     public bool isLeavePressed;
@@ -130,7 +130,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
     public Camera cam;
     public float forceLauch;
 
-    // private MoveAndAnimatorController movement;
+   
 
     private void OnEnable()
     {
@@ -204,7 +204,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         }
 
 
-        if (isRunPressed)
+        if (isRunPressed && checks.pushInteract == false)
         {
             characterController.Move(currentRunMovement * Time.deltaTime);
 
@@ -217,11 +217,15 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
         if (isSprint)
         {
-            //currentRunMovement = currentMovement * runMultiplier * multiplierSprint;
+            
             currentRunMovement *= multiplierSprint;
         }
 
-        characterController.Move(currentMovement * Time.deltaTime);
+        if (!playerInAction)
+        {
+            characterController.Move(currentMovement * Time.deltaTime);
+        }
+        
 
         Vector3 cameraForward = cameraObject.forward;
         cameraForward.y = 0;
@@ -236,15 +240,11 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
         currentRunMovement = currentMovement * runMultiplier;
 
-        /* if (!playerControl)
-         {
-             return;
-         }*/
-
+      
         if(isTrajectoryPressed == true && areaInt.loToma == true)
         {
             DrawProjection();
-            Debug.Log("Aparece");
+           // Debug.Log("Aparece");
         }
 
         else
@@ -306,15 +306,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
     private void HandleJump()
     {
-        /*  if (!isJumping && characterController.isGrounded && isJumpPressed)
-          {
-              velocityG += jumpPower;
-
-          }
-          else if(!isJumpPressed && isJumping && characterController.isGrounded)
-          {
-              isJumping = false;
-          }*/
+       
         if (!isJumping && characterController.isGrounded && isJumpPressed && canJump && checks.obstacleCollision == false && isClimbing == false && isActionPushin == false)
         {
             animator.SetBool(isJumpingHash, true);
@@ -352,13 +344,14 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
     void HandleRotation()
     {
+
         Vector3 positionLookAt;
         positionLookAt.x = currentMovement.x;
         positionLookAt.y = 0.0f;
         positionLookAt.z = currentMovement.z;
         Quaternion currentRotation = transform.rotation;
 
-        if (isMovementPressed)
+        if (isMovementPressed && !inParkour)
         {
             Quaternion targetRotation = Quaternion.LookRotation(positionLookAt);
             transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, rotationFactorPerFrame * Time.deltaTime);
@@ -440,7 +433,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             characterController.radius = 0.1846104f;
             characterController.height = 1.043544f;
 
-            Debug.Log("agachate");
+         
             sphereHead.enabled = true;
         }
 
@@ -449,7 +442,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             if(colisionHead.obstaculoencima == false)
 
             animator.SetBool(isCrouchHash, false);
-            Debug.Log("parate");
+        
             
             characterController.center = new Vector3(0, 0.84f, 0);
             characterController.radius = 0.1846104f;
@@ -461,14 +454,14 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         {
             animator.SetBool(isMoveCrouchHash, true);
 
-            Debug.Log("agachate y muevete");
+           
 
         }
 
         else if (isCrouchPressed && !isMovementPressed)
         {
             animator.SetBool(isMoveCrouchHash, false);
-            Debug.Log("dejalo");
+          
         }
 
 
@@ -511,7 +504,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             // Animacion de tomar
             areaInt.objetInter.tomo = true;
             areaInt.loToma = true;
-            Debug.Log("Lo tomo");
+           // Debug.Log("Lo tomo");
         }
 
         if(isDropPressed && areaInt.objetInter != null &&  areaInt.objetInter.loTiene == true )
@@ -520,7 +513,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             areaInt.objetInter.losuelta = true;
             areaInt.loToma = false;
            // areaInt.objetInter = null;
-            Debug.Log("Solto");
+            //Debug.Log("Solto");
         }
 
         if(isReleasePressed && areaInt.objetInter != null && areaInt.objetInter.loTiene == true )
@@ -533,7 +526,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             areaInt.objetInter.GetComponent<Rigidbody>().AddForce(cam.transform.forward, ForceMode.Impulse);*/
 
             ReleaseObject();
-            Debug.Log("Presiono");
+           //Debug.Log("Presiono");
 
         }
 
@@ -542,7 +535,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             // Animacion de tomar
             healthSyst.recupera = true;
             areaInt.puedTomarMedicina = false;
-            Debug.Log("Tomo Medicina");
+           // Debug.Log("Tomo Medicina");
         }
 
 
@@ -626,7 +619,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         if(isLanding && characterController.isGrounded)
         {
             animator.SetBool(isLandingHash, true);
-            Debug.Log("animacion suelo");
+            //Debug.Log("animacion suelo");
         }
 
         else

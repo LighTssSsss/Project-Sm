@@ -93,7 +93,7 @@ public class ClimbingSystem : MonoBehaviour
     IEnumerator PerformParkourAction(NewParkour action)
     {
         
-        //playerInAction = true;
+        movement.inParkour = true;
         character.enabled = false;
         character.detectCollisions = false;
         animator.applyRootMotion = true;
@@ -115,6 +115,7 @@ public class ClimbingSystem : MonoBehaviour
         yield return movement.PerformAction(action.AnimationName, compareTargetParameter, action.requiredRotation, action.LookAtObstacle, action.ParkourActionDelay);
 
         character.enabled = true;
+        movement.inParkour = false;
         character.detectCollisions = true;
         animator.applyRootMotion = false;
 
