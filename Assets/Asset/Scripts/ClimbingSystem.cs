@@ -65,7 +65,7 @@ public class ClimbingSystem : MonoBehaviour
 
       
         
-        if (movement.isJumpPressed && !movement.playerInAction && check.obstacleCollision == true && !movement.playerHaging)
+        if (movement.isJumpPressed && !movement.playerInAction && check.obstacleCollision == true && !movement.playerHaging && !movement.inParkour)
         {
                              
             ObstacleInfo hitData = check.CheckObstacle();
