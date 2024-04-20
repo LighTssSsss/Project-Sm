@@ -231,11 +231,10 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         cameraForward.y = 0;
         cameraForward.Normalize();
 
-        if (!playerInAction)
-        {
+        
             currentMovement = cameraForward * currentMovementInput.y + cameraObject.right * currentMovementInput.x;
             currentMovement.Normalize();
-        }
+        
 
 
         currentRunMovement = currentMovement * runMultiplier;
