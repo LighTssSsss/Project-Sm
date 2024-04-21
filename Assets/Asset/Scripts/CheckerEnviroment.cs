@@ -14,11 +14,13 @@ public class CheckerEnviroment : MonoBehaviour
     public LayerMask obstacleLayer;
     public float heightRayDistance;
     public float rayLength = 5f;
-   
+    public float rayLengthX = 1f;
+
     [Header("Climbing Check")]
     [SerializeField] private float climbingRayLength = 1.6f;
     [SerializeField] private LayerMask climbingLayer;
     public int numberOfRays = 12;
+    public bool notJumpAction;
 
     [Header("Touch or not object")]
     public bool obstacleCollision;
@@ -137,36 +139,75 @@ public class CheckerEnviroment : MonoBehaviour
     public void CheckInteract()
     {
         Vector3 rayOrigin = transform.position ;
+       
         RaycastHit hit ;
 
         if (Physics.Raycast(rayOrigin, transform.forward, out hit, rayLength, LayerMask.GetMask("InteractPush")))
         {
-            Debug.Log(" Se acerco, ahora lo puede empujar");
+          //  Debug.Log(" Se acerco, ahora lo puede empujar");
             pushInteract = true;
            
         }
         else
         {
-            Debug.Log("Se alejo, ya no lo puede empujar");
+            //Debug.Log("Se alejo, ya no lo puede empujar");
             pushInteract = false;
         }
 
-      /*  if(Physics.Raycast(rayOrigin, transform.forward, out hit, rayLength, LayerMask.GetMask("InteractObject")) && objectInHand == false)
+        if (Physics.Raycast(rayOrigin, transform.forward, out hit, rayLength, LayerMask.GetMask("Walls")))
         {
-            objectInteract = true;
-            interact = hit.collider.GetComponent<ObjectInteract>();
-            Debug.Log(" Se acerco, ahora lo puede tomar");
+           
+            notJumpAction = true;
+            Debug.Log("Hay Pared");
+
+        }
+
+        else if (Physics.Raycast(rayOrigin, Vector3.right, out hit, rayLengthX, LayerMask.GetMask("Walls")))
+        {
+
+            notJumpAction = true;
+            Debug.Log("Hay Pared");
+
+        }
+
+        else if (Physics.Raycast(rayOrigin, Vector3.left, out hit, rayLengthX, LayerMask.GetMask("Walls")))
+        {
+
+            notJumpAction = true;
+            Debug.Log("Hay Pared");
+
         }
 
         else
         {
-            interact = null;
-            Debug.Log(" Se alejo, ya no lo puede tomar");
-        }*/
+            notJumpAction = false;
+            Debug.Log("No hay Pared");
+        }
+
+        
 
 
 
-            Debug.DrawRay(rayOrigin, transform.forward * rayLength, (hit.collider != null) ? Color.yellow : Color.red);
+        /*  if(Physics.Raycast(rayOrigin, transform.forward, out hit, rayLength, LayerMask.GetMask("InteractObject")) && objectInHand == false)
+          {
+              objectInteract = true;
+              interact = hit.collider.GetComponent<ObjectInteract>();
+              Debug.Log(" Se acerco, ahora lo puede tomar");
+          }
+
+          else
+          {
+              interact = null;
+              Debug.Log(" Se alejo, ya no lo puede tomar");
+          }*/
+
+
+
+        Debug.DrawRay(rayOrigin, transform.forward * rayLength, (hit.collider != null) ? Color.yellow : Color.red);
+
+        Debug.DrawRay(rayOrigin, Vector3.right * rayLengthX, (hit.collider != null) ? Color.yellow : Color.red);
+
+        Debug.DrawRay(rayOrigin, Vector3.left * rayLengthX, (hit.collider != null) ? Color.yellow : Color.red);
     }
 
 }

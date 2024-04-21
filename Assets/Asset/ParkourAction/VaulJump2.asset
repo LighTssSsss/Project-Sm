@@ -16,9 +16,9 @@ MonoBehaviour:
   barrierTag: Barrier2
   minimumHeight: 0.9
   maximumHeight: 0.97
-  lookAtObstacle: 1
+  lookAtObstacle: 0
   parkourActionDelay: 0
-  allowTargetMatching: 0
+  allowTargetMatching: 1
   comparedBodyPart: 4
   compareStartTime: 0.35
   compareEndTime: 0.55

@@ -16,7 +16,7 @@ public class NewParkour : ScriptableObject
 
 
     [Header("Rotating Player towards Obstacles")]
-    [SerializeField] private bool lookAtObstacle;
+    [SerializeField] private bool lookAtObstacle = false;
     [SerializeField] private float parkourActionDelay;
     public Quaternion requiredRotation { get; set; }
 
@@ -34,7 +34,13 @@ public class NewParkour : ScriptableObject
 
     public bool CheckIfAvaible(ObstacleInfo hitData, Transform player)
     {
-        if(!string.IsNullOrEmpty(barrierTag) && hitData.hitInfo.transform.tag != barrierTag)
+
+        if (allowTargetMatching)
+        {
+            comparePosition = hitData.heightInfo.point; //Saltara un poco lejos del borde
+        }
+
+        if (!string.IsNullOrEmpty(barrierTag) && hitData.hitInfo.transform.tag != barrierTag)
         {
             return false;
         }
@@ -48,16 +54,17 @@ public class NewParkour : ScriptableObject
             return false;
         }
 
-        if (lookAtObstacle)
+        if (lookAtObstacle == true)
         {
             requiredRotation = Quaternion.LookRotation(-hitData.hitInfo.normal);
+            //Vector3 forwardDirection = new Vector3(0.1f, 0, 1).normalized;
+            //requiredRotation = Quaternion.LookRotation(forwardDirection);
         }
 
+       
 
-        if (allowTargetMatching)
-        {
-            comparePosition = hitData.heightInfo.point; //Saltara un poco lejos del borde
-        }
+
+        
 
         return true;
     }

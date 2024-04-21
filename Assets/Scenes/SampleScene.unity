@@ -3242,11 +3242,13 @@ MonoBehaviour:
     m_Bits: 512
   heightRayDistance: 0
   rayLength: 0.6
+  rayLengthX: 0.7
   climbingRayLength: 1.6
   climbingLayer:
     serializedVersion: 2
     m_Bits: 1024
   numberOfRays: 12
+  notJumpAction: 0
   obstacleCollision: 0
   pushInteract: 0
   objectInteract: 0
@@ -3996,8 +3998,8 @@ BoxCollider:
   m_ProvidesContacts: 1
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 1, z: 1.1640704}
+  m_Center: {x: -7.189083e-18, y: 0, z: -0.08203587}
 --- !u!23 &443933875
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -11118,7 +11120,7 @@ GameObject:
   - component: {fileID: 1629704649}
   - component: {fileID: 1629704648}
   - component: {fileID: 1629704647}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13902,7 +13904,7 @@ GameObject:
   - component: {fileID: 1978319903}
   - component: {fileID: 1978319902}
   - component: {fileID: 1978319901}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15089,7 +15091,7 @@ GameObject:
   - component: {fileID: 2100298124}
   - component: {fileID: 2100298123}
   - component: {fileID: 2100298122}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

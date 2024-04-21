@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
+using UnityEngine.InputSystem;
 
 public class ClimbingSystem : MonoBehaviour
 {
@@ -65,10 +66,15 @@ public class ClimbingSystem : MonoBehaviour
 
       
         
-        if (movement.isJumpPressed && !movement.playerInAction && check.obstacleCollision == true && !movement.playerHaging && !movement.inParkour)
+        if (movement.isJumpPressed && !movement.playerInAction && check.obstacleCollision == true && !movement.playerHaging && !movement.inParkour && check.notJumpAction == false)
         {
+
+            //Solo hacia adelante
+            //transform.rotation = Quaternion.LookRotation(Vector3.forward);
                              
             ObstacleInfo hitData = check.CheckObstacle();
+
+       
             foreach (NewParkour action in newParkours)
                 {
                
@@ -92,7 +98,7 @@ public class ClimbingSystem : MonoBehaviour
 
     IEnumerator PerformParkourAction(NewParkour action)
     {
-        
+       // Quaternion forwardRotation = Quaternion.LookRotation(Vector3.forward);
         movement.inParkour = true;
         character.enabled = false;
         character.detectCollisions = false;
@@ -112,7 +118,7 @@ public class ClimbingSystem : MonoBehaviour
             };
         }
 
-        yield return movement.PerformAction(action.AnimationName, compareTargetParameter, action.requiredRotation, action.LookAtObstacle, action.ParkourActionDelay);
+        yield return movement.PerformAction(action.AnimationName, compareTargetParameter, /*forwardRotation*/ action.requiredRotation, action.LookAtObstacle, action.ParkourActionDelay);
 
         character.enabled = true;
         movement.inParkour = false;
