@@ -249,6 +249,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         else
         {
             lineRenderer.enabled = false;
+            Debug.Log("Lo Solto");
         }
 
 
@@ -527,6 +528,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             areaInt.objetInter.GetComponent<Rigidbody>().AddForce(cam.transform.forward, ForceMode.Impulse);*/
 
             ReleaseObject();
+            isTrajectoryPressed = false;
            //Debug.Log("Presiono");
 
         }
@@ -840,6 +842,8 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         areaInt.objetInter.rigidObject.angularVelocity = Vector3.zero;
         areaInt.objetInter.rigidObject.AddForce(cam.transform.forward * throwStrength, ForceMode.Impulse);
         areaInt.objetInter.objectBroke.isRelease = true;
+        areaInt.loToma = false;
+        areaInt.puedoTomarlo = false;
     }
 
 
