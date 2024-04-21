@@ -78,7 +78,7 @@ public class CheckerEnviroment : MonoBehaviour
             if (hitData.heightHitFound)
             {
                 heightRayDistance = Vector3.Distance(hitData.hitInfo.point, hitData.heightInfo.point);
-                Debug.Log("Distancia del segundo rayo: " + heightRayDistance);
+               // Debug.Log("Distancia del segundo rayo: " + heightRayDistance);
             }
 
         }

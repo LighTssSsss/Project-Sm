@@ -32,7 +32,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         playerInputs.Movement.InteractObject.performed += OnInteract;
         playerInputs.Movement.InteractObject.canceled += OnInteract;
 
-        playerInputs.Movement.DropObject.performed += OnDrop;
+        playerInputs.Movement.DropObject.started += OnDrop;
         playerInputs.Movement.DropObject.canceled += OnDrop;
 
         playerInputs.Movement.Release.performed += OnRelease;

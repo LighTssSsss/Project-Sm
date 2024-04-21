@@ -108,7 +108,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
     private MoveableObject moveObject;
     public AreaInteract areaInt;
     private HealthSystem healthSyst;
-
+  
 
     [Header("Trajectory")]
     [SerializeField] private LineRenderer lineRenderer;
@@ -204,7 +204,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         }
 
 
-        if (isRunPressed && checks.pushInteract == false)
+        if (isRunPressed && checks.pushInteract == false && inParkour == false)
         {
             characterController.Move(currentRunMovement * Time.deltaTime);
 
@@ -464,13 +464,13 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         }
 
 
-        if (isInteractPressed && checks.pushInteract && areaInt.loToma == false)
+        if (isInteractPressed && checks.pushInteract)
         {
             animator.SetBool(isPushHash, true);
             //playerInAction = true;
             isActionPushin = true;
 
-            if (isMovementPressed)
+            if (isMovementPressed && areaInt.loToma == false)
             {
                 animator.SetBool(isPushMoveHash, true);
                 pushObject = true;
@@ -503,6 +503,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             // Animacion de tomar
             areaInt.objetInter.tomo = true;
             areaInt.loToma = true;
+            moveObject.enabled = false;
            // Debug.Log("Lo tomo");
         }
 
@@ -511,6 +512,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             areaInt.objetInter.tomo = false;
             areaInt.objetInter.losuelta = true;
             areaInt.loToma = false;
+            moveObject.enabled = true;
            // areaInt.objetInter = null;
             //Debug.Log("Solto");
         }

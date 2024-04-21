@@ -28,6 +28,7 @@ public class ObjectInteract : MonoBehaviour
             objects.transform.position = hand.position;
             objects.GetComponent<Rigidbody>().isKinematic = true;
             loTiene = true;
+            
            
         }
 

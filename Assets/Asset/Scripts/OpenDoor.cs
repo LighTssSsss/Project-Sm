@@ -11,13 +11,14 @@ public class OpenDoor : MonoBehaviour
     {
         door.SetActive(true);
     }
-    private void OnCollisionEnter(Collision collision)
+  
+
+    private void OnTriggerEnter(Collider other)
     {
-        if(collision.gameObject.CompareTag("Push"))
+
+        if (other.gameObject.CompareTag("Push"))
         {
             door.SetActive(false);
         }
-
-        
     }
 }
