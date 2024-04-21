@@ -162,7 +162,7 @@ public class CheckerEnviroment : MonoBehaviour
 
         }
 
-        else if (Physics.Raycast(rayOrigin, Vector3.right, out hit, rayLengthX, LayerMask.GetMask("Walls")))
+        else if (Physics.Raycast(rayOrigin, transform.right, out hit, rayLengthX, LayerMask.GetMask("Walls")))
         {
 
             notJumpAction = true;
@@ -170,7 +170,7 @@ public class CheckerEnviroment : MonoBehaviour
 
         }
 
-        else if (Physics.Raycast(rayOrigin, Vector3.left, out hit, rayLengthX, LayerMask.GetMask("Walls")))
+        else if (Physics.Raycast(rayOrigin, -transform.right, out hit, rayLengthX, LayerMask.GetMask("Walls")))
         {
 
             notJumpAction = true;
@@ -205,9 +205,9 @@ public class CheckerEnviroment : MonoBehaviour
 
         Debug.DrawRay(rayOrigin, transform.forward * rayLength, (hit.collider != null) ? Color.yellow : Color.red);
 
-        Debug.DrawRay(rayOrigin, Vector3.right * rayLengthX, (hit.collider != null) ? Color.yellow : Color.red);
+        Debug.DrawRay(rayOrigin, transform.right * rayLengthX, (hit.collider != null) ? Color.yellow : Color.red);
 
-        Debug.DrawRay(rayOrigin, Vector3.left * rayLengthX, (hit.collider != null) ? Color.yellow : Color.red);
+        Debug.DrawRay(rayOrigin, -transform.right * rayLengthX, (hit.collider != null) ? Color.yellow : Color.red);
     }
 
 }
