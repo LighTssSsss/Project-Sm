@@ -9,6 +9,7 @@ using UnityEngine.AI; // Para usar el NavMesh Agente
 public class FunctionalAdult : MonoBehaviour,  IHears
 {
     [SerializeField] private NavMeshAgent agent = null;
+    [SerializeField] private FieldOfView field;
     public bool cambio;
     private void Awake()
     {
@@ -17,6 +18,7 @@ public class FunctionalAdult : MonoBehaviour,  IHears
             Debug.LogWarning(name + "No tiene la IA agente");
         }
        
+        field = GetComponent<FieldOfView>();
     }
 
     private void Update()
@@ -30,7 +32,7 @@ public class FunctionalAdult : MonoBehaviour,  IHears
     public void RespondToSound(SoundChecker soundCheck)
     {
         
-        if(soundCheck.soundType == SoundChecker.SoundType.Insteresting)
+        if(soundCheck.soundType == SoundChecker.SoundType.Insteresting && field.canSeePlayer == false)
         {
             MoveTo(soundCheck.pos);
             cambio = true;

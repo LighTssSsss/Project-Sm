@@ -8,7 +8,10 @@ public class AreaInteract : MonoBehaviour
    public bool puedTomarMedicina;
    public ObjectInteract objetInter;
    public bool loToma;
-   
+  
+
+    
+
 
     private void OnTriggerEnter(Collider other)
     {

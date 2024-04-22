@@ -49,15 +49,21 @@ public class MoveableObject : MonoBehaviour
         {
             return;
         }
-
-        if(check.pushInteract == true && move.pushObject && areint.loToma == false)
+        
+        
+        if (check.pushInteract == true && move.pushObject && areint.loToma == false)
         {
+           
             pushdir = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
             //body.velocity = pushDir * pushPower;
             Vector3 collisionPoint = hit.point;
-
+            
             body.AddForceAtPosition(pushdir * pushForce, collisionPoint, ForceMode.Impulse);
         }
+
+        
+
+        
 
        
     }

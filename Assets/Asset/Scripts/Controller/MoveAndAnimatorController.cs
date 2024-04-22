@@ -114,7 +114,8 @@ public partial class MoveAndAnimatorController : MonoBehaviour
     [SerializeField] private LineRenderer lineRenderer;
     [SerializeField] private Transform releasePosition;
     [SerializeField] private LayerMask collisionMask;
-
+    [SerializeField] private int lineSegmentCount = 20;
+    private List<Vector3> linePoint = new List<Vector3>();
 
     [Header("Display Controls")]
     [SerializeField]
@@ -130,7 +131,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
     public Camera cam;
     public float forceLauch;
 
-   
+  
 
     private void OnEnable()
     {
@@ -174,8 +175,8 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         isFallingg = false;
         sphereHead.enabled = false;
 
-        /*
-        int objectLayer = areaInt.objetInter.objects.layer;
+
+       /* int objectLayer = areaInt.objetInter.rigidObject.gameObject.layer;
 
         for (int i = 0; i < 32; i++)
         {
@@ -184,13 +185,14 @@ public partial class MoveAndAnimatorController : MonoBehaviour
                 collisionMask |= 1 << i;
             }
         }*/
-
     }
 
   
 
     void Update()
     {
+        
+
 
         if (!playerControl)
         {
@@ -465,7 +467,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         }
 
 
-        if (isInteractPressed && checks.pushInteract)
+        if (isInteractPressed && checks.pushInteract && areaInt.loToma == false)
         {
             animator.SetBool(isPushHash, true);
             //playerInAction = true;
@@ -817,6 +819,8 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
 
     }
+
+    
 
     private void ReleaseObject()
     {
