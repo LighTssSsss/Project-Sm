@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.XR;
 using UnityEngine.TextCore.Text;
 
 public partial class MoveAndAnimatorController : MonoBehaviour
@@ -12,6 +13,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
     public CollisionHead colisionHead;
     PlayerInputs playerInputs;
     public Animator animator;
+    public float speed;
 
     int isWalkingHash;
     int isRunnigHash;
@@ -81,16 +83,15 @@ public partial class MoveAndAnimatorController : MonoBehaviour
     [Header("Gravity Setting")] // Cambiar
     [SerializeField] private float gravity = -9.81f;
     [SerializeField] private float gravityMultiplier = 3.0f;
-   
+    [SerializeField] private float maxFallGravity = -10;
 
-    
 
     [Header("Jump")]
     [SerializeField] private float jumpPower;
     [SerializeField] private float jumpCooldown;
-    private float velocityG;
-    public float timeInAir;
-    public float minTimeInAirForFall;
+     private float velocityG;
+    //public float timeInAir;
+    //public float minTimeInAirForFall;
     public float landingAnimationDuration;
     public bool canJump = true;
 
@@ -176,7 +177,12 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
     void Update()
     {
-        
+        // Ver lo del sato gravedad, arreglar hit distancia y por ultimo lo de la caja
+
+        /*float x = Input.GetAxis("Horizontal");
+        float z = Input.GetAxis("Vertical");
+        */
+
         if (!playerControl)
         {
             return;
@@ -192,12 +198,14 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         if (isRunPressed && checks.pushInteract == false && inParkour == false && moveObject.push == false && isCrouchPressed == false && colisionHead.obstaculoencima == false)
         {
             characterController.Move(currentRunMovement * Time.deltaTime);
-
+            
         }
 
         else
         {
-            characterController.Move(currentMovement * Time.deltaTime);
+            characterController.Move(currentMovement * Time.deltaTime); 
+
+            //physicalM.Move(new Vector3(x * speed, 0, z * speed) * Time.deltaTime );
         }
 
         if (isSprint)
@@ -206,6 +214,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             currentRunMovement *= multiplierSprint;
         }
 
+        
         if (!playerInAction)
         {
             characterController.Move(currentMovement * Time.deltaTime);
@@ -248,17 +257,18 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
 
 
-
+        Debug.Log(velocityG);
     }
 
    
     private void Gravity()
     {
+
         bool isFalling = currentMovement.y <= 0.0F;  //ORIGINAl
-        float fallMultiplier = 2.0f;
+        
         if (characterController.isGrounded && velocityG < 0.0f)
         {
-            velocityG = -1.0f;
+            //velocityG = -1.0f;
             isClimbing = false;
             if (isJumpAnimation)
             {
@@ -270,40 +280,71 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
         else if (isFalling)
         {
-            velocityG += gravity * fallMultiplier * Time.deltaTime;
+            
+              velocityG += gravity * gravityMultiplier * Time.deltaTime;
+            
+
+            
         }
 
         else
         {
-            velocityG += gravity * Time.deltaTime;
+            velocityG += gravity * gravityMultiplier * Time.deltaTime;
         }
 
+        if(velocityG <= -10f)
+        {
+            velocityG = - 9.8f;
+        }
+
+
+
         Vector3 gravityVector = new Vector3(0, velocityG, 0);
+
         characterController.Move(gravityVector * Time.deltaTime);
+
     }
 
 
     private void HandleJump()
     {
        
-        if (!isJumping && characterController.isGrounded && isJumpPressed && canJump && checks.obstacleCollision == false && isClimbing == false && isActionPushin == false && isCrouchPressed == false && colisionHead.obstaculoencima == false)
+        if (!isJumping && isJumpPressed && canJump && checks.obstacleCollision == false && isClimbing == false && isActionPushin == false && isCrouchPressed == false && colisionHead.obstaculoencima == false)
         {
-            animator.SetBool(isJumpingHash, true);
+            
             isJumpAnimation = true;
-            velocityG = jumpPower;
-           // physicalM.velocity.y = jumpPower;
+            //physicalM.Jump(jumpPower);
+            velocityG = jumpPower;        
             StartCoroutine(WaitJump(jumpCooldown));
             isJumping = true;
             canJump = false;
 
+            
+
         }
 
-        else if (isJumping && !isJumpPressed && characterController.isGrounded)
+        else if (isJumping && !isJumpPressed || isJumpPressed && !characterController.isGrounded)
         {
             isJumping = false; // El jugador ya no está en el aire
-            animator.SetBool(isJumpingHash, false);
+            animator.SetBool(isJumpingHash, true);
+            //animator.SetBool(isJumpingHash, false);
             isJumpAnimation = false;
+            //canJump = true;
             checks.obstacleCollision = false;
+        }
+
+        else if(isJumping == false && characterController.isGrounded)
+        {
+            animator.SetBool(isJumpingHash, false);
+            //canJump = true;
+            
+        }
+
+        else if (isJumping == false && characterController.isGrounded && !isMovementPressed && !isRunPressed) 
+        {
+            animator.SetBool(isJumpingHash, false);
+           
+            // physicalM.canJump = true;
         }
 
 
@@ -311,11 +352,14 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
     }
 
+ 
+
     private IEnumerator WaitJump(float delay)
     {
         yield return new WaitForSeconds(delay);
         animator.SetBool(isJumpingHash, false);
         canJump = true; // Habilitar el salto después del tiempo de espera
+       // physicalM.canJumps = true;
         isLanding = false;
 
     }
@@ -352,7 +396,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
 
 
-        if (isMovementPressed && !isWalking)
+        if (isMovementPressed && !isWalking && isFallingg == false)
         {
             animator.SetBool(isWalkingHash, true);
             timeSprint = 0;
@@ -366,7 +410,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
 
 
-        if (isMovementPressed && isRunPressed && !isRunning)
+        if (isMovementPressed && isRunPressed && !isRunning && isFallingg == false)
         {
             animator.SetBool(isRunnigHash, true);
 
@@ -380,7 +424,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         }
 
 
-        if (isMovementPressed && timeSprint >= 4 && !isSprinting)
+        if (isMovementPressed && timeSprint >= 4 && !isSprinting && isFallingg == false)
         {
             timeSprint = 4;
             animator.SetBool(isSprintigHash, true);
@@ -408,7 +452,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             isSprint = false;
         }
 
-        if (isCrouchPressed)
+        if (isCrouchPressed && isFallingg == false)
         {
             animator.SetBool(isCrouchHash, true);
             characterController.center = new Vector3(0, 0.58f, 0);
@@ -563,7 +607,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
        
         Debug.DrawRay(transform.position, Vector3.down * maxRayDistance, Color.red);
 
-        if (isGrounded && hit.distance > 1.5f)
+        if (isGrounded && hit.distance > 1f)
         {
             Debug.Log(hit.distance);
             isLanding = true;
@@ -571,11 +615,14 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             Debug.Log("Callo");
               
             animator.SetBool(isFallingHash, true);
+            animator.SetBool(isWalkingHash, false);
+            animator.SetBool(isRunnigHash, false);
+            animator.SetBool(isSprintigHash, false);
         }
 
         if(isGrounded && hit.distance < 1.5f)
         {
-            // Si el personaje está en el suelo, reinicia el tiempo en el aire
+            // Si el personaje está en el suelo, reinicia el tiempo en el aire Antiguo
             animator.SetBool(isFallingHash, false);
             Debug.Log("Suelo");
         }
@@ -599,6 +646,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         {
              animator.SetBool(isLandingHash, false);
         }
+
 
 
         /*
