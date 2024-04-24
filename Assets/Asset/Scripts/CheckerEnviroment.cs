@@ -27,10 +27,7 @@ public class CheckerEnviroment : MonoBehaviour
     public bool pushInteract;
     public bool objectInteract;
     public bool objectInHand;
-   // public AreaInteract interact;
 
-
-    
     private void Update()
     {
         Vector3 rayOrigin2 = transform.position + rayOffset;
@@ -42,20 +39,7 @@ public class CheckerEnviroment : MonoBehaviour
 
         obstacleCollision = hitFound;
 
-        // Si el primer raycast golpea un objeto en la capa especificada, establecer obstacleCollision en true
-        /*
-        if (hitFound)
-        {
-            obstacleCollision = true;
-        }
-        else
-        {
-            obstacleCollision = false;
-        }*/
-
-        CheckInteract();
-       
-
+        CheckInteract();      
     }
 
     public ObstacleInfo CheckObstacle()
@@ -78,7 +62,7 @@ public class CheckerEnviroment : MonoBehaviour
             if (hitData.heightHitFound)
             {
                 heightRayDistance = Vector3.Distance(hitData.hitInfo.point, hitData.heightInfo.point);
-               // Debug.Log("Distancia del segundo rayo: " + heightRayDistance);
+               
             }
 
         }
@@ -87,12 +71,7 @@ public class CheckerEnviroment : MonoBehaviour
         {
             obstacleCollision = false;
         }*/
-
-        
-
-        return hitData;
-
-      
+        return hitData;      
     }
 
     public bool CheckClimbing(Vector3 climbDirection,out RaycastHit climbInfo)
@@ -144,13 +123,13 @@ public class CheckerEnviroment : MonoBehaviour
 
         if (Physics.Raycast(rayOrigin, transform.forward, out hit, rayLength, LayerMask.GetMask("InteractPush")))
         {
-          //  Debug.Log(" Se acerco, ahora lo puede empujar");
+          
             pushInteract = true;
            
         }
         else
         {
-            //Debug.Log("Se alejo, ya no lo puede empujar");
+            
             pushInteract = false;
         }
 
@@ -158,7 +137,7 @@ public class CheckerEnviroment : MonoBehaviour
         {
            
             notJumpAction = true;
-            Debug.Log("Hay Pared");
+          
 
         }
 
@@ -166,7 +145,7 @@ public class CheckerEnviroment : MonoBehaviour
         {
 
             notJumpAction = true;
-            Debug.Log("Hay Pared");
+           
 
         }
 
@@ -174,35 +153,16 @@ public class CheckerEnviroment : MonoBehaviour
         {
 
             notJumpAction = true;
-            Debug.Log("Hay Pared");
+            
 
         }
 
         else
         {
             notJumpAction = false;
-            Debug.Log("No hay Pared");
+           
         }
-
-        
-
-
-
-        /*  if(Physics.Raycast(rayOrigin, transform.forward, out hit, rayLength, LayerMask.GetMask("InteractObject")) && objectInHand == false)
-          {
-              objectInteract = true;
-              interact = hit.collider.GetComponent<ObjectInteract>();
-              Debug.Log(" Se acerco, ahora lo puede tomar");
-          }
-
-          else
-          {
-              interact = null;
-              Debug.Log(" Se alejo, ya no lo puede tomar");
-          }*/
-
-
-
+    
         Debug.DrawRay(rayOrigin, transform.forward * rayLength, (hit.collider != null) ? Color.yellow : Color.red);
 
         Debug.DrawRay(rayOrigin, transform.right * rayLengthX, (hit.collider != null) ? Color.yellow : Color.red);

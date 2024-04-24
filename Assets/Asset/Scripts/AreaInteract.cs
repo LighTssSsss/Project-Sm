@@ -8,10 +8,13 @@ public class AreaInteract : MonoBehaviour
    public bool puedTomarMedicina;
    public ObjectInteract objetInter;
    public bool loToma;
-  
 
-    
 
+
+    private void Update()
+    {
+        
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -28,14 +31,16 @@ public class AreaInteract : MonoBehaviour
         }
     }
 
-   /* private void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("Object"))
-        {
-            puedoTomarlo = true;
-            objetInter = other.GetComponent<ObjectInteract>();
-        }
-    }*/
+   
+
+    /* private void OnTriggerStay(Collider other)
+     {
+         if (other.CompareTag("Object"))
+         {
+             puedoTomarlo = true;
+             objetInter = other.GetComponent<ObjectInteract>();
+         }
+     }*/
 
     private void OnTriggerExit(Collider other)
     {

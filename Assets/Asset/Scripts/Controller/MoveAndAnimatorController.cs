@@ -9,10 +9,9 @@ using UnityEngine.TextCore.Text;
 public partial class MoveAndAnimatorController : MonoBehaviour
 {
     public CharacterController characterController;
-    public Collider sphereHead;
     public CollisionHead colisionHead;
     PlayerInputs playerInputs;
-    Animator animator;
+    public Animator animator;
 
     int isWalkingHash;
     int isRunnigHash;
@@ -70,11 +69,11 @@ public partial class MoveAndAnimatorController : MonoBehaviour
     Quaternion requiredRotation;
 
    
-    float initialJumpVelocity;
+    //float initialJumpVelocity;
     
    
    
-    Vector3 initialPosition;
+   // Vector3 initialPosition;
 
     
 
@@ -82,7 +81,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
     [Header("Gravity Setting")] // Cambiar
     [SerializeField] private float gravity = -9.81f;
     [SerializeField] private float gravityMultiplier = 3.0f;
-
+   
 
     
 
@@ -108,7 +107,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
     private MoveableObject moveObject;
     public AreaInteract areaInt;
     private HealthSystem healthSyst;
-  
+    private PhysicalMove physicalM;
 
     [Header("Trajectory")]
     [SerializeField] private LineRenderer lineRenderer;
@@ -154,7 +153,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         climb = GetComponent<ClimbingSystem>();
         moveObject = GetComponent<MoveableObject>();
         healthSyst = GetComponent<HealthSystem>();
-        
+        physicalM = GetComponent<PhysicalMove>();
 
 
         isWalkingHash = Animator.StringToHash("isWalking");
@@ -172,28 +171,12 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
         cameraObject = Camera.main.transform;
 
-        isFallingg = false;
-        sphereHead.enabled = false;
-
-
-       /* int objectLayer = areaInt.objetInter.rigidObject.gameObject.layer;
-
-        for (int i = 0; i < 32; i++)
-        {
-            if (!Physics.GetIgnoreLayerCollision(objectLayer, i))
-            {
-                collisionMask |= 1 << i;
-            }
-        }*/
+        isFallingg = false;      
     }
-
-  
 
     void Update()
     {
         
-
-
         if (!playerControl)
         {
             return;
@@ -206,7 +189,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         }
 
 
-        if (isRunPressed && checks.pushInteract == false && inParkour == false)
+        if (isRunPressed && checks.pushInteract == false && inParkour == false && moveObject.push == false && isCrouchPressed == false && colisionHead.obstaculoencima == false)
         {
             characterController.Move(currentRunMovement * Time.deltaTime);
 
@@ -228,14 +211,15 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             characterController.Move(currentMovement * Time.deltaTime);
         }
         
+        
 
         Vector3 cameraForward = cameraObject.forward;
         cameraForward.y = 0;
         cameraForward.Normalize();
 
         
-            currentMovement = cameraForward * currentMovementInput.y + cameraObject.right * currentMovementInput.x;
-            currentMovement.Normalize();
+        currentMovement = cameraForward * currentMovementInput.y + cameraObject.right * currentMovementInput.x;
+        currentMovement.Normalize();
         
 
 
@@ -245,23 +229,18 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         if(isTrajectoryPressed == true && areaInt.loToma == true)
         {
             DrawProjection();
-           // Debug.Log("Aparece");
+           
         }
 
         else
         {
             lineRenderer.enabled = false;
-            Debug.Log("Lo Solto");
+           
         }
 
-
-
-
-
         Gravity();
-        // CheckForFalling();
-        CheckGrounded();
-        HandleRotation();
+        CheckGrounded();      
+        HandleRotation();      
         HandleAnimation();
         HandleJump();
 
@@ -273,8 +252,6 @@ public partial class MoveAndAnimatorController : MonoBehaviour
     }
 
    
-
-
     private void Gravity()
     {
         bool isFalling = currentMovement.y <= 0.0F;  //ORIGINAl
@@ -309,11 +286,12 @@ public partial class MoveAndAnimatorController : MonoBehaviour
     private void HandleJump()
     {
        
-        if (!isJumping && characterController.isGrounded && isJumpPressed && canJump && checks.obstacleCollision == false && isClimbing == false && isActionPushin == false)
+        if (!isJumping && characterController.isGrounded && isJumpPressed && canJump && checks.obstacleCollision == false && isClimbing == false && isActionPushin == false && isCrouchPressed == false && colisionHead.obstaculoencima == false)
         {
             animator.SetBool(isJumpingHash, true);
             isJumpAnimation = true;
             velocityG = jumpPower;
+           // physicalM.velocity.y = jumpPower;
             StartCoroutine(WaitJump(jumpCooldown));
             isJumping = true;
             canJump = false;
@@ -346,14 +324,14 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
     void HandleRotation()
     {
-
+       
         Vector3 positionLookAt;
         positionLookAt.x = currentMovement.x;
         positionLookAt.y = 0.0f;
         positionLookAt.z = currentMovement.z;
         Quaternion currentRotation = transform.rotation;
 
-        if (isMovementPressed && !inParkour)
+        if (isMovementPressed && !inParkour && moveObject.push == false)
         {
             Quaternion targetRotation = Quaternion.LookRotation(positionLookAt);
             transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, rotationFactorPerFrame * Time.deltaTime);
@@ -361,6 +339,8 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         }
 
     }
+
+    // ver lo del hit.collider hacia el piso, bloquear movimiento en x o al presionar botones o mover la camara cuando muevo la caja y mejorar IA
 
 
     void HandleAnimation()
@@ -415,7 +395,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
 
 
-        if (isRunPressed)
+        if (isRunPressed && isCrouchPressed == false && colisionHead.obstaculoencima == false)
         {
             timeSprint += Time.deltaTime;
 
@@ -436,35 +416,59 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             characterController.height = 1.043544f;
 
          
-            sphereHead.enabled = true;
+            //sphereHead.enabled = true;
         }
 
          else
         {
             if(colisionHead.obstaculoencima == false)
+            {
+                animator.SetBool(isCrouchHash, false);
 
-            animator.SetBool(isCrouchHash, false);
-        
+
+                characterController.center = new Vector3(0, 0.84f, 0);
+                characterController.radius = 0.1846104f;
+                characterController.height = 1.61f;
+                //sphereHead.enabled = false;
+            }
+
             
-            characterController.center = new Vector3(0, 0.84f, 0);
-            characterController.radius = 0.1846104f;
-            characterController.height = 1.61f;
-            sphereHead.enabled = false;
+        }
+
+        if(!isMovementPressed && colisionHead.obstaculoencima == true)
+        {
+            animator.SetBool(isCrouchHash, true);
+            animator.SetBool(isMoveCrouchHash, false);
         }
 
         if (isCrouchPressed && isMovementPressed && !isCrouchMovement || isMovementPressed && colisionHead.obstaculoencima == true)
         {
             animator.SetBool(isMoveCrouchHash, true);
-
-           
-
         }
 
         else if (isCrouchPressed && !isMovementPressed)
         {
             animator.SetBool(isMoveCrouchHash, false);
-          
+            animator.SetBool(isCrouchHash, true);
+
         }
+
+        else if(isMovementPressed && colisionHead.obstaculoencima == false && !isCrouchPressed)
+        {
+            animator.SetBool(isCrouchHash, false);
+            animator.SetBool(isMoveCrouchHash, false);
+            animator.SetBool(isWalkingHash, true);
+        }
+
+        else if (isMovementPressed && colisionHead.obstaculoencima == false && !isCrouchPressed && isRunPressed)
+        {
+            animator.SetBool(isCrouchHash, false);
+            animator.SetBool(isMoveCrouchHash, false);
+            animator.SetBool(isWalkingHash, false);
+            animator.SetBool(isRunnigHash, false);
+        }
+
+
 
 
         if (isInteractPressed && checks.pushInteract && areaInt.loToma == false)
@@ -515,23 +519,18 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             areaInt.objetInter.tomo = false;
             areaInt.objetInter.losuelta = true;
             areaInt.loToma = false;
+            areaInt.puedoTomarlo = false;
             moveObject.enabled = true;
-           // areaInt.objetInter = null;
-            //Debug.Log("Solto");
+          
         }
 
         if(isReleasePressed && areaInt.objetInter != null && areaInt.objetInter.loTiene == true)
         {
-            /*areaInt.objetInter.tomo = false;
-            areaInt.objetInter.losuelta = true;
-            Debug.Log("Lanzo");
-            areaInt.objetInter.objects.transform.SetParent(null);
-            areaInt.objetInter.GetComponent<Rigidbody>().isKinematic = false;
-            areaInt.objetInter.GetComponent<Rigidbody>().AddForce(cam.transform.forward, ForceMode.Impulse);*/
-
+           
             ReleaseObject();
             isTrajectoryPressed = false;
-           //Debug.Log("Presiono");
+            moveObject.enabled = true;
+           
 
         }
 
@@ -540,101 +539,16 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             // Animacion de tomar
             healthSyst.recupera = true;
             areaInt.puedTomarMedicina = false;
-           // Debug.Log("Tomo Medicina");
+           
         }
 
 
 
     }
 
-    void CheckForFalling()
-    {
-        /*
-        // Dispara un rayo hacia abajo desde el personaje
-        Ray ray = new Ray(transform.position, Vector3.down * maxRayDistance);
-        RaycastHit hit;
+    
 
-        // Realiza el raycast
-        if (Physics.Raycast(ray, out hit))
-        {
-            // Calcula la distancia desde el suelo
-
-            float distanceToGround = hit.distance;
-            //Debug.Log(distanceToGround);
-
-            // Dibuja el rayo en el Editor de Unity
-           // Debug.DrawRay(ray.origin, ray.direction * distanceToGround, Color.red);
-
-            // Verifica si la distancia desde el suelo es mayor que el umbral mínimo
-            if (distanceToGround > minFallHeightForAnimation && !characterController.isGrounded && !isFallingg)
-            {
-                // Activa la animación de caída
-                isFallingg = true;
-                Debug.Log(isFallingg);
-                // animator.SetBool(isFallingHash, true);
-            }
-            else
-            {
-                // Desactiva la animación de caída
-                isFallingg = false;
-                animator.SetBool(isFallingHash, false);
-            }
-
-            /*if (isFalling && characterController.isGrounded)
-            {
-                animator.SetBool(isLandingHash, true);
-
-            }*/
-
-
-
-
-        // Verifica si el personaje está cayendo
-      //  bool isFallingg = characterController.velocity.y < 0 && !characterController.isGrounded;
-
-        // Si el personaje ha estado en el aire durante un tiempo prolongado, también activa isFallingg
-
-        if (!characterController.isGrounded)
-        {
-            timeInAir += Time.deltaTime;
-            if (timeInAir >= minTimeInAirForFall)
-            {
-                //isFallingg = true;
-                Debug.Log("Callo");
-               // isLanding = true;
-               // animator.SetBool(isFallingHash, true);
-            }
-        }
-        else
-        {
-            // Si el personaje está en el suelo, reinicia el tiempo en el aire
-            animator.SetBool(isFallingHash, false);
-            timeInAir = 0f;
-            Debug.Log("Suelo");
-        }
-
-        if(!isFallingg && characterController.isGrounded)
-        {
-          // animator.SetBool(isLandingHash, true);
-          
-          // animator.SetBool(isLandingHash, false);
-            //StartCoroutine(DisableLandingAnimation(landingAnimationDuration));
-        }
-
-        if(isLanding && characterController.isGrounded)
-        {
-            animator.SetBool(isLandingHash, true);
-            //Debug.Log("animacion suelo");
-        }
-
-        else
-        {
-           // animator.SetBool(isLandingHash, false);
-        }
-
-        // Activa la animación de caída si es necesario
-         
-    }
+    
 
     IEnumerator DisableLandingAnimation(float delay)
     {
@@ -646,9 +560,48 @@ public partial class MoveAndAnimatorController : MonoBehaviour
     {
         RaycastHit hit;
         bool isGrounded = Physics.Raycast(transform.position, Vector3.down, out hit, maxRayDistance, groundLayer);
-       // Debug.Log(isGrounded);
+       
         Debug.DrawRay(transform.position, Vector3.down * maxRayDistance, Color.red);
 
+        if (isGrounded && hit.distance > 1.5f)
+        {
+            Debug.Log(hit.distance);
+            isLanding = true;
+            isFallingg = true;
+            Debug.Log("Callo");
+              
+            animator.SetBool(isFallingHash, true);
+        }
+
+        if(isGrounded && hit.distance < 1.5f)
+        {
+            // Si el personaje está en el suelo, reinicia el tiempo en el aire
+            animator.SetBool(isFallingHash, false);
+            Debug.Log("Suelo");
+        }
+
+        if (isFallingg == true && characterController.isGrounded)
+        {
+             animator.SetBool(isLandingHash, true);
+
+             animator.SetBool(isLandingHash, false);
+
+             StartCoroutine(DisableLandingAnimation(landingAnimationDuration));
+        }
+
+        if (isLanding && characterController.isGrounded)
+        {
+            animator.SetBool(isLandingHash, true);
+            Debug.Log("animacion suelo");
+        }
+
+        else
+        {
+             animator.SetBool(isLandingHash, false);
+        }
+
+
+        /*
         if (!isGrounded && minFallHeightForAnimation > hit.distance)
         {
             isFallingg = true;
@@ -676,7 +629,55 @@ public partial class MoveAndAnimatorController : MonoBehaviour
              animator.SetBool(isLandingHash, false);
         }
 
-        
+        */
+
+
+        /*
+      if (!characterController.isGrounded)
+      {
+          timeInAir += Time.deltaTime;
+          if (timeInAir >= minTimeInAirForFall)
+          {
+              //isFallingg = true;
+              Debug.Log("Callo");
+             // isLanding = true;
+             // animator.SetBool(isFallingHash, true);
+          }
+      }
+      else
+      {
+          // Si el personaje está en el suelo, reinicia el tiempo en el aire
+          animator.SetBool(isFallingHash, false);
+          timeInAir = 0f;
+          Debug.Log("Suelo");
+      }
+
+      if(!isFallingg && characterController.isGrounded)
+      {
+        // animator.SetBool(isLandingHash, true);
+
+        // animator.SetBool(isLandingHash, false);
+          //StartCoroutine(DisableLandingAnimation(landingAnimationDuration));
+      }
+
+      if(isLanding && characterController.isGrounded)
+      {
+          animator.SetBool(isLandingHash, true);
+          //Debug.Log("animacion suelo");
+      }
+
+      else
+      {
+         // animator.SetBool(isLandingHash, false);
+      }
+
+      */
+
+        // Activa la animación de caída si es necesario
+
+
+
+
     }
 
 
@@ -816,29 +817,11 @@ public partial class MoveAndAnimatorController : MonoBehaviour
                 return;
             }
         }
-
-
     }
 
     
-
     private void ReleaseObject()
-    {
-        /*areaInt.objetInter.tomo = false;
-           areaInt.objetInter.losuelta = true;
-           Debug.Log("Lanzo");
-           areaInt.objetInter.objects.transform.SetParent(null);
-           areaInt.objetInter.GetComponent<Rigidbody>().isKinematic = false;
-           areaInt.objetInter.GetComponent<Rigidbody>().AddForce(cam.transform.forward, ForceMode.Impulse);*/
-        /*
-        Grenade.velocity = Vector3.zero;
-        Grenade.angularVelocity = Vector3.zero;
-        Grenade.isKinematic = false;
-        Grenade.freezeRotation = false;
-        Grenade.transform.SetParent(null, true);
-        Grenade.AddForce(Camera.transform.forward * ThrowStrength, ForceMode.Impulse);*/
-
-        Debug.Log("Lanza el objeto");
+    {      
         areaInt.objetInter.losuelta = true;
         areaInt.objetInter.rigidObject.isKinematic = false;
         areaInt.objetInter.rigidObject.freezeRotation = false;
@@ -849,27 +832,6 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         areaInt.loToma = false;
         areaInt.puedoTomarlo = false;
     }
-
-
-
-    private void OnControllerColliderHit(ControllerColliderHit hit)
-    {
-        Rigidbody rigg = hit.collider.attachedRigidbody;
-
-        if (rigg != null )
-        {
-            Vector3 forceDirection = hit.gameObject.transform.position - transform.position;
-            forceDirection.y = 0;
-            forceDirection.Normalize();
-
-            rigg.AddForceAtPosition(forceDirection * pushForce, transform.position, ForceMode.Impulse);
-        }
-    }
-
-
-    
-
-
 
 }
 
@@ -883,31 +845,6 @@ public class CompareTargetParameter
 
 }
 
-    /* void CheckForFallingAnimation()
-     {
-         // Calcula la altura de la caída
-         float fallHeight = CalculateFallHeight();
-
-         // Comprueba si la altura de la caída supera el umbral mínimo
-         if (fallHeight > minFallHeightForAnimation && !characterController.isGrounded)
-         {
-             // Reproduce la animación de caída
-             animator.SetBool(isFallingHash, true);
-
-         }
-         else
-         {
-             // Mantén la animación actual (probablemente una animación de idle)
-             animator.SetBool(isFallingHash, false);
-         }
-     }
-
-     // Calcula la altura de la caída
-     float CalculateFallHeight()
-     {
-         // Calcula la diferencia entre la posición actual y la posición inicial del personaje en el eje Y
-         return transform.position.y - initialPosition.y;
-     }*/
 
 
 

@@ -10,7 +10,7 @@ public class ObjectInteract : MonoBehaviour
    public bool loTiene;
    public bool losuelta;
    public Rigidbody rigidObject;
-    public ObjectBroke objectBroke;
+   public ObjectBroke objectBroke;
 
     private void Awake()
     {

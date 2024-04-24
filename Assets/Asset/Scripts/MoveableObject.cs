@@ -10,6 +10,7 @@ public class MoveableObject : MonoBehaviour
     [SerializeField] private AreaInteract areint;
     [SerializeField] Vector3 pushdir;
     [SerializeField] private CharacterController ch;
+    public bool push;
 
     private void Awake()
     {
@@ -59,10 +60,14 @@ public class MoveableObject : MonoBehaviour
             Vector3 collisionPoint = hit.point;
             
             body.AddForceAtPosition(pushdir * pushForce, collisionPoint, ForceMode.Impulse);
+            push = true;
         }
 
-        
 
+        else
+        {
+            push = false;
+        }
         
 
        
