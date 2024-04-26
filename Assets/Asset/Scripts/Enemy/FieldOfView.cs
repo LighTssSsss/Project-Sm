@@ -120,7 +120,7 @@ public class FieldOfView : MonoBehaviour
 
     IEnumerator LostObjectTime()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(10);
         canSeePlayer = false;
         estadoPersecusion = false;
     }

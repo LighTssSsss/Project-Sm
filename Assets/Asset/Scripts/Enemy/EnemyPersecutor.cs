@@ -26,7 +26,7 @@ public class EnemyPersecutor : MonoBehaviour
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if (hit.collider.CompareTag("Player") && hit != null)
+       /* if (hit.collider.CompareTag("Player") && hit != null)
         {
             Debug.Log("Daño");
             HealthSystem health = hit.collider.GetComponent<HealthSystem>();
@@ -34,7 +34,7 @@ public class EnemyPersecutor : MonoBehaviour
             {
                 health.GetComponent<HealthSystem>().SetDamageHealth(damage);
             }
-        }
+        }*/
     }
 
     private void DamageWithHand()
