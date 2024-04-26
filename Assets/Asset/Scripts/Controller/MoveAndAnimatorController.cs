@@ -14,6 +14,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
     PlayerInputs playerInputs;
     public Animator animator;
     public float speed;
+    public PhysicalMove physicalM;
 
     int isWalkingHash;
     int isRunnigHash;
@@ -108,7 +109,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
     private MoveableObject moveObject;
     public AreaInteract areaInt;
     private HealthSystem healthSyst;
-    private PhysicalMove physicalM;
+
 
     [Header("Trajectory")]
     [SerializeField] private LineRenderer lineRenderer;
@@ -226,7 +227,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         cameraForward.y = 0;
         cameraForward.Normalize();
 
-        
+        //Cambiar el current movement en la direccion donde este viendo la caja
         currentMovement = cameraForward * currentMovementInput.y + cameraObject.right * currentMovementInput.x;
         currentMovement.Normalize();
         
@@ -247,7 +248,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
            
         }
 
-        Gravity();
+       // Gravity();
         CheckGrounded();      
         HandleRotation();      
         HandleAnimation();
@@ -264,44 +265,42 @@ public partial class MoveAndAnimatorController : MonoBehaviour
     private void Gravity()
     {
 
-        bool isFalling = currentMovement.y <= 0.0F;  //ORIGINAl
+        //bool isFalling = currentMovement.y <= 0.0F;  //ORIGINAl
         
-        if (characterController.isGrounded && velocityG < 0.0f)
-        {
-            //velocityG = -1.0f;
-            isClimbing = false;
-            if (isJumpAnimation)
-            {
-                animator.SetBool(isJumpingHash, false);
-                // isJumpAnimation = false;
+        //if (characterController.isGrounded && velocityG <= 0.0f)
+        //{
+        //    velocityG = 0f;
+        //    isClimbing = false;
 
-            }
-        }
+        //    if (isJumpAnimation)
+        //    {
+        //        animator.SetBool(isJumpingHash, false);
+        //        // isJumpAnimation = false;
 
-        else if (isFalling)
-        {
+        //    }
+        //}
+
+        //else if (isFalling)
+        //{
             
-              velocityG += gravity * gravityMultiplier * Time.deltaTime;
+        //      velocityG += gravity * gravityMultiplier * Time.deltaTime;
             
 
             
-        }
+        //}
 
-        else
-        {
-            velocityG += gravity * gravityMultiplier * Time.deltaTime;
-        }
+       
 
-        if(velocityG <= -10f)
-        {
-            velocityG = - 9.8f;
-        }
+        //if(velocityG <= -10f)
+        //{
+        //    velocityG = - 9.8f;
+        //}
 
 
 
-        Vector3 gravityVector = new Vector3(0, velocityG, 0);
+        //Vector3 gravityVector = new Vector3(0, velocityG, 0);
 
-        characterController.Move(gravityVector * Time.deltaTime);
+        //characterController.Move(gravityVector * Time.deltaTime);
 
     }
 
@@ -313,7 +312,8 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         {
             
             isJumpAnimation = true;
-            //physicalM.Jump(jumpPower);
+            physicalM.Jump(jumpPower);
+
             velocityG = jumpPower;        
             StartCoroutine(WaitJump(jumpCooldown));
             isJumping = true;

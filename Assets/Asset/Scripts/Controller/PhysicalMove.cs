@@ -8,7 +8,8 @@ public class PhysicalMove : MonoBehaviour
 
     [SerializeField] private float jumpGravity = 1;
     [SerializeField] private float fallingGravity = 3;
-    [SerializeField] private float maxFallVelocity = -10;
+    [SerializeField] private float maxFallVelocity = -10; 
+
     public bool canJumps;
     public Vector3 velocity;
     private float disableGroundDetection;
@@ -22,14 +23,13 @@ public class PhysicalMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Revisar el codigo
+
         float gravityScale = fallingGravity;
+        if (controller.velocity.y >= 0) gravityScale = jumpGravity;
+             
+        Debug.Log(controller.isGrounded);
 
-        if(controller.velocity.y >= 0)
-        {
-            gravityScale = jumpGravity;
-        }
-
-     
         if (controller.isGrounded && disableGroundDetection == 0)
         {
             velocity.y = 0;
@@ -41,6 +41,7 @@ public class PhysicalMove : MonoBehaviour
         {
             velocity.y += Physics.gravity.y * gravityScale * Time.deltaTime;
             //Debug.Log("Esta en el aire");
+
             disableGroundDetection -= Time.deltaTime;
             disableGroundDetection = Mathf.Max(0, disableGroundDetection);
         }
@@ -48,8 +49,6 @@ public class PhysicalMove : MonoBehaviour
        
 
         velocity.y = Mathf.Max(velocity.y, maxFallVelocity);
-
-
         controller.Move(velocity * Time.deltaTime);
     }
 

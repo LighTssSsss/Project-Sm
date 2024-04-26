@@ -55,6 +55,7 @@ public class EnemyPersecutor : MonoBehaviour
             StartCoroutine(NotDamage());
 
         }*/
+        //Añadir una corutina para hacer daño
 
         foreach(Collider player in collider)
         {
