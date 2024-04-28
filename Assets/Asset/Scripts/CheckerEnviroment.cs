@@ -71,6 +71,7 @@ public class CheckerEnviroment : MonoBehaviour
         {
             obstacleCollision = false;
         }*/
+
         return hitData;      
     }
 

@@ -5,7 +5,8 @@ using UnityEngine;
 public class PhysicalMove : MonoBehaviour
 {
     //[SerializeField] private MoveAndAnimatorController move;
-
+    [SerializeField] private CharacterController controller;
+    [SerializeField] private CheckerEnviroment check;
     [SerializeField] private float jumpGravity = 1;
     [SerializeField] private float fallingGravity = 3;
     [SerializeField] private float maxFallVelocity = -10; 
@@ -29,11 +30,12 @@ public class PhysicalMove : MonoBehaviour
 
         float gravityScale = fallingGravity;
 
-        //if (move.characterController.velocity.y >= 0) gravityScale = jumpGravity;
+         if (controller.velocity.y >= 0) gravityScale = jumpGravity;
              
         Debug.Log(isGrounded);
+       
 
-        if (isGrounded == true && disableGroundDetection == 0)
+        if (isGrounded == true && disableGroundDetection == 0 && check.obstacleCollision == false)
         {
             velocity.y = 0;
             canJumps = true;
@@ -43,7 +45,7 @@ public class PhysicalMove : MonoBehaviour
         else
         {
             velocity.y += Physics.gravity.y * gravityScale * Time.deltaTime;
-           
+            canJumps = false;
 
             disableGroundDetection -= Time.deltaTime;
             disableGroundDetection = Mathf.Max(0, disableGroundDetection);
@@ -51,11 +53,12 @@ public class PhysicalMove : MonoBehaviour
 
         
 
-        //velocity.y = Mathf.Max(velocity.y, maxFallVelocity);
-       // controller.Move(velocity * Time.deltaTime);
+         velocity.y = Mathf.Max(velocity.y, maxFallVelocity);
+
+        // controller.Move(velocity * Time.deltaTime);
     }
 
-  
+
 
 
     public void Jump(float force)
@@ -64,8 +67,9 @@ public class PhysicalMove : MonoBehaviour
         
         velocity.y = force;
         canJumps = false;
-
-        //disableGroundDetection = 0.2f;
+        Debug.Log("Fuerza salto: " + force);
+        disableGroundDetection = 0.2f;
+        
     }
 
     private void OnTriggerStay(Collider other)

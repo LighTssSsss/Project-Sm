@@ -9,8 +9,8 @@ public class EnemyPersecutor : MonoBehaviour
     public Transform centro;
     public float radio;
     public LayerMask layermask;
-    bool estaAtacando = false;
-
+    //bool estaAtacando = false;
+    [SerializeField] private bool canDamage = true;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +40,8 @@ public class EnemyPersecutor : MonoBehaviour
     private void DamageWithHand()
     {
         Collider[] collider = Physics.OverlapSphere(centro.position, radio, layermask);
+
+        
         /*
         for(int i = 0; i < collider.Length; i++)
         {
@@ -59,13 +61,36 @@ public class EnemyPersecutor : MonoBehaviour
 
         foreach(Collider player in collider)
         {
+           
+            if(player == null)
+            {
+                return;
+                Debug.Log(" Se detecto que es nulo");
+            }
             Debug.Log(" Se detecto el choque con Player");
-            estaAtacando = true;
-            if(estaAtacando == true)
+
+            HealthSystem healthSystem = player.GetComponent<HealthSystem>();
+            if(healthSystem != null)
+            {
+                if (canDamage)
+                {
+                    Debug.Log("Hace daño");
+                    healthSystem.SetDamageHealth(damage);
+                    StartCoroutine(Damage());
+                }
+            }
+
+            else
+            {
+                Debug.Log("no tiene el componenete");
+            }
+
+          /*  if (canDamage == true && player != null)
             {
                 player.GetComponent<HealthSystem>().SetDamageHealth(damage);
-                estaAtacando = false;
-            }
+                 StartCoroutine(Damage());
+                //canDamage = false;
+            }*/
         }
 
        
@@ -78,13 +103,13 @@ public class EnemyPersecutor : MonoBehaviour
         Gizmos.DrawWireSphere(centro.position, radio);
     }
 
-    IEnumerator NotDamage()
+    IEnumerator Damage()
     {
-        if(estaAtacando == true)
-        {
+        
+            canDamage = false;
             yield return new WaitForSeconds(2);
-            estaAtacando = false;
-        }
+            canDamage = true;
+        
        
     }
 }

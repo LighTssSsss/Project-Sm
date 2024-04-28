@@ -180,9 +180,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
     {
         // Ver lo del sato gravedad, arreglar hit distancia y por ultimo lo de la caja
 
-        /*float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
-        */
+       
 
         if (!playerControl)
         {
@@ -198,15 +196,24 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
         if (isRunPressed && checks.pushInteract == false && inParkour == false && moveObject.push == false && isCrouchPressed == false && colisionHead.obstaculoencima == false)
         {
-            characterController.Move(currentRunMovement * Time.deltaTime);
-            
+              physicalM.velocity = new Vector3(currentRunMovement.x, physicalM.velocity.y, currentRunMovement.z);
+
+              characterController.Move(physicalM.velocity * Time.deltaTime);
+
+             //characterController.Move(currentRunMovement * Time.deltaTime); 
+
         }
 
         else
         {
-            characterController.Move(currentMovement * Time.deltaTime); 
+             physicalM.velocity = new Vector3(currentMovement.x, physicalM.velocity.y, currentMovement.z);
 
-            //physicalM.Move(new Vector3(x * speed, 0, z * speed) * Time.deltaTime );
+             characterController.Move(physicalM.velocity * Time.deltaTime);
+
+             //characterController.Move(currentMovement * Time.deltaTime); 
+
+
+
         }
 
         if (isSprint)
@@ -251,17 +258,15 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
 
 
-       // Gravity();
+        // Gravity();
+       
         CheckGrounded();      
         HandleRotation();      
         HandleAnimation();
         HandleJump();
 
 
-        //Debug.Log(characterController.isGrounded);
 
-
-        //Debug.Log(velocityG);
     }
 
    
@@ -311,22 +316,20 @@ public partial class MoveAndAnimatorController : MonoBehaviour
     private void HandleJump()
     {
        
-        if (!isJumping && isJumpPressed && canJump && checks.obstacleCollision == false && isClimbing == false && isActionPushin == false && isCrouchPressed == false && colisionHead.obstaculoencima == false)
+        if (!isJumping && isJumpPressed && physicalM.canJumps == true && checks.obstacleCollision == false && isClimbing == false && isActionPushin == false && isCrouchPressed == false && colisionHead.obstaculoencima == false)
         {
             
             isJumpAnimation = true;
-            physicalM.Jump(jumpPower);
-
-            //velocityG = jumpPower;        
+            physicalM.Jump(jumpPower);                
             StartCoroutine(WaitJump(jumpCooldown));
-            isJumping = true;
-            canJump = false;
-
-            
+            isJumping = true;         
+            Debug.Log("Salto");
+            //velocityG = jumpPower;  
+            // canJump = false;
 
         }
 
-        else if (isJumping && !isJumpPressed || isJumpPressed && !characterController.isGrounded)
+        else if (isJumping && !isJumpPressed || isJumpPressed && !physicalM.isGrounded /*!characterController.isGrounded */)
         {
             isJumping = false; // El jugador ya no está en el aire
             animator.SetBool(isJumpingHash, true);
@@ -336,14 +339,14 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             checks.obstacleCollision = false;
         }
 
-        else if(isJumping == false && characterController.isGrounded)
+        else if(isJumping == false && physicalM.isGrounded /*characterController.isGrounded*/ )
         {
             animator.SetBool(isJumpingHash, false);
             //canJump = true;
             
         }
 
-        else if (isJumping == false && characterController.isGrounded && !isMovementPressed && !isRunPressed) 
+        else if (isJumping == false && physicalM.isGrounded /*characterController.isGrounded*/  && !isMovementPressed && !isRunPressed) 
         {
             animator.SetBool(isJumpingHash, false);
            
@@ -352,7 +355,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
 
 
-
+        
     }
 
  
@@ -361,8 +364,8 @@ public partial class MoveAndAnimatorController : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         animator.SetBool(isJumpingHash, false);
-        canJump = true; // Habilitar el salto después del tiempo de espera
-       // physicalM.canJumps = true;
+        // canJump = true; // Habilitar el salto después del tiempo de espera
+        physicalM.canJumps = true;
         isLanding = false;
 
     }
@@ -607,41 +610,48 @@ public partial class MoveAndAnimatorController : MonoBehaviour
     private void CheckGrounded()
     {
         RaycastHit hit;
-        //bool isGrounded = Physics.Raycast(transform.position, Vector3.down, out hit, maxRayDistance, groundLayer);
+         bool isGrounded = Physics.Raycast(transform.position, Vector3.down, out hit, maxRayDistance, groundLayer);
        
         Debug.DrawRay(transform.position, Vector3.down * maxRayDistance, Color.red);
+        Debug.Log(hit.distance);
 
-/*
-        if (isGrounded && hit.distance > 1f)
+        if (isGrounded && hit.distance > 3.5f)
         {
-            Debug.Log(hit.distance);
+            //Debug.Log(hit.distance);
             isLanding = true;
             isFallingg = true;
-            Debug.Log("Callo");
+            Debug.Log("Esta cayendo");
               
             animator.SetBool(isFallingHash, true);
             animator.SetBool(isWalkingHash, false);
             animator.SetBool(isRunnigHash, false);
             animator.SetBool(isSprintigHash, false);
+            animator.SetBool(isWalkingHash, false);
+            animator.SetBool(isRunnigHash, false);
+            animator.SetBool(isJumpingHash, false);
         }
 
-        if(isGrounded && hit.distance < 1.5f)
+       /* if(isGrounded && hit.distance < 1.5f)
         {
             // Si el personaje está en el suelo, reinicia el tiempo en el aire Antiguo
-            animator.SetBool(isFallingHash, false);
-            Debug.Log("Suelo");
+            //animator.SetBool(isFallingHash, false);
+            Debug.Log("Toco el suelo");
         }
+        */
 
-        if (isFallingg == true && characterController.isGrounded)
+        if (isFallingg == true && physicalM.isGrounded == true && hit.distance <= 0.5f)
         {
-             animator.SetBool(isLandingHash, true);
-
-             animator.SetBool(isLandingHash, false);
+            animator.SetBool(isFallingHash, false);
+            animator.SetBool(isLandingHash, true);
+            isFallingg = false;
+            isLanding = false;
+            // animator.SetBool(isLandingHash, false);
 
              StartCoroutine(DisableLandingAnimation(landingAnimationDuration));
         }
 
-        if (isLanding && characterController.isGrounded)
+/*
+        if (isLanding && physicalM.isGrounded == true)
         {
             animator.SetBool(isLandingHash, true);
             Debug.Log("animacion suelo");
@@ -653,6 +663,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         }
 
         */
+        
 
         //Aqui termina
 
