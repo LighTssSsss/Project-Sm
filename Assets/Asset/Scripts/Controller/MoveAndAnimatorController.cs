@@ -228,6 +228,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         cameraForward.Normalize();
 
         //Cambiar el current movement en la direccion donde este viendo la caja
+
         currentMovement = cameraForward * currentMovementInput.y + cameraObject.right * currentMovementInput.x;
         currentMovement.Normalize();
         
@@ -248,6 +249,8 @@ public partial class MoveAndAnimatorController : MonoBehaviour
            
         }
 
+
+
        // Gravity();
         CheckGrounded();      
         HandleRotation();      
@@ -255,10 +258,10 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         HandleJump();
 
 
+        //Debug.Log(characterController.isGrounded);
 
 
-
-        Debug.Log(velocityG);
+        //Debug.Log(velocityG);
     }
 
    
@@ -314,7 +317,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             isJumpAnimation = true;
             physicalM.Jump(jumpPower);
 
-            velocityG = jumpPower;        
+            //velocityG = jumpPower;        
             StartCoroutine(WaitJump(jumpCooldown));
             isJumping = true;
             canJump = false;
@@ -455,6 +458,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         if (isCrouchPressed && isFallingg == false)
         {
             animator.SetBool(isCrouchHash, true);
+
             characterController.center = new Vector3(0, 0.58f, 0);
             characterController.radius = 0.1846104f;
             characterController.height = 1.043544f;
@@ -603,10 +607,11 @@ public partial class MoveAndAnimatorController : MonoBehaviour
     private void CheckGrounded()
     {
         RaycastHit hit;
-        bool isGrounded = Physics.Raycast(transform.position, Vector3.down, out hit, maxRayDistance, groundLayer);
+        //bool isGrounded = Physics.Raycast(transform.position, Vector3.down, out hit, maxRayDistance, groundLayer);
        
         Debug.DrawRay(transform.position, Vector3.down * maxRayDistance, Color.red);
 
+/*
         if (isGrounded && hit.distance > 1f)
         {
             Debug.Log(hit.distance);
@@ -647,6 +652,9 @@ public partial class MoveAndAnimatorController : MonoBehaviour
              animator.SetBool(isLandingHash, false);
         }
 
+        */
+
+        //Aqui termina
 
 
         /*
