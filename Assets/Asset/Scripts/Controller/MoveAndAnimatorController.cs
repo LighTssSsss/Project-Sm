@@ -194,7 +194,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         }
 
 
-        if (isRunPressed && checks.pushInteract == false && inParkour == false && moveObject.push == false && isCrouchPressed == false && colisionHead.obstaculoencima == false)
+        if (isRunPressed && checks.pushInteract == false && inParkour == false && moveObject.push == false && isCrouchPressed == false && colisionHead.obstaculoencima == false )
         {
               physicalM.velocity = new Vector3(currentRunMovement.x, physicalM.velocity.y, currentRunMovement.z);
 
@@ -227,6 +227,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         {
             characterController.Move(currentMovement * Time.deltaTime);
         }
+
         
         
 
@@ -531,6 +532,8 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             if (isMovementPressed && areaInt.loToma == false)
             {
                 animator.SetBool(isPushMoveHash, true);
+
+              
                 pushObject = true;
                // isActionPushin = true;
 
@@ -666,85 +669,6 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         
 
         //Aqui termina
-
-
-        /*
-        if (!isGrounded && minFallHeightForAnimation > hit.distance)
-        {
-            isFallingg = true;
-            isLanding = true;
-            animator.SetBool(isFallingHash, true);
-           // Debug.Log("Animacion Falling");
-           
-        }
-        
-        else
-        {
-            isFallingg = false;
-            animator.SetBool(isFallingHash, false);
-        }
-
-        if (isLanding && isGrounded)
-        {
-            animator.SetBool(isLandingHash, true);
-            
-          
-        }
-
-        else
-        {
-             animator.SetBool(isLandingHash, false);
-        }
-
-        */
-
-
-        /*
-      if (!characterController.isGrounded)
-      {
-          timeInAir += Time.deltaTime;
-          if (timeInAir >= minTimeInAirForFall)
-          {
-              //isFallingg = true;
-              Debug.Log("Callo");
-             // isLanding = true;
-             // animator.SetBool(isFallingHash, true);
-          }
-      }
-      else
-      {
-          // Si el personaje está en el suelo, reinicia el tiempo en el aire
-          animator.SetBool(isFallingHash, false);
-          timeInAir = 0f;
-          Debug.Log("Suelo");
-      }
-
-      if(!isFallingg && characterController.isGrounded)
-      {
-        // animator.SetBool(isLandingHash, true);
-
-        // animator.SetBool(isLandingHash, false);
-          //StartCoroutine(DisableLandingAnimation(landingAnimationDuration));
-      }
-
-      if(isLanding && characterController.isGrounded)
-      {
-          animator.SetBool(isLandingHash, true);
-          //Debug.Log("animacion suelo");
-      }
-
-      else
-      {
-         // animator.SetBool(isLandingHash, false);
-      }
-
-      */
-
-        // Activa la animación de caída si es necesario
-
-
-
-
     }
 
 
