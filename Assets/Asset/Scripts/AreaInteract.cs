@@ -29,6 +29,7 @@ public class AreaInteract : MonoBehaviour
             puedTomarMedicina = true;
             Debug.Log("Medicina");
         }
+
     }
 
    
