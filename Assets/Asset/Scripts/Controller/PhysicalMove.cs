@@ -20,21 +20,16 @@ public class PhysicalMove : MonoBehaviour
     void Start()
     {
         canJumps = true;
-        //move = GetComponent<MoveAndAnimatorController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Revisar el codigo
 
         float gravityScale = fallingGravity;
 
-         if (controller.velocity.y >= 0) gravityScale = jumpGravity;
-             
-        Debug.Log(isGrounded);
-       
-
+        if (controller.velocity.y >= 0) gravityScale = jumpGravity; 
+        
         if (isGrounded == true && disableGroundDetection == 0 && check.obstacleCollision == false)
         {
             velocity.y = 0;
@@ -50,12 +45,8 @@ public class PhysicalMove : MonoBehaviour
             disableGroundDetection -= Time.deltaTime;
             disableGroundDetection = Mathf.Max(0, disableGroundDetection);
         }
-
-        
-
+       
          velocity.y = Mathf.Max(velocity.y, maxFallVelocity);
-
-        // controller.Move(velocity * Time.deltaTime);
     }
 
 

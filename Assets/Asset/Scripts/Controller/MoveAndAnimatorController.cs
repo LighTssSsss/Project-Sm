@@ -215,21 +215,17 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         cameraForward.Normalize();
 
         //Cambiar el current movement en la direccion donde este viendo la caja
+      
+        currentMovement = cameraForward * currentMovementInput.y + cameraObject.right * currentMovementInput.x;
+        currentMovement.Normalize();
+        
 
-        if(isPush == false)
-        {
-            currentMovement = cameraForward * currentMovementInput.y + cameraObject.right * currentMovementInput.x;
-            currentMovement.Normalize();           
-        }
-
-        else
-        {
-            physicalM.velocity = new Vector3(currentMovement.x, physicalM.velocity.y, currentMovement.z);
-            currentMovement = cameraForward * currentMovementInput.y + cameraObject.right * currentMovementInput.x;
-            currentMovement.Normalize();
-        }
+       
         
         currentRunMovement = currentMovement * runMultiplier;
+
+       
+
      
         if(isTrajectoryPressed == true && areaInt.loToma == true)
         {
@@ -528,14 +524,13 @@ public partial class MoveAndAnimatorController : MonoBehaviour
          bool isGrounded = Physics.Raycast(transform.position, Vector3.down, out hit, maxRayDistance, groundLayer);
        
         Debug.DrawRay(transform.position, Vector3.down * maxRayDistance, Color.red);
-        Debug.Log(hit.distance);
 
         if (isGrounded && hit.distance > 3.5f)
         {
             
             isLanding = true;
             isFallingg = true;
-            Debug.Log("Esta cayendo");
+            //Debug.Log("Esta cayendo");
               
             animator.SetBool(isFallingHash, true);
             animator.SetBool(isWalkingHash, false);
