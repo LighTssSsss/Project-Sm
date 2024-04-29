@@ -62,6 +62,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
     public bool playerHaging { get; set; }
 
     public bool isPush;
+    public bool inPersecution;
 
     public float pushForce;
     public float rotationFactorPerFrame;
@@ -195,7 +196,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
              //characterController.Move(currentMovement * Time.deltaTime); 
         }
 
-        if (isSprint)
+        if (isSprint || inPersecution == true)
         {
             
             currentRunMovement *= multiplierSprint;
@@ -279,7 +280,6 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         }
         
     }
-
  
     private IEnumerator WaitJump(float delay)
     {
@@ -287,7 +287,6 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         animator.SetBool(isJumpingHash, false);
         physicalM.canJumps = true;
         isLanding = false;
-
     }
 
     void HandleRotation()
@@ -344,14 +343,14 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         }
 
 
-        if (isMovementPressed && timeSprint >= 4 && !isSprinting && isFallingg == false)
+        if (isMovementPressed && timeSprint >= 4 && !isSprinting && isFallingg == false || inPersecution == true)
         {
             timeSprint = 4;
             animator.SetBool(isSprintigHash, true);
             isSprint = true;
         }
 
-        else if ((!isMovementPressed || !isRunPressed) && timeSprint <= 0 && isSprinting)
+        else if ((!isMovementPressed || !isRunPressed) && timeSprint <= 0 && isSprinting || inPersecution == false)
         {
             timeSprint = 0;
             animator.SetBool(isSprintigHash, false);
@@ -359,7 +358,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
 
 
-        if (isRunPressed && isCrouchPressed == false && colisionHead.obstaculoencima == false)
+        if (isRunPressed && isCrouchPressed == false && colisionHead.obstaculoencima == false || inPersecution == false)
         {
             timeSprint += Time.deltaTime;
 

@@ -81,16 +81,16 @@ public class OldCode : MonoBehaviour
          }
          */
 
-        //if (isFallingg == true && physicalM.isGrounded == true && hit.distance <= 0.5f)
-        //{
-        //    animator.SetBool(isFallingHash, false);
-        //    animator.SetBool(isLandingHash, true);
-        //    isFallingg = false;
-        //    isLanding = false;
-        //    // animator.SetBool(isLandingHash, false);
+    //if (isFallingg == true && physicalM.isGrounded == true && hit.distance <= 0.5f)
+    //{
+    //    animator.SetBool(isFallingHash, false);
+    //    animator.SetBool(isLandingHash, true);
+    //    isFallingg = false;
+    //    isLanding = false;
+    //    // animator.SetBool(isLandingHash, false);
 
-        //    StartCoroutine(DisableLandingAnimation(landingAnimationDuration));
-        //}
+    //    StartCoroutine(DisableLandingAnimation(landingAnimationDuration));
+    //}
 
     //else if (isJumping && !isJumpPressed || isJumpPressed && !physicalM.isGrounded /*!characterController.isGrounded */)
     //    {
@@ -102,21 +102,67 @@ public class OldCode : MonoBehaviour
     //        checks.obstacleCollision = false;
     //    }
 
-        /*
-                if (isLanding && physicalM.isGrounded == true)
-                {
-                    animator.SetBool(isLandingHash, true);
-                    Debug.Log("animacion suelo");
-                }
+    /*
+            if (isLanding && physicalM.isGrounded == true)
+            {
+                animator.SetBool(isLandingHash, true);
+                Debug.Log("animacion suelo");
+            }
 
-                else
-                {
-                     animator.SetBool(isLandingHash, false);
-                }
+            else
+            {
+                 animator.SetBool(isLandingHash, false);
+            }
 
-                */
+            */
 
 
-        //Aqui termina
-    }
+    //Aqui termina
+
+
+    /*
+       for(int i = 0; i < collider.Length; i++)
+       {
+           Debug.Log(" Se detecto el choque con Player");
+           estaAtacando = true;
+
+           if(estaAtacando == true)
+           {
+
+           }
+
+
+           StartCoroutine(NotDamage());
+
+       }*/
+
+
+
+    /*  if (canDamage == true && player != null)
+           {
+               player.GetComponent<HealthSystem>().SetDamageHealth(damage);
+                StartCoroutine(Damage());
+               //canDamage = false;
+
+
+
+
+     private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+       /* if (hit.collider.CompareTag("Player") && hit != null)
+        {
+            Debug.Log("Daño");
+            HealthSystem health = hit.collider.GetComponent<HealthSystem>();
+            if(health != null)
+            {
+                health.GetComponent<HealthSystem>().SetDamageHealth(damage);
+            }
+        }*/
+}
+
+           
+
+
+
+
 

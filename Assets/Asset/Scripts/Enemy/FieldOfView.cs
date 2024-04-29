@@ -91,6 +91,7 @@ public class FieldOfView : MonoBehaviour
         {
             //canSeePlayer = false;
             StartCoroutine(LostObjectTime());
+            
             agent.speed = 3.5f;
             //estadoPersecusion = false;
         }
@@ -119,9 +120,9 @@ public class FieldOfView : MonoBehaviour
     }
 
     IEnumerator LostObjectTime()
-    {
+    {      
         yield return new WaitForSeconds(10);
         canSeePlayer = false;
-        estadoPersecusion = false;
+        estadoPersecusion = false;        
     }
 }
