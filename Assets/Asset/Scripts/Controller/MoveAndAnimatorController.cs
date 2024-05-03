@@ -216,18 +216,24 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         cameraForward.Normalize();
 
         //Cambiar el current movement en la direccion donde este viendo la caja
-      
-        currentMovement = cameraForward * currentMovementInput.y + cameraObject.right * currentMovementInput.x;
-        currentMovement.Normalize();
-        
 
-       
-        
+        if(isPush == false)
+        {
+            currentMovement = cameraForward * currentMovementInput.y + cameraObject.right * currentMovementInput.x;
+            currentMovement.Normalize();
+            Debug.Log("Desbloqueo");
+        }
+
+        if (isPush)
+        {
+            currentMovement = transform.forward * currentMovementInput.y + cameraObject.right * currentMovementInput.x;
+
+            currentMovement.Normalize();
+            Debug.Log("Bloqueo");
+        }
+                                    
         currentRunMovement = currentMovement * runMultiplier;
-
-       
-
-     
+           
         if(isTrajectoryPressed == true && areaInt.loToma == true)
         {
             DrawProjection();
@@ -244,6 +250,8 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         HandleRotation();      
         HandleAnimation();
         HandleJump();
+
+       
 
     }
 
@@ -298,12 +306,15 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         positionLookAt.z = currentMovement.z;
         Quaternion currentRotation = transform.rotation;
 
-        if (isMovementPressed && !inParkour && moveObject.push == false)
+        if (isMovementPressed && !inParkour && moveObject.push == false  && isPush == false)
         {
             Quaternion targetRotation = Quaternion.LookRotation(positionLookAt);
             transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, rotationFactorPerFrame * Time.deltaTime);
+            Debug.Log("Rota");
 
         }
+
+       
 
     }
 
@@ -452,7 +463,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             {
                 animator.SetBool(isPushMoveHash, false);
                 pushObject = false;
-                isPush = false;
+               
             }
 
         }
@@ -466,6 +477,8 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             pushObject = false;
             playerInAction = false;
             isActionPushin = false;
+            moveObject.push = false;
+            isPush = false;
         }
 
         if (isInteractPressed && areaInt != null && checks.pushInteract == false && areaInt.puedoTomarlo == true  && areaInt.objetInter.loTiene == false)
