@@ -226,7 +226,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
         if (isPush)
         {
-            currentMovement = transform.forward * currentMovementInput.y + cameraObject.right * currentMovementInput.x;
+            currentMovement = transform.forward * currentMovementInput.y;
 
             currentMovement.Normalize();
             Debug.Log("Bloqueo");
