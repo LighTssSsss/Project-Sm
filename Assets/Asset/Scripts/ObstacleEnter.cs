@@ -23,6 +23,7 @@ public class ObstacleEnter : MonoBehaviour
         center.y += verticalOffset;
 
         Collider[] colliders = Physics.OverlapBox(center, size, transform.rotation, layerMask);
+
         foreach(Collider player in colliders)
         {
             if (player == null)
@@ -63,7 +64,7 @@ public class ObstacleEnter : MonoBehaviour
     IEnumerator Damage()
     {
         canDamage = false;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(4f);
         canDamage = true;
     }
 }

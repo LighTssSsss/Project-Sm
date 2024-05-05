@@ -369,7 +369,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
 
 
-        if (isRunPressed && isCrouchPressed == false && colisionHead.obstaculoencima == false)
+        if (isRunPressed && isCrouchPressed == false && colisionHead.obstaculoencima == false )
         {
             timeSprint += Time.deltaTime;
 
@@ -382,7 +382,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             isSprint = false;
         }
 
-        if (isCrouchPressed && isFallingg == false)
+        if (isCrouchPressed && isFallingg == false && isRunPressed == false)
         {
             animator.SetBool(isCrouchHash, true);
 
