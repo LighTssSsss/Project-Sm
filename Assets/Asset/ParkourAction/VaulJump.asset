@@ -22,4 +22,4 @@ MonoBehaviour:
   comparedBodyPart: 4
   compareStartTime: 0.01
   compareEndTime: 0.31
-  comparePositionWeight: {x: 0, y: 3, z: 5}
+  comparePositionWeight: {x: 0, y: 3, z: 1}

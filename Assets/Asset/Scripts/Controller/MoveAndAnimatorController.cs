@@ -88,6 +88,8 @@ public partial class MoveAndAnimatorController : MonoBehaviour
     //public float minTimeInAirForFall;
     public float landingAnimationDuration;
     public bool canJump = true;
+    bool isrun;
+
 
     [Header("Fall and Land")]
     public LayerMask groundLayer;
@@ -180,23 +182,23 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         }
 
 
-        if (isRunPressed && checks.pushInteract == false && inParkour == false && moveObject.push == false && isCrouchPressed == false && colisionHead.obstaculoencima == false )
+        if (isRunPressed && checks.pushInteract == false && inParkour == false && moveObject.push == false && isCrouchPressed == false && colisionHead.obstaculoencima == false && isCrouchPressed == false)
         {
               physicalM.velocity = new Vector3(currentRunMovement.x, physicalM.velocity.y, currentRunMovement.z);
-
+              isrun = true;
               characterController.Move(physicalM.velocity * Time.deltaTime);
         }
 
         else
         {
              physicalM.velocity = new Vector3(currentMovement.x, physicalM.velocity.y, currentMovement.z);
-
+            isrun = false;
              characterController.Move(physicalM.velocity * Time.deltaTime);
 
              //characterController.Move(currentMovement * Time.deltaTime); 
         }
 
-        if (isSprint || inPersecution == true)
+        if (isSprint && isCrouchPressed == false )
         {
             
             currentRunMovement *= multiplierSprint;
@@ -340,7 +342,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
 
 
-        if (isMovementPressed && isRunPressed && !isRunning && isFallingg == false)
+        if (isMovementPressed && isRunPressed && !isRunning && isFallingg == false && isCrouchPressed == false)
         {
             animator.SetBool(isRunnigHash, true);
 
@@ -354,7 +356,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         }
 
 
-        if (isMovementPressed && timeSprint >= 4 && !isSprinting && isFallingg == false )
+        if (isMovementPressed && timeSprint >= 4 && !isSprinting && isFallingg == false && isCrouchPressed == false )
         {
             timeSprint = 4;
             animator.SetBool(isSprintigHash, true);
@@ -382,10 +384,9 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             isSprint = false;
         }
 
-        if (isCrouchPressed && isFallingg == false && isRunPressed == false)
+        if (isCrouchPressed && isFallingg == false && isRunPressed == false && isrun == false)
         {
             animator.SetBool(isCrouchHash, true);
-
             characterController.center = new Vector3(0, 0.58f, 0);
             characterController.radius = 0.1846104f;
             characterController.height = 1.043544f;
