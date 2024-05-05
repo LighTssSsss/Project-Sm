@@ -58,7 +58,7 @@ public class PhysicalMove : MonoBehaviour
         
         velocity.y = force;
         canJumps = false;
-        Debug.Log("Fuerza salto: " + force);
+       // Debug.Log("Fuerza salto: " + force);
         disableGroundDetection = 0.2f;
         
     }

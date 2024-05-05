@@ -221,7 +221,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         {
             currentMovement = cameraForward * currentMovementInput.y + cameraObject.right * currentMovementInput.x;
             currentMovement.Normalize();
-            Debug.Log("Desbloqueo");
+           // Debug.Log("Desbloqueo");
         }
 
         if (isPush)
@@ -229,7 +229,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             currentMovement = transform.forward * currentMovementInput.y;
 
             currentMovement.Normalize();
-            Debug.Log("Bloqueo");
+            //Debug.Log("Bloqueo");
         }
                                     
         currentRunMovement = currentMovement * runMultiplier;
@@ -310,7 +310,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         {
             Quaternion targetRotation = Quaternion.LookRotation(positionLookAt);
             transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, rotationFactorPerFrame * Time.deltaTime);
-            Debug.Log("Rota");
+           // Debug.Log("Rota");
 
         }
 
@@ -354,14 +354,14 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         }
 
 
-        if (isMovementPressed && timeSprint >= 4 && !isSprinting && isFallingg == false || inPersecution == true)
+        if (isMovementPressed && timeSprint >= 4 && !isSprinting && isFallingg == false )
         {
             timeSprint = 4;
             animator.SetBool(isSprintigHash, true);
             isSprint = true;
         }
 
-        else if ((!isMovementPressed || !isRunPressed) && timeSprint <= 0 && isSprinting || inPersecution == false)
+        else if ((!isMovementPressed || !isRunPressed) && timeSprint <= 0 && isSprinting)
         {
             timeSprint = 0;
             animator.SetBool(isSprintigHash, false);
@@ -369,7 +369,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
 
 
-        if (isRunPressed && isCrouchPressed == false && colisionHead.obstaculoencima == false || inPersecution == false)
+        if (isRunPressed && isCrouchPressed == false && colisionHead.obstaculoencima == false)
         {
             timeSprint += Time.deltaTime;
 

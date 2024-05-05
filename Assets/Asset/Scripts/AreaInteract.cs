@@ -27,7 +27,7 @@ public class AreaInteract : MonoBehaviour
         if (other.CompareTag("Medicine"))
         {
             puedTomarMedicina = true;
-            Debug.Log("Medicina");
+            //Debug.Log("Medicina");
         }
 
     }
