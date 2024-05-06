@@ -63,7 +63,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
     public bool isPush;
     public bool inPersecution;
-
+    public bool sprintUnlock;
     public float pushForce;
     public float rotationFactorPerFrame;
     public float runMultiplier;
@@ -141,6 +141,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
     private void Awake()
     {
+        Cursor.lockState = CursorLockMode.Locked;
         playerInputs = new PlayerInputs();
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
@@ -166,6 +167,8 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         cameraObject = Camera.main.transform;
 
         isFallingg = false;      
+
+
     }
 
     void Update()
@@ -192,7 +195,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         else
         {
              physicalM.velocity = new Vector3(currentMovement.x, physicalM.velocity.y, currentMovement.z);
-            isrun = false;
+             isrun = false;
              characterController.Move(physicalM.velocity * Time.deltaTime);
 
              //characterController.Move(currentMovement * Time.deltaTime); 
@@ -265,8 +268,9 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         {
             
             isJumpAnimation = true;
+            canJump = false;
             physicalM.Jump(jumpPower);                
-            StartCoroutine(WaitJump(jumpCooldown));
+           //StartCoroutine(WaitJump(jumpCooldown));
             isJumping = true;         
         }
 
@@ -274,13 +278,15 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         {
             isJumping = false; // El jugador ya no está en el aire
             animator.SetBool(isJumpingHash, true);
-            isJumpAnimation = false;
+            isJumpAnimation = false;          
+           // canJump = true;
             checks.obstacleCollision = false;
         }
 
-        else if(isJumping == false && physicalM.isGrounded  )
+        else if(isJumping == false && physicalM.isGrounded)
         {
-            animator.SetBool(isJumpingHash, false);           
+            animator.SetBool(isJumpingHash, false);
+            //StartCoroutine(WaitJump(jumpCooldown));
         }
 
         else if (isJumping == false && physicalM.isGrounded && !isMovementPressed && !isRunPressed) 
@@ -293,7 +299,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
  
     private IEnumerator WaitJump(float delay)
     {
-        yield return new WaitForSeconds(delay);
+        yield return new WaitForSeconds(1);
         animator.SetBool(isJumpingHash, false);
         physicalM.canJumps = true;
         isLanding = false;
@@ -371,7 +377,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
 
 
-        if (isRunPressed && isCrouchPressed == false && colisionHead.obstaculoencima == false )
+        if (isRunPressed && isCrouchPressed == false && colisionHead.obstaculoencima == false && sprintUnlock == true)
         {
             timeSprint += Time.deltaTime;
 
@@ -384,7 +390,12 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             isSprint = false;
         }
 
-        if (isCrouchPressed && isFallingg == false && isRunPressed == false && isrun == false)
+        if(timeSprint >= 4)
+        {
+            timeSprint = 4;
+        }
+
+        if (isCrouchPressed && isFallingg == false && isRunPressed == false && isrun == false && isPush == false)
         {
             animator.SetBool(isCrouchHash, true);
             characterController.center = new Vector3(0, 0.58f, 0);

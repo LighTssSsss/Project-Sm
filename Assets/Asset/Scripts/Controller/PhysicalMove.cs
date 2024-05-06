@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PhysicalMove : MonoBehaviour
 {
-    //[SerializeField] private MoveAndAnimatorController move;
+    
     [SerializeField] private CharacterController controller;
     [SerializeField] private CheckerEnviroment check;
     [SerializeField] private float jumpGravity = 1;
@@ -34,7 +34,7 @@ public class PhysicalMove : MonoBehaviour
         {
             velocity.y = 0;
             canJumps = true;
-            
+           // Debug.Log("Puede");
         }
 
         else
@@ -54,11 +54,12 @@ public class PhysicalMove : MonoBehaviour
 
     public void Jump(float force)
     {
-        if (!canJumps) return;
+        
+        if (canJumps == false) return;
         
         velocity.y = force;
         canJumps = false;
-       // Debug.Log("Fuerza salto: " + force);
+        
         disableGroundDetection = 0.2f;
         
     }
