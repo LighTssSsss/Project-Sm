@@ -318,7 +318,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         {
             Quaternion targetRotation = Quaternion.LookRotation(positionLookAt);
             transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, rotationFactorPerFrame * Time.deltaTime);
-           // Debug.Log("Rota");
+          
 
         }
 

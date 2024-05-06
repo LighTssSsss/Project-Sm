@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
         if(player.health <= 0)
         {
             panel.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
         }
 
        

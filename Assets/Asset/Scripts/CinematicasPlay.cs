@@ -35,6 +35,7 @@ public class CinematicasPlay : MonoBehaviour
             // Debug.Log(" Se detecto el choque con Player");
 
             Time.timeScale = 0;
+            Cursor.lockState = CursorLockMode.None;
             objeto.SetActive(true);
             StartCoroutine(CloseCambios());
             Debug.Log("Muestrame cinematica de salida del mundo o de la pesadilla");
