@@ -81,8 +81,8 @@ public class FieldOfView : MonoBehaviour
 
             else
             {
-                //canSeePlayer = false;
-                StartCoroutine(LostObjectTime());
+                canSeePlayer = false;
+               // StartCoroutine(LostObjectTime());
                 //estadoPersecusion = false;
             }
         }
@@ -121,7 +121,7 @@ public class FieldOfView : MonoBehaviour
 
     IEnumerator LostObjectTime()
     {      
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(4);
         canSeePlayer = false;
         estadoPersecusion = false;        
     }
