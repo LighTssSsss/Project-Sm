@@ -4514,8 +4514,8 @@ Transform:
   m_GameObject: {fileID: 217061961}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 9.4744, y: 10.6, z: 37.408}
-  m_LocalScale: {x: 7.4756813, y: 0.016266761, z: 6.200876}
+  m_LocalPosition: {x: 149.3564, y: 10.54, z: 18.858002}
+  m_LocalScale: {x: 7.4756813, y: 0.016266761, z: 6.2008767}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 190341464}
@@ -4524,7 +4524,7 @@ Transform:
   - {fileID: 554558180}
   - {fileID: 1737527892}
   - {fileID: 353173632}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 638557931}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &218151708
 GameObject:
@@ -5989,7 +5989,7 @@ GameObject:
   - component: {fileID: 298306509}
   - component: {fileID: 298306508}
   m_Layer: 12
-  m_Name: Object Interact 2 (5)
+  m_Name: Botella
   m_TagString: Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13294,6 +13294,11 @@ Transform:
   - {fileID: 14607773}
   - {fileID: 602232803}
   - {fileID: 1300921498}
+  - {fileID: 1653133862}
+  - {fileID: 830576507}
+  - {fileID: 1228603750}
+  - {fileID: 1351215364}
+  - {fileID: 217061965}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &643271324
@@ -17869,11 +17874,11 @@ Transform:
   m_GameObject: {fileID: 830576505}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: 43.965, y: 0.018, z: -9.84}
+  m_LocalPosition: {x: 183.847, y: -0.042, z: -28.39}
   m_LocalScale: {x: 0.09409717, y: 0.09409717, z: 0.09409717}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 638557931}
   m_LocalEulerAnglesHint: {x: 90, y: -90, z: 0}
 --- !u!1 &836876288
 GameObject:
@@ -21794,7 +21799,7 @@ GameObject:
   - component: {fileID: 1035508159}
   - component: {fileID: 1035508158}
   m_Layer: 12
-  m_Name: Object Interact 2 (3)
+  m_Name: Roca
   m_TagString: Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25736,11 +25741,11 @@ Transform:
   m_GameObject: {fileID: 1228603748}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: 43.901, y: 0.018, z: -11.117}
+  m_LocalPosition: {x: 183.783, y: -0.042, z: -29.667}
   m_LocalScale: {x: 0.09409717, y: 0.09409717, z: 0.09409717}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 638557931}
   m_LocalEulerAnglesHint: {x: 90, y: -90, z: 0}
 --- !u!1 &1233084953
 GameObject:
@@ -28902,11 +28907,11 @@ Transform:
   m_GameObject: {fileID: 1351215362}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: 44.514, y: 0.018, z: -10.476}
+  m_LocalPosition: {x: 184.396, y: -0.042, z: -29.026}
   m_LocalScale: {x: 0.09409717, y: 0.09409717, z: 0.09409717}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 638557931}
   m_LocalEulerAnglesHint: {x: 90, y: -90, z: 0}
 --- !u!1 &1353696057
 GameObject:
@@ -29871,7 +29876,7 @@ GameObject:
   - component: {fileID: 1398805691}
   - component: {fileID: 1398805690}
   m_Layer: 12
-  m_Name: Object Interact 2 (4)
+  m_Name: Botella/Roca
   m_TagString: Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35662,11 +35667,11 @@ Transform:
   m_GameObject: {fileID: 1653133860}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: 43.345, y: 0.018, z: -10.471}
+  m_LocalPosition: {x: 183.227, y: -0.042, z: -29.021}
   m_LocalScale: {x: 0.09409717, y: 0.09409717, z: 0.09409717}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 638557931}
   m_LocalEulerAnglesHint: {x: 90, y: -90, z: 0}
 --- !u!1 &1653252690
 GameObject:
@@ -48688,7 +48693,6 @@ SceneRoots:
   - {fileID: 849275701}
   - {fileID: 553853164}
   - {fileID: 1412602177}
-  - {fileID: 217061965}
   - {fileID: 649381028}
   - {fileID: 1930981}
   - {fileID: 1177066424}
@@ -48711,7 +48715,3 @@ SceneRoots:
   - {fileID: 513895855}
   - {fileID: 144484348}
   - {fileID: 638557931}
-  - {fileID: 1653133862}
-  - {fileID: 830576507}
-  - {fileID: 1228603750}
-  - {fileID: 1351215364}
