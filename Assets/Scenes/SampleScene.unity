@@ -4624,6 +4624,7 @@ GameObject:
   - component: {fileID: 223955322}
   - component: {fileID: 223955321}
   - component: {fileID: 223955320}
+  - component: {fileID: 223955326}
   m_Layer: 0
   m_Name: Medicine
   m_TagString: Medicine
@@ -4662,7 +4663,7 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.50000006
   m_Height: 1
@@ -4754,12 +4755,33 @@ Transform:
   m_GameObject: {fileID: 223955319}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.71738666, w: 0.6966753}
-  m_LocalPosition: {x: -59.2153, y: 3.6434, z: 23.0575}
+  m_LocalPosition: {x: -59.213, y: 3.565, z: 23.0575}
   m_LocalScale: {x: 0.30754778, y: 0.661605, z: 0.6292116}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 407089652}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 91.678}
+--- !u!65 &223955326
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 223955319}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.0412498, y: 1.0000001, z: 0.99999994}
+  m_Center: {x: 1.0206267, y: 0.00000761191, z: -0.0000018945819}
 --- !u!1 &224233109
 GameObject:
   m_ObjectHideFlags: 0
@@ -40158,8 +40180,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8462c12f3573051488577620ccee72bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 7.82
-  angle: 169
+  radius: 8.4
+  angle: 183
   lostTarget: 10
   playerReft: {fileID: 0}
   targetMask:
