@@ -266,7 +266,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
        
         if (!isJumping && isJumpPressed && physicalM.canJumps == true && checks.obstacleCollision == false && isClimbing == false && isActionPushin == false && isCrouchPressed == false && colisionHead.obstaculoencima == false)
         {
-            
+            animator.SetBool(isJumpingHash, true);
             isJumpAnimation = true;
             canJump = false;
             physicalM.Jump(jumpPower);                
@@ -277,7 +277,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         else if (isJumping && !isJumpPressed || isJumpPressed && !physicalM.isGrounded)
         {
             isJumping = false; // El jugador ya no está en el aire
-            animator.SetBool(isJumpingHash, true);
+           // 
             isJumpAnimation = false;          
            // canJump = true;
             checks.obstacleCollision = false;
