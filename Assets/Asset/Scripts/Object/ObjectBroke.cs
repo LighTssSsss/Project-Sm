@@ -16,8 +16,9 @@ public class ObjectBroke : MonoBehaviour
         {
             if (collision.gameObject.CompareTag("Ground"))
             {
-                Debug.Log("Reproduce Sonido");
+              //  Debug.Log("Reproduce Sonido");
                 SoundPlay();
+                Destroy(this.gameObject, 1f);
             }
         }
     }
@@ -45,7 +46,7 @@ public class ObjectBroke : MonoBehaviour
 
         var sound = new SoundChecker(transform.position, soundRange);
 
-        Debug.Log("Sound wit position: " + (sound.pos) + "and range: " + (sound.ranges));
+        //Debug.Log("Sound wit position: " + (sound.pos) + "and range: " + (sound.ranges));
         sound.soundType = SoundChecker.SoundType.Insteresting;
         SoundsCh.MakeSound(sound);
     }

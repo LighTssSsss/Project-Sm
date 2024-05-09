@@ -8,6 +8,7 @@ public class FieldOfView : MonoBehaviour
     public float radius;
     [Range(0,360)]
     public float angle;
+    public float lostTarget;
 
     public GameObject playerReft;
 
@@ -73,7 +74,7 @@ public class FieldOfView : MonoBehaviour
 
                 else
                 {
-                    StartCoroutine(LostObjectTime());
+                    StartCoroutine(LostObjectTime(lostTarget));
                    // canSeePlayer = false;
                    // estadoPersecusion = false;
                 }
@@ -90,7 +91,7 @@ public class FieldOfView : MonoBehaviour
         else if (canSeePlayer)
         {
             //canSeePlayer = false;
-            StartCoroutine(LostObjectTime());
+            StartCoroutine(LostObjectTime(lostTarget));
             
             agent.speed = 3.5f;
             //estadoPersecusion = false;
@@ -119,9 +120,9 @@ public class FieldOfView : MonoBehaviour
         }
     }
 
-    IEnumerator LostObjectTime()
+    IEnumerator LostObjectTime(float target)
     {      
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(target);
         canSeePlayer = false;
         estadoPersecusion = false;        
     }

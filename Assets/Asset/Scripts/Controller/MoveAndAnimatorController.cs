@@ -362,9 +362,9 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         }
 
 
-        if (isMovementPressed && timeSprint >= 4 && !isSprinting && isFallingg == false && isCrouchPressed == false )
+        if (isMovementPressed && timeSprint >= 2 && !isSprinting && isFallingg == false && isCrouchPressed == false )
         {
-            timeSprint = 4;
+            timeSprint = 2;
             animator.SetBool(isSprintigHash, true);
             isSprint = true;
         }
@@ -390,9 +390,9 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             isSprint = false;
         }
 
-        if(timeSprint >= 4)
+        if(timeSprint >= 2)
         {
-            timeSprint = 4;
+            timeSprint = 2;
         }
 
         if (isCrouchPressed && isFallingg == false && isRunPressed == false && isrun == false && isPush == false)
