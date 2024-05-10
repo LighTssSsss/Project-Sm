@@ -36,4 +36,5 @@ public class FieldOfViewEditor : Editor
 
         return new Vector3(Mathf.Sin(angleInDegress * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegress * Mathf.Deg2Rad));
     }
+    
 }
