@@ -127,6 +127,12 @@ public partial class MoveAndAnimatorController : MonoBehaviour
     public Camera cam;
     public float forceLauch;
 
+
+    [Header("Blend Tree")]
+    public float velocidad = 0.0f;
+    public float aceleracion = 0.1f;
+    public float desaceleracion = 0.5f;
+
   
 
     private void OnEnable()

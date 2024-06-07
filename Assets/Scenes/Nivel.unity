@@ -2449,6 +2449,59 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1234180020}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &415650228
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 415650229}
+  - component: {fileID: 415650230}
+  m_Layer: 0
+  m_Name: Cabeza
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &415650229
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 415650228}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.013, y: 2.547, z: -0.058}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1216232521}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &415650230
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 415650228}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.17
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &420199404
 GameObject:
   m_ObjectHideFlags: 0
@@ -8252,6 +8305,8 @@ GameObject:
   - component: {fileID: 1216232521}
   - component: {fileID: 1216232522}
   - component: {fileID: 1216232523}
+  - component: {fileID: 1216232525}
+  - component: {fileID: 1216232524}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -8273,6 +8328,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1528473872}
+  - {fileID: 415650229}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!95 &1216232522
@@ -8322,6 +8378,87 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1.33, z: -0.04}
+--- !u!114 &1216232524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1216232520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db6d375ebf3e5f049a44940c028cdbfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 1216232523}
+  check: {fileID: 0}
+  jumpGravity: 1
+  fallingGravity: 3
+  maxFallVelocity: -10
+  canJumps: 0
+  isGrounded: 0
+  velocity: {x: 0, y: 0, z: 0}
+--- !u!114 &1216232525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1216232520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e69a1aad0e88a943ae67b15113813fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterController: {fileID: 1216232523}
+  colisionHead: {fileID: 0}
+  animator: {fileID: 0}
+  speed: 0
+  physicalM: {fileID: 1216232524}
+  isFallingg: 0
+  isClimbing: 0
+  inParkour: 0
+  isJumpAnimation: 0
+  isLeavePressed: 0
+  isCrouchPressed: 0
+  isInteractPressed: 0
+  isDropPressed: 0
+  isReleasePressed: 0
+  playerControl: 1
+  isJumpPressed: 0
+  isJumping: 0
+  isPush: 0
+  inPersecution: 0
+  sprintUnlock: 0
+  pushForce: 0
+  rotationFactorPerFrame: 0
+  runMultiplier: 0
+  multiplierSprint: 0
+  maxRayDistance: 0
+  timeSprint: 0
+  gravity: -9.81
+  gravityMultiplier: 3
+  maxFallGravity: -10
+  jumpPower: 0
+  jumpCooldown: 0
+  landingAnimationDuration: 0
+  canJump: 1
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  minFallHeightForAnimation: 0
+  areaInt: {fileID: 0}
+  lineRenderer: {fileID: 0}
+  releasePosition: {fileID: 0}
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 0
+  lineSegmentCount: 20
+  linePoints: 25
+  timeBetweenPoint: 0.1
+  pushObject: 0
+  cam: {fileID: 0}
+  forceLauch: 0
 --- !u!1 &1225612028
 GameObject:
   m_ObjectHideFlags: 0
