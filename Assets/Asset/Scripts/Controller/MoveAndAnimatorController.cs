@@ -157,6 +157,8 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         healthSyst = GetComponent<HealthSystem>();
         physicalM = GetComponent<PhysicalMove>();
 
+
+        /*
         isWalkingHash = Animator.StringToHash("isWalking");
         isRunnigHash = Animator.StringToHash("isRunning");
         isSprintigHash = Animator.StringToHash("isSprinting");
@@ -167,6 +169,8 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         isMoveCrouchHash = Animator.StringToHash("isMoveCrouch");
         isPushHash = Animator.StringToHash("isPush");
         isPushMoveHash = Animator.StringToHash("isPushMove");
+
+        */
 
         SubscribeInput();
 
@@ -260,7 +264,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         CheckGrounded();      
         HandleRotation();      
         HandleAnimation();
-        HandleJump();
+      //  HandleJump();
 
        
 
@@ -335,57 +339,89 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
     void HandleAnimation()
     {
-        bool isWalking = animator.GetBool(isWalkingHash);
+       /* bool isWalking = animator.GetBool(isWalkingHash);
         bool isRunning = animator.GetBool(isRunnigHash);
         bool isSprinting = animator.GetBool(isSprintigHash);
-        bool isCrouchMovement = animator.GetBool(isMoveCrouchHash);
+        bool isCrouchMovement = animator.GetBool(isMoveCrouchHash);*/
 
-        if (isMovementPressed && !isWalking && isFallingg == false)
+        if (isMovementPressed /*&& !isWalking*/ && isFallingg == false && velocidad < 0.1f && isRunPressed == false)
         {
-            animator.SetBool(isWalkingHash, true);
+            //animator.SetBool(isWalkingHash, true);
+            // animator.SetFloat("Velocidad", 0.06f);            
+            velocidad += Time.deltaTime * aceleracion;
+           
             timeSprint = 0;
         }
 
-        else if (!isMovementPressed && isWalking)
+        else if (!isMovementPressed /*&& isWalking*/ && velocidad > 0.0f && isRunPressed == false)
         {
-            animator.SetBool(isWalkingHash, false);
+            // animator.SetBool(isWalkingHash, false);
+            // animator.SetFloat("Velocidad", 0.05f);
+            velocidad = 0.0f;
+            Debug.Log("Dejo");
+            //velocidad = 0.0f;
             timeSprint = 0;
         }
 
 
-
-        if (isMovementPressed && isRunPressed && !isRunning && isFallingg == false && isCrouchPressed == false)
+        if (isMovementPressed && isRunPressed /*&& !isRunning*/ && isFallingg == false && isCrouchPressed == false && velocidad <= 0.5)
         {
-            animator.SetBool(isRunnigHash, true);
+            // animator.SetBool(isRunnigHash, true);
+           
+            velocidad += Time.deltaTime * aceleracion;
+           
+           // velocidad = 0.7f;
+        }
+
+        else if ((isMovementPressed || !isRunPressed) /*&& isRunning*/ && velocidad > 1.0f && velocidad <= 0.1f)
+        {
+            //animator.SetBool(isRunnigHash, false);
+           // velocidad -= 0.0f;
+            velocidad -= Time.deltaTime * desaceleracion;
+            // velocidad = 0.0f;
 
         }
 
-        else if ((!isMovementPressed || !isRunPressed) && isRunning)
+        else if ((!isMovementPressed || !isRunPressed) /*&& isRunning*/ && velocidad > 1.0f)
         {
-            animator.SetBool(isRunnigHash, false);
-
+            //animator.SetBool(isRunnigHash, false);
+             velocidad -= 0.0f;
+             
+            // velocidad = 0.0f;
 
         }
 
 
-        if (isMovementPressed && timeSprint >= 2 && !isSprinting && isFallingg == false && isCrouchPressed == false )
+
+        if (isMovementPressed && timeSprint >= 2 /* && !isSprinting*/ && isFallingg == false && isCrouchPressed == false )
         {
             timeSprint = 2;
-            animator.SetBool(isSprintigHash, true);
+            //  animator.SetBool(isSprintigHash, true);
+            // velocidad = 1f;
+            if (velocidad < 0.1)
+            {
+                velocidad += Time.deltaTime * aceleracion;
+            }
+            else
+            {
+                velocidad = 0.1f;
+            }
             isSprint = true;
         }
 
-        else if ((!isMovementPressed || !isRunPressed) && timeSprint <= 0 && isSprinting)
+        else if ((!isMovementPressed || !isRunPressed) && timeSprint <= 0 /*&& isSprinting*/)
         {
             timeSprint = 0;
-            animator.SetBool(isSprintigHash, false);
+            //velocidad = 0f;
+            //velocidad -= Time.deltaTime * desaceleracion;
+            //animator.SetBool(isSprintigHash, false);
         }
 
 
 
         if (isRunPressed && isCrouchPressed == false && colisionHead.obstaculoencima == false && sprintUnlock == true)
         {
-            timeSprint += Time.deltaTime;
+            //timeSprint += Time.deltaTime;
 
         }
 
@@ -396,6 +432,8 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             isSprint = false;
         }
 
+        animator.SetFloat("Velocidad", velocidad);
+
         if(timeSprint >= 2)
         {
             timeSprint = 2;
@@ -403,7 +441,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
         if (isCrouchPressed && isFallingg == false && isRunPressed == false && isrun == false && isPush == false)
         {
-            animator.SetBool(isCrouchHash, true);
+            //animator.SetBool(isCrouchHash, true);
             characterController.center = new Vector3(0, 0.58f, 0);
             characterController.radius = 0.1846104f;
             characterController.height = 1.043544f;
@@ -414,7 +452,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         {
             if(colisionHead.obstaculoencima == false)
             {
-                animator.SetBool(isCrouchHash, false);
+                //animator.SetBool(isCrouchHash, false);
 
 
                 characterController.center = new Vector3(0, 0.84f, 0);
@@ -427,35 +465,35 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
         if(!isMovementPressed && colisionHead.obstaculoencima == true)
         {
-            animator.SetBool(isCrouchHash, true);
-            animator.SetBool(isMoveCrouchHash, false);
+           /* animator.SetBool(isCrouchHash, true);
+            animator.SetBool(isMoveCrouchHash, false);*/
         }
 
-        if (isCrouchPressed && isMovementPressed && !isCrouchMovement || isMovementPressed && colisionHead.obstaculoencima == true)
+        if (isCrouchPressed && isMovementPressed /*&& !isCrouchMovement*/ || isMovementPressed && colisionHead.obstaculoencima == true)
         {
-            animator.SetBool(isMoveCrouchHash, true);
+           // animator.SetBool(isMoveCrouchHash, true);
         }
 
         else if (isCrouchPressed && !isMovementPressed)
         {
-            animator.SetBool(isMoveCrouchHash, false);
-            animator.SetBool(isCrouchHash, true);
+            /*animator.SetBool(isMoveCrouchHash, false);
+            animator.SetBool(isCrouchHash, true);*/
 
         }
 
         else if(isMovementPressed && colisionHead.obstaculoencima == false && !isCrouchPressed)
         {
-            animator.SetBool(isCrouchHash, false);
+            /*animator.SetBool(isCrouchHash, false);
             animator.SetBool(isMoveCrouchHash, false);
-            animator.SetBool(isWalkingHash, true);
+            animator.SetBool(isWalkingHash, true);*/
         }
 
         else if (isMovementPressed && colisionHead.obstaculoencima == false && !isCrouchPressed && isRunPressed)
         {
-            animator.SetBool(isCrouchHash, false);
+           /* animator.SetBool(isCrouchHash, false);
             animator.SetBool(isMoveCrouchHash, false);
             animator.SetBool(isWalkingHash, false);
-            animator.SetBool(isRunnigHash, false);
+            animator.SetBool(isRunnigHash, false);*/
         }
 
 
@@ -479,7 +517,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
             else
             {
-                animator.SetBool(isPushMoveHash, false);
+                //animator.SetBool(isPushMoveHash, false);
                 pushObject = false;
                
             }
@@ -490,8 +528,8 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
         else
         {
-            animator.SetBool(isPushHash, false);
-            animator.SetBool(isPushMoveHash, false);
+          /*  animator.SetBool(isPushHash, false);
+            animator.SetBool(isPushMoveHash, false);*/
             pushObject = false;
             playerInAction = false;
             isActionPushin = false;
