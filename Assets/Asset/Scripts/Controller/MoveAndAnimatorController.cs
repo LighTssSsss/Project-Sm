@@ -129,6 +129,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
 
     [Header("Blend Tree")]
+    public float clampValue;
     public float velocidad = 0.0f;
     public float aceleracion = 0.1f;
     public float desaceleracion = 0.5f;
@@ -344,40 +345,49 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         bool isSprinting = animator.GetBool(isSprintigHash);
         bool isCrouchMovement = animator.GetBool(isMoveCrouchHash);*/
 
-        if (isMovementPressed /*&& !isWalking*/ && isFallingg == false && velocidad < 0.1f && isRunPressed == false)
+        if (isMovementPressed /*&& !isWalking*/ && isFallingg == false && isRunPressed == false )
         {
             //animator.SetBool(isWalkingHash, true);
-            // animator.SetFloat("Velocidad", 0.06f);            
+            //animator.SetFloat("Velocidad", 0.06f);    
             velocidad += Time.deltaTime * aceleracion;
-           
+            clampValue = Mathf.Lerp(clampValue, 0.59f, Time.deltaTime * aceleracion);
+            velocidad = Mathf.Clamp(velocidad, 0, clampValue);
+            animator.SetFloat("Velocidad", velocidad);
+
+
             timeSprint = 0;
         }
 
-        else if (!isMovementPressed /*&& isWalking*/ && velocidad > 0.0f && isRunPressed == false)
+        else 
         {
             // animator.SetBool(isWalkingHash, false);
             // animator.SetFloat("Velocidad", 0.05f);
-            velocidad = 0.0f;
-            Debug.Log("Dejo");
-            //velocidad = 0.0f;
+
+            velocidad -= Time.deltaTime * desaceleracion;
+            velocidad = Mathf.Clamp(velocidad, 0, 1f);
+            animator.SetFloat("Velocidad", velocidad);
+
+
+
             timeSprint = 0;
         }
 
 
-        if (isMovementPressed && isRunPressed /*&& !isRunning*/ && isFallingg == false && isCrouchPressed == false && velocidad <= 0.5)
+        if (isMovementPressed && isRunPressed /*&& !isRunning*/ && isFallingg == false && isCrouchPressed == false)
         {
             // animator.SetBool(isRunnigHash, true);
+         
            
-            velocidad += Time.deltaTime * aceleracion;
-           
-           // velocidad = 0.7f;
+            // velocidad += Time.deltaTime * aceleracion;
+
+            // velocidad = 0.7f;
         }
 
         else if ((isMovementPressed || !isRunPressed) /*&& isRunning*/ && velocidad > 1.0f && velocidad <= 0.1f)
         {
             //animator.SetBool(isRunnigHash, false);
            // velocidad -= 0.0f;
-            velocidad -= Time.deltaTime * desaceleracion;
+           // velocidad -= Time.deltaTime * desaceleracion;
             // velocidad = 0.0f;
 
         }
@@ -385,7 +395,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         else if ((!isMovementPressed || !isRunPressed) /*&& isRunning*/ && velocidad > 1.0f)
         {
             //animator.SetBool(isRunnigHash, false);
-             velocidad -= 0.0f;
+           //  velocidad = 0.0f;
              
             // velocidad = 0.0f;
 
@@ -400,11 +410,11 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             // velocidad = 1f;
             if (velocidad < 0.1)
             {
-                velocidad += Time.deltaTime * aceleracion;
+               // velocidad += Time.deltaTime * aceleracion;
             }
             else
             {
-                velocidad = 0.1f;
+                //velocidad = 0.1f;
             }
             isSprint = true;
         }
@@ -417,7 +427,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             //animator.SetBool(isSprintigHash, false);
         }
 
-
+        
 
         if (isRunPressed && isCrouchPressed == false && colisionHead.obstaculoencima == false && sprintUnlock == true)
         {
@@ -432,7 +442,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             isSprint = false;
         }
 
-        animator.SetFloat("Velocidad", velocidad);
+        
 
         if(timeSprint >= 2)
         {
