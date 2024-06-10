@@ -376,18 +376,24 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         if (isMovementPressed && isRunPressed /*&& !isRunning*/ && isFallingg == false && isCrouchPressed == false)
         {
             // animator.SetBool(isRunnigHash, true);
-         
-           
-            // velocidad += Time.deltaTime * aceleracion;
 
+
+            velocidad += Time.deltaTime * aceleracion;
+            clampValue = Mathf.Lerp(clampValue, 0.8f, Time.deltaTime * desaceleracion);
+            velocidad = Mathf.Clamp(velocidad, 0, clampValue);
+            animator.SetFloat("Velocidad", velocidad);
             // velocidad = 0.7f;
         }
 
         else if ((isMovementPressed || !isRunPressed) /*&& isRunning*/ && velocidad > 1.0f && velocidad <= 0.1f)
         {
+            velocidad -= Time.deltaTime * aceleracion;
+            clampValue = Mathf.Lerp(clampValue, 0.59f, Time.deltaTime * desaceleracion);
+            velocidad = Mathf.Clamp(velocidad, 0, clampValue);
+            animator.SetFloat("Velocidad", velocidad);
             //animator.SetBool(isRunnigHash, false);
-           // velocidad -= 0.0f;
-           // velocidad -= Time.deltaTime * desaceleracion;
+            // velocidad -= 0.0f;
+            // velocidad -= Time.deltaTime * desaceleracion;
             // velocidad = 0.0f;
 
         }
@@ -395,8 +401,10 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         else if ((!isMovementPressed || !isRunPressed) /*&& isRunning*/ && velocidad > 1.0f)
         {
             //animator.SetBool(isRunnigHash, false);
-           //  velocidad = 0.0f;
-             
+            //  velocidad = 0.0f;
+            velocidad -= Time.deltaTime * desaceleracion;
+            velocidad = Mathf.Clamp(velocidad, 0, 1f);
+            animator.SetFloat("Velocidad", velocidad);
             // velocidad = 0.0f;
 
         }
@@ -408,14 +416,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             timeSprint = 2;
             //  animator.SetBool(isSprintigHash, true);
             // velocidad = 1f;
-            if (velocidad < 0.1)
-            {
-               // velocidad += Time.deltaTime * aceleracion;
-            }
-            else
-            {
-                //velocidad = 0.1f;
-            }
+            
             isSprint = true;
         }
 
