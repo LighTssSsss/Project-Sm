@@ -8824,9 +8824,9 @@ MonoBehaviour:
   pushObject: 0
   cam: {fileID: 538419085}
   forceLauch: 5
-  clampValue: 0.35
+  clampValue: 0.43
   velocidad: 0
-  aceleracion: 0.1
+  aceleracion: 3.7
   desaceleracion: 3.2
 --- !u!65 &1216232526
 BoxCollider:
