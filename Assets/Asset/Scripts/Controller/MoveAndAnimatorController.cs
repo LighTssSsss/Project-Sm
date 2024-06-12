@@ -173,6 +173,8 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
         */
 
+        isJumpingHash = Animator.StringToHash("isJumping");
+
         SubscribeInput();
 
         cameraObject = Camera.main.transform;
@@ -265,7 +267,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         CheckGrounded();      
         HandleRotation();      
         HandleAnimation();
-      //  HandleJump();
+        HandleJump();
 
        
 
@@ -282,30 +284,58 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             canJump = false;
             physicalM.Jump(jumpPower);                
            //StartCoroutine(WaitJump(jumpCooldown));
-            isJumping = true;         
+            isJumping = true;
+            Debug.Log("Salto");
         }
 
-        else if (isJumping && !isJumpPressed || isJumpPressed && !physicalM.isGrounded)
+        if (isJumping && !isJumpPressed && physicalM.isGrounded || isJumpPressed && physicalM.isGrounded)
         {
-            isJumping = false; // El jugador ya no está en el aire
-           // 
-            isJumpAnimation = false;          
-           // canJump = true;
+            //animator.SetBool(isJumpingHash, false);
+            isJumping = false;
+            isJumpAnimation = false;
             checks.obstacleCollision = false;
+            canJump = true;
+            Debug.Log("Aterrizó");
         }
 
-        else if(isJumping == false && physicalM.isGrounded)
+        else if (isJumping == false && physicalM.isGrounded)
         {
             animator.SetBool(isJumpingHash, false);
-            //StartCoroutine(WaitJump(jumpCooldown));
+
         }
 
-        else if (isJumping == false && physicalM.isGrounded && !isMovementPressed && !isRunPressed) 
+        else if (isJumping == false && physicalM.isGrounded && !isMovementPressed && !isRunPressed)
         {
             animator.SetBool(isJumpingHash, false);
-           
+
         }
-        
+
+       
+
+
+
+        /* if (isJumping && !isJumpPressed || isJumpPressed && !physicalM.isGrounded)
+         {
+             isJumping = false; // El jugador ya no está en el aire
+            // 
+             isJumpAnimation = false;          
+            // canJump = true;
+             checks.obstacleCollision = false;
+
+         }
+
+         else if(isJumping == false && physicalM.isGrounded)
+         {
+             animator.SetBool(isJumpingHash, false);
+             //StartCoroutine(WaitJump(jumpCooldown));
+         }
+
+         else if (isJumping == false && physicalM.isGrounded && !isMovementPressed && !isRunPressed) 
+         {
+             animator.SetBool(isJumpingHash, false);
+
+         }*/
+
     }
  
     private IEnumerator WaitJump(float delay)
@@ -369,7 +399,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
 
 
-            timeSprint = 0;
+            //timeSprint = 0;
         }
 
 
@@ -377,11 +407,12 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         {
             // animator.SetBool(isRunnigHash, true);
 
-
+            timeSprint += Time.deltaTime;
             velocidad += Time.deltaTime * aceleracion;
             clampValue = Mathf.Lerp(clampValue, 0.8f, Time.deltaTime * desaceleracion);
             velocidad = Mathf.Clamp(velocidad, 0, clampValue);
             animator.SetFloat("Velocidad", velocidad);
+            
             // velocidad = 0.7f;
         }
 
@@ -391,6 +422,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             clampValue = Mathf.Lerp(clampValue, 0.59f, Time.deltaTime * desaceleracion);
             velocidad = Mathf.Clamp(velocidad, 0, clampValue);
             animator.SetFloat("Velocidad", velocidad);
+           
             //animator.SetBool(isRunnigHash, false);
             // velocidad -= 0.0f;
             // velocidad -= Time.deltaTime * desaceleracion;
@@ -414,15 +446,21 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         if (isMovementPressed && timeSprint >= 2 /* && !isSprinting*/ && isFallingg == false && isCrouchPressed == false )
         {
             timeSprint = 2;
+            clampValue = Mathf.Lerp(clampValue, 1.5f, Time.deltaTime * desaceleracion);
+            velocidad = Mathf.Clamp(velocidad, 0, clampValue);
+            animator.SetFloat("Velocidad", velocidad);
             //  animator.SetBool(isSprintigHash, true);
             // velocidad = 1f;
-            
+
             isSprint = true;
         }
 
-        else if ((!isMovementPressed || !isRunPressed) && timeSprint <= 0 /*&& isSprinting*/)
+        else if ((!isMovementPressed || !isRunPressed) && timeSprint <= 0 && velocidad > 1.0f/*&& isSprinting*/)
         {
-            timeSprint = 0;
+           // timeSprint = 0;
+            velocidad -= Time.deltaTime * desaceleracion;
+            velocidad = Mathf.Clamp(velocidad, 0, 1f);
+            animator.SetFloat("Velocidad", velocidad);
             //velocidad = 0f;
             //velocidad -= Time.deltaTime * desaceleracion;
             //animator.SetBool(isSprintigHash, false);
@@ -439,7 +477,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
         else
         {
-            timeSprint = 0;
+           // timeSprint = 0;
             isSprint = false;
         }
 

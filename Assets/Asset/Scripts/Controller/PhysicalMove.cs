@@ -34,7 +34,8 @@ public class PhysicalMove : MonoBehaviour
         {
             velocity.y = 0;
             canJumps = true;
-           // Debug.Log("Puede");
+           
+            // Debug.Log("Puede");
         }
 
         else
