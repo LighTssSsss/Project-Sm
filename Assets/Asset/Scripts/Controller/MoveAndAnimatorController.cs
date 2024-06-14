@@ -417,7 +417,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
             timeSprint += Time.deltaTime;
             velocidad += Time.deltaTime * aceleracion;
-            clampValue = Mathf.Lerp(clampValue, 0.8f, Time.deltaTime * desaceleracion);
+            clampValue = Mathf.Lerp(clampValue, 0.8f, Time.deltaTime * aceleracion);
             velocidad = Mathf.Clamp(velocidad, 0, clampValue);
             animator.SetFloat("Velocidad", velocidad);
             
@@ -426,7 +426,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
         else if ((isMovementPressed || !isRunPressed) /*&& isRunning*/ && velocidad > 1.0f && velocidad <= 0.1f)
         {
-            velocidad -= Time.deltaTime * aceleracion;
+            velocidad -= Time.deltaTime * desaceleracion;
             clampValue = Mathf.Lerp(clampValue, 0.59f, Time.deltaTime * desaceleracion);
             velocidad = Mathf.Clamp(velocidad, 0, clampValue);
             animator.SetFloat("Velocidad", velocidad);
@@ -486,7 +486,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
         if(timeSprint >= 2)
         {
-            timeSprint = 2;
+            timeSprint = 3;
         }
 
         if (isCrouchPressed && isFallingg == false && isRunPressed == false && isrun == false && isPush == false)
@@ -505,9 +505,9 @@ public partial class MoveAndAnimatorController : MonoBehaviour
                 animator.SetBool(isCrouchHash, false);
 
 
-                characterController.center = new Vector3(0, 1.17f, -0.04f);
+                characterController.center = new Vector3(0, 1.26f, -0.04f);
                 characterController.radius = 0.2716253f;
-                characterController.height = 2.083044f;
+                characterController.height = 1.933063f;
             }
 
             
@@ -767,11 +767,16 @@ public partial class MoveAndAnimatorController : MonoBehaviour
        // characterController.enabled = hasControl;
         
         if (!hasControl)
-        {            
-            animator.SetBool(isWalkingHash, false);
-            animator.SetBool(isJumpingHash, false);
-            animator.SetBool(isRunnigHash, false);
-            animator.SetBool(isWalkingHash, false);
+        {
+            /* animator.SetBool(isWalkingHash, false);
+             animator.SetBool(isJumpingHash, false);
+             animator.SetBool(isRunnigHash, false);
+             animator.SetBool(isWalkingHash, false);
+             animator.SetBool(isFallingHash, false);
+             animator.SetBool(isLandingHash, false);
+             animator.SetBool(isCrouchHash, false)*/
+
+            animator.SetFloat("Velocidad", 0f);
             animator.SetBool(isFallingHash, false);
             animator.SetBool(isLandingHash, false);
             animator.SetBool(isCrouchHash, false);

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40c715ea7052f7d40a277027e618acd5, type: 3}
   m_Name: ClimbingUp
   m_EditorClassIdentifier: 
-  animationName: ClimbingUp
+  animationName: Climb Up
   barrierTag: 
   minimumHeight: 2
   maximumHeight: 3

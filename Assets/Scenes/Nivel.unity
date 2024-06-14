@@ -5858,8 +5858,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.1169263, y: 1, z: 1.1779646}
+  m_Center: {x: 0.0039014176, y: 0, z: 0.041991375}
 --- !u!23 &927637437
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8797,7 +8797,7 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 1.17, z: -0.04}
+  m_Center: {x: 0, y: 1.26, z: -0.04}
 --- !u!114 &1216232524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8911,7 +8911,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1216232520}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c6567f9b0e1b1a4c88b6189ad1fa661, type: 3}
   m_Name: 
@@ -15344,9 +15344,9 @@ SceneRoots:
   - {fileID: 961739753}
   - {fileID: 203844589}
   - {fileID: 1160234427}
-  - {fileID: 1216232521}
   - {fileID: 1234180020}
   - {fileID: 212028254}
+  - {fileID: 1216232521}
   - {fileID: 334986806}
   - {fileID: 538419084}
   - {fileID: 1392860986}
