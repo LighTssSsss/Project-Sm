@@ -174,6 +174,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         */
 
         isJumpingHash = Animator.StringToHash("isJumping");
+        isCrouchHash = Animator.StringToHash("isCrounch");
 
         SubscribeInput();
 
@@ -273,41 +274,42 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
     }
 
-   
+
     private void HandleJump()
     {
-       
+
         if (!isJumping && isJumpPressed && physicalM.canJumps == true && checks.obstacleCollision == false && isClimbing == false && isActionPushin == false && isCrouchPressed == false && colisionHead.obstaculoencima == false)
         {
             animator.SetBool(isJumpingHash, true);
             isJumpAnimation = true;
-            canJump = false;
-            physicalM.Jump(jumpPower);                
-           //StartCoroutine(WaitJump(jumpCooldown));
+            canJump = false;    
             isJumping = true;
+            StartCoroutine(WaitJump(1f));
+            physicalM.Jump(jumpPower);
             Debug.Log("Salto");
         }
 
-        if (isJumping && !isJumpPressed && physicalM.isGrounded || isJumpPressed && physicalM.isGrounded)
+       else if (isJumping && !isJumpPressed && physicalM.isGrounded)
         {
-            //animator.SetBool(isJumpingHash, false);
-            isJumping = false;
+            animator.SetBool(isJumpingHash, false);
+            //isJumping = false;
             isJumpAnimation = false;
             checks.obstacleCollision = false;
-            canJump = true;
+           // physicalM.canJumps = false;
+            // canJump = true;
             Debug.Log("Aterrizó");
         }
 
-        else if (isJumping == false && physicalM.isGrounded)
+        else if (isJumping == false && physicalM.isGrounded && isJumpPressed)
         {
             animator.SetBool(isJumpingHash, false);
-
+            isJumpAnimation = false;
         }
 
         else if (isJumping == false && physicalM.isGrounded && !isMovementPressed && !isRunPressed)
         {
             animator.SetBool(isJumpingHash, false);
-
+            isJumpAnimation = false;
         }
 
        
@@ -340,8 +342,10 @@ public partial class MoveAndAnimatorController : MonoBehaviour
  
     private IEnumerator WaitJump(float delay)
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(delay);
         animator.SetBool(isJumpingHash, false);
+        canJump = true;
+        isJumping = false;      
         physicalM.canJumps = true;
         isLanding = false;
     }
@@ -374,6 +378,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         bool isRunning = animator.GetBool(isRunnigHash);
         bool isSprinting = animator.GetBool(isSprintigHash);
         bool isCrouchMovement = animator.GetBool(isMoveCrouchHash);*/
+       bool isCrouchMovement = animator.GetBool(isMoveCrouchHash);
 
         if (isMovementPressed /*&& !isWalking*/ && isFallingg == false && isRunPressed == false )
         {
@@ -413,7 +418,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             velocidad = Mathf.Clamp(velocidad, 0, clampValue);
             animator.SetFloat("Velocidad", velocidad);
             
-            // velocidad = 0.7f;
+           
         }
 
         else if ((isMovementPressed || !isRunPressed) /*&& isRunning*/ && velocidad > 1.0f && velocidad <= 0.1f)
@@ -424,20 +429,17 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             animator.SetFloat("Velocidad", velocidad);
            
             //animator.SetBool(isRunnigHash, false);
-            // velocidad -= 0.0f;
-            // velocidad -= Time.deltaTime * desaceleracion;
-            // velocidad = 0.0f;
+          
 
         }
 
         else if ((!isMovementPressed || !isRunPressed) /*&& isRunning*/ && velocidad > 1.0f)
         {
-            //animator.SetBool(isRunnigHash, false);
-            //  velocidad = 0.0f;
+            //animator.SetBool(isRunnigHash, false);         
             velocidad -= Time.deltaTime * desaceleracion;
             velocidad = Mathf.Clamp(velocidad, 0, 1f);
             animator.SetFloat("Velocidad", velocidad);
-            // velocidad = 0.0f;
+          
 
         }
 
@@ -449,20 +451,16 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             clampValue = Mathf.Lerp(clampValue, 1.5f, Time.deltaTime * desaceleracion);
             velocidad = Mathf.Clamp(velocidad, 0, clampValue);
             animator.SetFloat("Velocidad", velocidad);
-            //  animator.SetBool(isSprintigHash, true);
-            // velocidad = 1f;
+            //animator.SetBool(isSprintigHash, true);
 
             isSprint = true;
         }
 
         else if ((!isMovementPressed || !isRunPressed) && timeSprint <= 0 && velocidad > 1.0f/*&& isSprinting*/)
         {
-           // timeSprint = 0;
             velocidad -= Time.deltaTime * desaceleracion;
             velocidad = Mathf.Clamp(velocidad, 0, 1f);
             animator.SetFloat("Velocidad", velocidad);
-            //velocidad = 0f;
-            //velocidad -= Time.deltaTime * desaceleracion;
             //animator.SetBool(isSprintigHash, false);
         }
 
@@ -490,23 +488,23 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
         if (isCrouchPressed && isFallingg == false && isRunPressed == false && isrun == false && isPush == false)
         {
-            //animator.SetBool(isCrouchHash, true);
+            animator.SetBool(isCrouchHash, true);
             characterController.center = new Vector3(0, 0.58f, 0);
             characterController.radius = 0.1846104f;
             characterController.height = 1.043544f;
-
+            
         }
 
          else
         {
             if(colisionHead.obstaculoencima == false)
             {
-                //animator.SetBool(isCrouchHash, false);
+                animator.SetBool(isCrouchHash, false);
 
 
-                characterController.center = new Vector3(0, 0.84f, 0);
-                characterController.radius = 0.1846104f;
-                characterController.height = 1.61f;
+                characterController.center = new Vector3(0, 1.17f, -0.04f);
+                characterController.radius = 0.2716253f;
+                characterController.height = 2.27501f;
             }
 
             
@@ -514,8 +512,8 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
         if(!isMovementPressed && colisionHead.obstaculoencima == true)
         {
-           /* animator.SetBool(isCrouchHash, true);
-            animator.SetBool(isMoveCrouchHash, false);*/
+            animator.SetBool(isCrouchHash, true);
+            animator.SetBool(isMoveCrouchHash, false);
         }
 
         if (isCrouchPressed && isMovementPressed /*&& !isCrouchMovement*/ || isMovementPressed && colisionHead.obstaculoencima == true)
