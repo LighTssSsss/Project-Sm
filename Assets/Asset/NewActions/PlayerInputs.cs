@@ -293,6 +293,34 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             ""id"": ""d053d81e-fc6f-4db8-a5d9-1ad9909c8750"",
             ""actions"": [],
             ""bindings"": []
+        },
+        {
+            ""name"": ""Game"",
+            ""id"": ""81aa7a65-ff7e-46d0-95ad-a2adcf9fa781"",
+            ""actions"": [
+                {
+                    ""name"": ""Pausa"",
+                    ""type"": ""Button"",
+                    ""id"": ""df3b0d35-72a4-4b72-922e-d502ce6e2ef0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""af0f8bee-7199-4ce7-9280-6b0ae7cb654d"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC and Gamepad"",
+                    ""action"": ""Pausa"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -316,6 +344,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_Movement_Projectile = m_Movement.FindAction("Projectile", throwIfNotFound: true);
         // Actions
         m_Actions = asset.FindActionMap("Actions", throwIfNotFound: true);
+        // Game
+        m_Game = asset.FindActionMap("Game", throwIfNotFound: true);
+        m_Game_Pausa = m_Game.FindAction("Pausa", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -521,6 +552,52 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         }
     }
     public ActionsActions @Actions => new ActionsActions(this);
+
+    // Game
+    private readonly InputActionMap m_Game;
+    private List<IGameActions> m_GameActionsCallbackInterfaces = new List<IGameActions>();
+    private readonly InputAction m_Game_Pausa;
+    public struct GameActions
+    {
+        private @PlayerInputs m_Wrapper;
+        public GameActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Pausa => m_Wrapper.m_Game_Pausa;
+        public InputActionMap Get() { return m_Wrapper.m_Game; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(GameActions set) { return set.Get(); }
+        public void AddCallbacks(IGameActions instance)
+        {
+            if (instance == null || m_Wrapper.m_GameActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_GameActionsCallbackInterfaces.Add(instance);
+            @Pausa.started += instance.OnPausa;
+            @Pausa.performed += instance.OnPausa;
+            @Pausa.canceled += instance.OnPausa;
+        }
+
+        private void UnregisterCallbacks(IGameActions instance)
+        {
+            @Pausa.started -= instance.OnPausa;
+            @Pausa.performed -= instance.OnPausa;
+            @Pausa.canceled -= instance.OnPausa;
+        }
+
+        public void RemoveCallbacks(IGameActions instance)
+        {
+            if (m_Wrapper.m_GameActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IGameActions instance)
+        {
+            foreach (var item in m_Wrapper.m_GameActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_GameActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public GameActions @Game => new GameActions(this);
     private int m_PCandGamepadSchemeIndex = -1;
     public InputControlScheme PCandGamepadScheme
     {
@@ -544,5 +621,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     }
     public interface IActionsActions
     {
+    }
+    public interface IGameActions
+    {
+        void OnPausa(InputAction.CallbackContext context);
     }
 }

@@ -271,6 +271,34 @@
             "id": "d053d81e-fc6f-4db8-a5d9-1ad9909c8750",
             "actions": [],
             "bindings": []
+        },
+        {
+            "name": "Game",
+            "id": "81aa7a65-ff7e-46d0-95ad-a2adcf9fa781",
+            "actions": [
+                {
+                    "name": "Pausa",
+                    "type": "Button",
+                    "id": "df3b0d35-72a4-4b72-922e-d502ce6e2ef0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "af0f8bee-7199-4ce7-9280-6b0ae7cb654d",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC and Gamepad",
+                    "action": "Pausa",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [
