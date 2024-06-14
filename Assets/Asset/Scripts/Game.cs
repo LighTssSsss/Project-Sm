@@ -26,6 +26,7 @@ public class Game : MonoBehaviour
         playerInput = new PlayerInputs();
         playerInput.Game.Pausa.started += OnPausa;
         playerInput.Game.Pausa.canceled -= OnPausa;
+        pausa.SetActive(false);
     }
   
     // Update is called once per frame
@@ -33,8 +34,8 @@ public class Game : MonoBehaviour
     {
         if(pausePressed)
         {
-            Time.timeScale = 0;
-            pausa.SetActive(true);
+           Time.timeScale = 0;
+           pausa.SetActive(true);
            Cursor.lockState = CursorLockMode.None;
         }
 
@@ -50,9 +51,5 @@ public class Game : MonoBehaviour
     }
 
 
-    public void ContinuarPausa()
-    {
-        Time.timeScale = 1;
-        pausa.SetActive(false);
-    }
+    
 }

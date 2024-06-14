@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.ShaderData;
 
 public class Botones : MonoBehaviour
 {
+    public GameObject pausa;
     public void Comenzar()
     {
 
@@ -19,5 +21,11 @@ public class Botones : MonoBehaviour
 
     }
 
-    
+    public void ContinuarPausa()
+    {
+        Debug.Log("presiono");
+        Time.timeScale = 1;
+        //Cursor.lockState = CursorLockMode.Locked;
+        pausa.SetActive(false);
+    }
 }
