@@ -170,13 +170,14 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         isMoveCrouchHash = Animator.StringToHash("isMoveCrouch");
         isPushHash = Animator.StringToHash("isPush");
         isPushMoveHash = Animator.StringToHash("isPushMove");
-
+        
         */
 
         isJumpingHash = Animator.StringToHash("isJumping");
         isCrouchHash = Animator.StringToHash("isCrounch");
         isMoveCrouchHash = Animator.StringToHash("isMoveCrouch");
         isPushHash = Animator.StringToHash("isPushing");
+        isPushMoveHash = Animator.StringToHash("isPushWalk");
 
         SubscribeInput();
 
@@ -506,7 +507,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
                 characterController.center = new Vector3(0, 1.17f, -0.04f);
                 characterController.radius = 0.2716253f;
-                characterController.height = 2.27501f;
+                characterController.height = 2.083044f;
             }
 
             
@@ -577,7 +578,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
             else
             {
-                //animator.SetBool(isPushMoveHash, false);
+                animator.SetBool(isPushMoveHash, false);
                 pushObject = false;
                
             }
@@ -588,8 +589,8 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
         else
         {
-           animator.SetBool(isPushHash, false);
-            /* animator.SetBool(isPushMoveHash, false);*/
+            animator.SetBool(isPushHash, false);
+            animator.SetBool(isPushMoveHash, false);
             pushObject = false;
             playerInAction = false;
             isActionPushin = false;
@@ -661,11 +662,11 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             //Debug.Log("Esta cayendo");
               
             animator.SetBool(isFallingHash, true);
-            animator.SetBool(isWalkingHash, false);
+           /* animator.SetBool(isWalkingHash, false);
             animator.SetBool(isRunnigHash, false);
             animator.SetBool(isSprintigHash, false);
             animator.SetBool(isWalkingHash, false);
-            animator.SetBool(isRunnigHash, false);
+            animator.SetBool(isRunnigHash, false);*/
             animator.SetBool(isJumpingHash, false);
         }
 
