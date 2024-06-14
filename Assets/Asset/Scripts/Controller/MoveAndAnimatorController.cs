@@ -176,6 +176,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         isJumpingHash = Animator.StringToHash("isJumping");
         isCrouchHash = Animator.StringToHash("isCrounch");
         isMoveCrouchHash = Animator.StringToHash("isMoveCrouch");
+        isPushHash = Animator.StringToHash("isPushing");
 
         SubscribeInput();
 
@@ -517,7 +518,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             animator.SetBool(isMoveCrouchHash, false);
         }
 
-        if (isCrouchPressed && isMovementPressed /*&& !isCrouchMovement*/ || isMovementPressed && colisionHead.obstaculoencima == true)
+        if (isCrouchPressed && isMovementPressed && !isCrouchMovement || isMovementPressed && colisionHead.obstaculoencima == true)
         {
             animator.SetBool(isMoveCrouchHash, true);
         }
@@ -587,8 +588,8 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
         else
         {
-          /*  animator.SetBool(isPushHash, false);
-            animator.SetBool(isPushMoveHash, false);*/
+           animator.SetBool(isPushHash, false);
+            /* animator.SetBool(isPushMoveHash, false);*/
             pushObject = false;
             playerInAction = false;
             isActionPushin = false;
