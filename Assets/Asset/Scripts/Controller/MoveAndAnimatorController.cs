@@ -175,6 +175,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
         isJumpingHash = Animator.StringToHash("isJumping");
         isCrouchHash = Animator.StringToHash("isCrounch");
+        isMoveCrouchHash = Animator.StringToHash("isMoveCrouch");
 
         SubscribeInput();
 
@@ -378,7 +379,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         bool isRunning = animator.GetBool(isRunnigHash);
         bool isSprinting = animator.GetBool(isSprintigHash);
         bool isCrouchMovement = animator.GetBool(isMoveCrouchHash);*/
-       bool isCrouchMovement = animator.GetBool(isMoveCrouchHash);
+        bool isCrouchMovement = animator.GetBool(isMoveCrouchHash);
 
         if (isMovementPressed /*&& !isWalking*/ && isFallingg == false && isRunPressed == false )
         {
@@ -518,28 +519,39 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
         if (isCrouchPressed && isMovementPressed /*&& !isCrouchMovement*/ || isMovementPressed && colisionHead.obstaculoencima == true)
         {
-           // animator.SetBool(isMoveCrouchHash, true);
+            animator.SetBool(isMoveCrouchHash, true);
         }
 
         else if (isCrouchPressed && !isMovementPressed)
         {
-            /*animator.SetBool(isMoveCrouchHash, false);
-            animator.SetBool(isCrouchHash, true);*/
+            animator.SetBool(isMoveCrouchHash, false);
+            animator.SetBool(isCrouchHash, true);
 
         }
 
-        else if(isMovementPressed && colisionHead.obstaculoencima == false && !isCrouchPressed)
+        else if(isMovementPressed && colisionHead.obstaculoencima == false && !isCrouchPressed && !isRunPressed)
         {
-            /*animator.SetBool(isCrouchHash, false);
+            animator.SetBool(isCrouchHash, false);
             animator.SetBool(isMoveCrouchHash, false);
-            animator.SetBool(isWalkingHash, true);*/
+            animator.SetFloat("Velocidad", velocidad);
+            /*animator.SetBool(isWalkingHash, true);*/
         }
 
         else if (isMovementPressed && colisionHead.obstaculoencima == false && !isCrouchPressed && isRunPressed)
         {
-           /* animator.SetBool(isCrouchHash, false);
+            animator.SetBool(isCrouchHash, false);
             animator.SetBool(isMoveCrouchHash, false);
-            animator.SetBool(isWalkingHash, false);
+            velocidad = 0.79f;
+            animator.SetFloat("Velocidad", velocidad);
+            /*animator.SetBool(isWalkingHash, true);*/
+        }
+
+        else if (isMovementPressed && colisionHead.obstaculoencima == false && !isCrouchPressed)
+        {
+            animator.SetBool(isCrouchHash, false);
+            animator.SetBool(isMoveCrouchHash, false);
+            animator.SetFloat("Velocidad", velocidad);
+            /*animator.SetBool(isWalkingHash, false);
             animator.SetBool(isRunnigHash, false);*/
         }
 
