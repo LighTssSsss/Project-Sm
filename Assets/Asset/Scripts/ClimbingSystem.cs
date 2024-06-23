@@ -98,11 +98,13 @@ public class ClimbingSystem : MonoBehaviour
 
     IEnumerator PerformParkourAction(NewParkour action)
     {
+
        // Quaternion forwardRotation = Quaternion.LookRotation(Vector3.forward);
         movement.inParkour = true;
         character.enabled = false;
         character.detectCollisions = false;
         animator.applyRootMotion = true;
+
 
         CompareTargetParameter compareTargetParameter = null;
 
@@ -125,13 +127,20 @@ public class ClimbingSystem : MonoBehaviour
         character.detectCollisions = true;
         animator.applyRootMotion = false;
 
+
+        
+        
        
     }
+
+
 
     void CompareTarget(NewParkour action)
     {
         animator.MatchTarget(action.comparePosition, transform.rotation, action.CompareBodyPart, new MatchTargetWeightMask((action.ComparePositionWeight), 0), action.CompareStartTime, action.CompareEndTime);
     }
+
+
 
     /* IEnumerator PerformParkourAction(NewParkour action)
      {
