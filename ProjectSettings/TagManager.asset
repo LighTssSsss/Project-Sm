@@ -17,6 +17,7 @@ TagManager:
   - Mecanismo
   - MetaCine
   - ParedBaja
+  - Puerta
   layers:
   - Default
   - TransparentFX
@@ -33,7 +34,7 @@ TagManager:
   - InteractObject
   - Enemy
   - PostProcesado
-  - 
+  - Puerta
   - 
   - 
   - 
