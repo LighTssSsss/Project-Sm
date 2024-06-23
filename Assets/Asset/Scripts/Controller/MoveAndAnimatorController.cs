@@ -47,6 +47,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
     bool isRunPressed;
     bool isTrajectoryPressed;
     bool isActionPushin;
+   
 
     public bool inParkour;
     public bool playerInAction { get; private set; }
@@ -404,18 +405,18 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             velocidad -= Time.deltaTime * desaceleracion;
             velocidad = Mathf.Clamp(velocidad, 0, 1f);
             animator.SetFloat("Velocidad", velocidad);
-
+          
 
 
             //timeSprint = 0;
         }
 
 
-        if (isMovementPressed && isRunPressed /*&& !isRunning*/ && isFallingg == false && isCrouchPressed == false)
+        if (isMovementPressed && isRunPressed /*&& !isRunning*/ && isFallingg == false && isCrouchPressed == false && inPersecution == false)
         {
             // animator.SetBool(isRunnigHash, true);
 
-            timeSprint += Time.deltaTime;
+           // timeSprint += Time.deltaTime;
             velocidad += Time.deltaTime * aceleracion;
             clampValue = Mathf.Lerp(clampValue, 0.8f, Time.deltaTime * aceleracion);
             velocidad = Mathf.Clamp(velocidad, 0, clampValue);
@@ -448,7 +449,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
 
 
-        if (isMovementPressed && timeSprint >= 2 /* && !isSprinting*/ && isFallingg == false && isCrouchPressed == false )
+        if (isMovementPressed /*&& timeSprint >= 2  && !isSprinting*/ && isFallingg == false && isCrouchPressed == false && inPersecution == true)
         {
             timeSprint = 2;
             clampValue = Mathf.Lerp(clampValue, 1.5f, Time.deltaTime * desaceleracion);
@@ -486,7 +487,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
         if(timeSprint >= 2)
         {
-            timeSprint = 3;
+           // timeSprint = 3;
         }
 
         if (isCrouchPressed && isFallingg == false && isRunPressed == false && isrun == false && isPush == false)
