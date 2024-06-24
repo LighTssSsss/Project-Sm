@@ -99,7 +99,7 @@ public class ClimbingSystem : MonoBehaviour
     IEnumerator PerformParkourAction(NewParkour action)
     {
 
-       // Quaternion forwardRotation = Quaternion.LookRotation(Vector3.forward);
+        //Quaternion forwardRotation = Quaternion.LookRotation(Vector3.forward);
         movement.inParkour = true;
         character.enabled = false;
         character.detectCollisions = false;
@@ -120,7 +120,7 @@ public class ClimbingSystem : MonoBehaviour
             };
         }
 
-        yield return movement.PerformAction(action.AnimationName, compareTargetParameter, /*forwardRotation*/ action.requiredRotation, action.LookAtObstacle, action.ParkourActionDelay);
+        yield return movement.PerformAction(action.AnimationName, compareTargetParameter, /*forwardRotation,*/ action.requiredRotation, action.LookAtObstacle, action.ParkourActionDelay);
 
         character.enabled = true;
         movement.inParkour = false;

@@ -58,7 +58,7 @@ public class NewParkour : ScriptableObject
         {
             requiredRotation = Quaternion.LookRotation(-hitData.hitInfo.normal);
             //Vector3 forwardDirection = new Vector3(0.1f, 0, 1).normalized;
-            //requiredRotation = Quaternion.LookRotation(forwardDirection);
+           // requiredRotation = Quaternion.LookRotation(forwardDirection);
         }
 
        
