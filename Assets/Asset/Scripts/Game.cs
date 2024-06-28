@@ -6,8 +6,10 @@ using UnityEngine.InputSystem;
 public class Game : MonoBehaviour
 {
 
+    public static Game Instance;
+
     PlayerInputs playerInput;
-    public bool pausePressed;
+    public static bool estaPausado;
     public GameObject pausa;
     // Start is called before the first frame update
 
@@ -23,32 +25,44 @@ public class Game : MonoBehaviour
 
     private void Awake()
     {
+        Instance  = this;
+
         playerInput = new PlayerInputs();
         playerInput.Game.Pausa.started += OnPausa;
         playerInput.Game.Pausa.canceled -= OnPausa;
         pausa.SetActive(false);
     }
   
-    // Update is called once per frame
-    void Update()
-    {
-        if(pausePressed)
-        {
-           Time.timeScale = 0;
-           pausa.SetActive(true);
-           Cursor.lockState = CursorLockMode.None;
-        }
-
-       else
-        {
-           
-        }
-    }
-
     void OnPausa(InputAction.CallbackContext context)
     {
-        pausePressed = context.ReadValueAsButton();
+        if (context.ReadValueAsButton())
+        {
+            Toggle();
+        }
     }
+
+    private void Toggle()
+    {
+        estaPausado = !estaPausado;
+        SetPausa(estaPausado);
+    }
+
+    public void SetPausa(bool active)
+    {
+        if (active)
+        {
+            Time.timeScale = 0;
+            pausa.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            Debug.Log("presiono");
+            Time.timeScale = 1;
+            Cursor.lockState = CursorLockMode.Locked;
+            pausa.SetActive(false);
+        }
+    } 
 
 
     

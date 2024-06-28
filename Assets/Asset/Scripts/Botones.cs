@@ -23,9 +23,10 @@ public class Botones : MonoBehaviour
 
     public void ContinuarPausa()
     {
-        Debug.Log("presiono");
-        Time.timeScale = 1;
+        Game.Instance.SetPausa(false);
+        //Debug.Log("presiono");
+        //Time.timeScale = 1;
         //Cursor.lockState = CursorLockMode.Locked;
-        pausa.SetActive(false);
+        //pausa.SetActive(false);
     }
 }

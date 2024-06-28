@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -125,7 +126,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
     [Header("Variable references")]
     public bool pushObject;
-    public Camera cam;
+    public CinemachineVirtualCamera cam;
     public float forceLauch;
 
 
