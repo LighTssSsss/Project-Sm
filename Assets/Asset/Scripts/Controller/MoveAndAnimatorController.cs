@@ -126,7 +126,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
     [Header("Variable references")]
     public bool pushObject;
-    public CinemachineVirtualCamera cam;
+    public CinemachineFreeLook cam;
     public float forceLauch;
 
 
