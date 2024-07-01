@@ -8728,7 +8728,6 @@ GameObject:
   - component: {fileID: 222678919}
   - component: {fileID: 222678918}
   - component: {fileID: 222678917}
-  - component: {fileID: 222678916}
   m_Layer: 0
   m_Name: Prop_Sandbag_Wall (2)
   m_TagString: Untagged
@@ -8736,28 +8735,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!64 &222678916
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 222678915}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -7022833923757080385, guid: ecf1e596d39e0344eaefab828f889fa0, type: 3}
 --- !u!23 &222678917
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -27285,6 +27262,7 @@ Transform:
   - {fileID: 937979065}
   - {fileID: 1047809856}
   - {fileID: 787688142}
+  - {fileID: 1710549852}
   - {fileID: 2096842298}
   m_Father: {fileID: 502521101}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -33319,7 +33297,7 @@ PrefabInstance:
     - target: {fileID: 4383553484781942807, guid: 51d397987bf212447b6c60d0330911dd,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.29
+      value: -0.37
       objectReference: {fileID: 0}
     - target: {fileID: 4383553484781942807, guid: 51d397987bf212447b6c60d0330911dd,
         type: 3}
@@ -33379,7 +33357,7 @@ PrefabInstance:
     - target: {fileID: 8133615983569771081, guid: 51d397987bf212447b6c60d0330911dd,
         type: 3}
       propertyPath: m_Size.x
-      value: 4.43815
+      value: 3.9372532
       objectReference: {fileID: 0}
     - target: {fileID: 8133615983569771081, guid: 51d397987bf212447b6c60d0330911dd,
         type: 3}
@@ -33394,7 +33372,7 @@ PrefabInstance:
     - target: {fileID: 8133615983569771081, guid: 51d397987bf212447b6c60d0330911dd,
         type: 3}
       propertyPath: m_Center.x
-      value: 0.33293414
+      value: 0.20791088
       objectReference: {fileID: 0}
     - target: {fileID: 8133615983569771081, guid: 51d397987bf212447b6c60d0330911dd,
         type: 3}
@@ -59494,7 +59472,6 @@ GameObject:
   - component: {fileID: 1518684535}
   - component: {fileID: 1518684534}
   - component: {fileID: 1518684533}
-  - component: {fileID: 1518684532}
   m_Layer: 0
   m_Name: Prop_Sandbag_Wall (3)
   m_TagString: Untagged
@@ -59502,28 +59479,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!64 &1518684532
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1518684531}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -7022833923757080385, guid: ecf1e596d39e0344eaefab828f889fa0, type: 3}
 --- !u!23 &1518684533
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -63767,7 +63722,7 @@ GameObject:
   - component: {fileID: 1620906105}
   - component: {fileID: 1620906104}
   - component: {fileID: 1620906103}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Techo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -66848,6 +66803,124 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1710044811}
   m_Mesh: {fileID: -8076092053346408422, guid: 031aa782c77c5ac4bae6143eeb58c1c7, type: 3}
+--- !u!1 &1710549851
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1710549852}
+  - component: {fileID: 1710549854}
+  - component: {fileID: 1710549853}
+  m_Layer: 0
+  m_Name: Directional Light (35)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1710549852
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1710549851}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.7071011, y: -0.7071011, z: 0.0028326213, w: -0.0028326213}
+  m_LocalPosition: {x: -0.09781, y: 0.06792, z: 0.0175}
+  m_LocalScale: {x: 0.011738369, y: 0.011738366, z: 0.011738367}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 745773742}
+  m_LocalEulerAnglesHint: {x: 90.458984, y: 0, z: 0}
+--- !u!114 &1710549853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1710549851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_RenderingLayers: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
+--- !u!108 &1710549854
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1710549851}
+  m_Enabled: 1
+  serializedVersion: 10
+  m_Type: 0
+  m_Shape: 0
+  m_Color: {r: 0.5471698, g: 0.49038804, b: 0.5156244, a: 1}
+  m_Intensity: 8.96
+  m_Range: 6.3296666
+  m_SpotAngle: 77.74529
+  m_InnerSpotAngle: 33.901474
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingLayerMask: 1
+  m_Lightmapping: 4
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
 --- !u!1 &1716964022
 GameObject:
   m_ObjectHideFlags: 0
