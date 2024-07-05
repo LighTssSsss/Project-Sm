@@ -136,7 +136,10 @@ public partial class MoveAndAnimatorController : MonoBehaviour
     public float aceleracion = 0.1f;
     public float desaceleracion = 0.5f;
 
-  
+
+    [Header("Notas")]
+    public GameObject notas;
+    public bool tomoLaNota;
 
     private void OnEnable()
     {
@@ -633,6 +636,22 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             healthSyst.recupera = true;
             areaInt.puedTomarMedicina = false;
            
+        }
+
+        //Aqui Notas
+        if(isInteractPressed && areaInt.puedoTomarNota == true && tomoLaNota == false)
+        {
+            tomoLaNota = true;
+            notas.SetActive(true);
+            speed = 0;
+        }
+
+
+        if (isDropPressed && areaInt.puedoTomarNota == true && tomoLaNota == true)
+        {
+            tomoLaNota = false;
+            notas.SetActive(false);
+            speed = 2;
         }
 
 

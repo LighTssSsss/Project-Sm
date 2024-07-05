@@ -10,6 +10,8 @@ public class AreaInteract : MonoBehaviour
    public bool loToma;
 
 
+    //public GameObject notas;
+    public bool puedoTomarNota;
 
     private void Update()
     {
@@ -29,6 +31,14 @@ public class AreaInteract : MonoBehaviour
             puedTomarMedicina = true;
             //Debug.Log("Medicina");
         }
+
+        if (other.CompareTag("Nota"))
+        {
+            puedoTomarNota = true;
+        }
+
+        
+
 
     }
 
@@ -55,6 +65,12 @@ public class AreaInteract : MonoBehaviour
         if (other.CompareTag("Medicine"))
         {
             puedTomarMedicina = false;
+        }
+
+
+        if (other.CompareTag("Nota"))
+        {
+            puedoTomarNota = false;
         }
     }
   

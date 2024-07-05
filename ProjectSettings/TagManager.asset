@@ -18,6 +18,8 @@ TagManager:
   - MetaCine
   - ParedBaja
   - Puerta
+  - Nota
+  - interracion
   layers:
   - Default
   - TransparentFX
