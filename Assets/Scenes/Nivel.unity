@@ -15011,8 +15011,6 @@ Transform:
   - {fileID: 2085556691}
   - {fileID: 1212315804}
   - {fileID: 1640881931}
-  - {fileID: 1349938713}
-  - {fileID: 1551144323}
   - {fileID: 71803567}
   - {fileID: 1113212068}
   - {fileID: 368587243}
@@ -57251,7 +57249,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 351827924}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4383553484781942807, guid: 51d397987bf212447b6c60d0330911dd,
         type: 3}
@@ -57363,12 +57361,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 51d397987bf212447b6c60d0330911dd, type: 3}
---- !u!4 &1349938713 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4383553484781942807, guid: 51d397987bf212447b6c60d0330911dd,
-    type: 3}
-  m_PrefabInstance: {fileID: 1349938712}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1352406376
 GameObject:
   m_ObjectHideFlags: 0
@@ -66286,7 +66278,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 351827924}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4383553484781942807, guid: 51d397987bf212447b6c60d0330911dd,
         type: 3}
@@ -66398,12 +66390,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 51d397987bf212447b6c60d0330911dd, type: 3}
---- !u!4 &1551144323 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4383553484781942807, guid: 51d397987bf212447b6c60d0330911dd,
-    type: 3}
-  m_PrefabInstance: {fileID: 1551144322}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1553635446
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -89493,6 +89479,8 @@ SceneRoots:
   - {fileID: 1234180020}
   - {fileID: 1095415954}
   - {fileID: 300037232}
+  - {fileID: 1349938712}
+  - {fileID: 1551144322}
   - {fileID: 351827924}
   - {fileID: 1756066875}
   - {fileID: 867502670}
