@@ -153,6 +153,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
     private void Awake()
     {
+        Time.timeScale = 1;
         Cursor.lockState = CursorLockMode.Locked;
         playerInputs = new PlayerInputs();
         characterController = GetComponent<CharacterController>();
@@ -206,7 +207,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             return;
         }
 
-       // Vector3 moveDir = Quaternion.Euler(0f,angl)
+        // Vector3 moveDir = Quaternion.Euler(0f,angl)
 
 
         if (isRunPressed && checks.pushInteract == false && inParkour == false && moveObject.push == false && isCrouchPressed == false && colisionHead.obstaculoencima == false && isCrouchPressed == false)

@@ -60,7 +60,7 @@ public class Guardador : MonoBehaviour
          }
      }*/
 
-    
+   
 
     private void Guardado()
     {
@@ -74,12 +74,13 @@ public class Guardador : MonoBehaviour
             DataManager.data.posicionPlayer = true;
             DataManager.data.posicion = this.transform.position;
             DataManager.data.posicion = this.transform.position;
+            
             Debug.Log("Guarda");
 
             
         }
 
-            
+        DataManager.Save();
 
     }
 
