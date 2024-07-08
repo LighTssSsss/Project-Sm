@@ -70,8 +70,9 @@ public class Guardador : MonoBehaviour
         Collider[] colliders = Physics.OverlapBox(center, size, transform.rotation, layerMask);
 
         foreach (Collider player in colliders)
-        {            
-           
+        {
+            DataManager.data.posicionPlayer = true;
+            DataManager.data.posicion = this.transform.position;
             DataManager.data.posicion = this.transform.position;
             Debug.Log("Guarda");
 

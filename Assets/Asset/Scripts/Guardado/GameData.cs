@@ -9,6 +9,7 @@ public class GameData
 {
     public float vidaActual; // variable vida que quiero guardar
     public Vector3 posicion; // posicion que quiero guardar del player
+    public Vector3 posicionCamara;
     public bool cinematicaTermino; // veo si la cinematica ya se reprodujo
     public bool parkour;
     public bool persecucion;
@@ -30,11 +31,11 @@ public class GameData
 
     public GameData()
     {
-        vidaActual = 3;
+        vidaActual = 100;
         posicionPlayer = false;
 
-        posicion = new Vector3(0, 0, 0);
-
+        posicion = new Vector3(10.91044f, -0.8581856f, 0.04091856f);
+        posicionCamara = new Vector3(12.21856f, 0.6449999f, 0.5327948f);
         cinematicaTermino = false;
         parkour = false; //dash
         //desactivado = false;
