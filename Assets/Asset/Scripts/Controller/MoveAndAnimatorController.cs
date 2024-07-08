@@ -106,7 +106,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
     private MoveableObject moveObject;
     public AreaInteract areaInt;
     private HealthSystem healthSyst;
-
+    
 
     [Header("Trajectory")]
     [SerializeField] private LineRenderer lineRenderer;
@@ -126,7 +126,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
     [Header("Variable references")]
     public bool pushObject;
-    public CinemachineFreeLook cam;
+    public Transform cam;
     public float forceLauch;
 
 
@@ -205,6 +205,8 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         {
             return;
         }
+
+       // Vector3 moveDir = Quaternion.Euler(0f,angl)
 
 
         if (isRunPressed && checks.pushInteract == false && inParkour == false && moveObject.push == false && isCrouchPressed == false && colisionHead.obstaculoencima == false && isCrouchPressed == false)
