@@ -10,17 +10,18 @@ public class Cinematica : MonoBehaviour
     [SerializeField] private float verticalOffset = 0;
     [SerializeField] private Vector3 size = Vector3.one;
     [SerializeField] private LayerMask layerMask;
-    public PlayableDirector cinematica;
+     public PlayableDirector cinematica;
 
     public float tiempoApaga;
     public bool poseeCinematica;
     public bool tengoCinematica = true;
     private bool CinematicaListaPlayer;
-
+    private bool puedoR;
 
     // Start is called before the first frame update
     void Start()
     {
+        
         
     }
 
@@ -28,6 +29,12 @@ public class Cinematica : MonoBehaviour
     void Update()
     {
         ReproduceCinematicas();
+
+    if(Input.GetKeyDown(KeyCode.E) && puedoR == true)
+      {
+            cinematica.Play();
+            StartCoroutine(Apaga());
+       }
     }
 
 
@@ -45,9 +52,9 @@ public class Cinematica : MonoBehaviour
             DataManager.data.posicionPlayer = true;
             DataManager.data.posicion = this.transform.position;
             DataManager.data.posicion = this.transform.position;*/
-
-            cinematica.Play();
-            Debug.Log("Comienza cinematica");
+            puedoR = true;
+            //cinematica.Play();
+            Debug.Log("Puedo iniciar la cinematica");
 
 
         }
@@ -69,10 +76,12 @@ public class Cinematica : MonoBehaviour
     IEnumerator Apaga()
     {
         yield return new WaitForSeconds(tiempoApaga);
-
+        this.gameObject.SetActive(false);
         if (cinematica != null)
         {
             cinematica.enabled = false;
+            Debug.Log("Apaga");
+
         }
 
         if (poseeCinematica)
@@ -82,7 +91,7 @@ public class Cinematica : MonoBehaviour
                                                                         // Debug.Log("No se debe reproducir");
         }
     
-    this.gameObject.SetActive(false);
+    
 
     }
 

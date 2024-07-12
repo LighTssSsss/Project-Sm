@@ -45209,7 +45209,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   cinematica: {fileID: 657223747}
-  tiempoApaga: 1.3
+  tiempoApaga: 3
   poseeCinematica: 0
   tengoCinematica: 1
 --- !u!320 &657223747
@@ -65819,7 +65819,7 @@ Transform:
   m_GameObject: {fileID: 961739749}
   serializedVersion: 2
   m_LocalRotation: {x: 0.026789326, y: -0.6742444, z: 0.02448775, w: 0.7376159}
-  m_LocalPosition: {x: 12.1209, y: 0.6449999, z: -0.55287415}
+  m_LocalPosition: {x: -22.82, y: 0.66656643, z: 3.7896912}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -111930,7 +111930,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   cinematica: {fileID: 1625927784}
-  tiempoApaga: 0
+  tiempoApaga: 5
   poseeCinematica: 0
   tengoCinematica: 1
 --- !u!4 &1625927783
@@ -111959,7 +111959,7 @@ PlayableDirector:
   serializedVersion: 3
   m_PlayableAsset: {fileID: 11400000, guid: 958c547f817f6834298ddbc89a54f8ec, type: 2}
   m_InitialState: 0
-  m_WrapMode: 0
+  m_WrapMode: 2
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
   m_SceneBindings:
