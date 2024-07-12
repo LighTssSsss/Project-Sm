@@ -18,6 +18,8 @@ public class Cinematica : MonoBehaviour
     private bool CinematicaListaPlayer;
     private bool puedoR;
 
+    public GameObject objetos;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,7 +36,8 @@ public class Cinematica : MonoBehaviour
       {
             cinematica.Play();
             StartCoroutine(Apaga());
-       }
+            StartCoroutine(ApagaObjeto());
+        }
     }
 
 
@@ -92,6 +95,16 @@ public class Cinematica : MonoBehaviour
         }
     
     
+
+    }
+
+    IEnumerator ApagaObjeto()
+    {
+        yield return new WaitForSeconds(2);
+        objetos.SetActive(false);
+        
+
+
 
     }
 
