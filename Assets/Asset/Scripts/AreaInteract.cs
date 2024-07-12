@@ -8,7 +8,7 @@ public class AreaInteract : MonoBehaviour
    public bool puedTomarMedicina;
    public ObjectInteract objetInter;
    public bool loToma;
-
+   private bool llame1;
 
     //public GameObject notas;
     public bool puedoTomarNota;
@@ -37,7 +37,15 @@ public class AreaInteract : MonoBehaviour
             puedoTomarNota = true;
         }
 
-        
+        if (other.CompareTag("LlaveP1"))
+        {
+            llame1 = true;
+        }
+
+        if (other.CompareTag("PuertaPrimeraPesadilla") && llame1 == true)
+        {
+            
+        }
 
 
     }

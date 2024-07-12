@@ -20,6 +20,7 @@ TagManager:
   - Puerta
   - Nota
   - interracion
+  - PuertaPrimeraPesadilla
   layers:
   - Default
   - TransparentFX
