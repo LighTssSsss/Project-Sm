@@ -17,10 +17,13 @@ public class AreaInteract : MonoBehaviour
     private bool puertaUno;
     public GameObject textoPuerta;
     private bool noAparece;
+    public GameObject textoCaja;
     private void Start()
     {
        puerta = FindObjectOfType<PuertaUno>();
        llaves = FindObjectOfType<Llave>();
+       textoPuerta.SetActive(false);
+       textoCaja.SetActive(false);
     }
     private void Update()
     {
@@ -65,6 +68,11 @@ public class AreaInteract : MonoBehaviour
             Debug.Log("Se Acerco");
            // other.GetComponent<Llave>().toma = true;
             
+        }
+
+        if (other.CompareTag("CajaP1"))
+        {
+            textoCaja.SetActive(true);
         }
 
         if (other.CompareTag("PuertaPrimeraPesadilla")  && llave1 == true )
@@ -124,6 +132,11 @@ public class AreaInteract : MonoBehaviour
             textoPuerta.SetActive(false);
             //other.gameObject.GetComponent<PuertaUno>().abre = true;
             Debug.Log("Abre Puerta");
+        }
+
+        if (other.CompareTag("CajaP1"))
+        {
+            textoCaja.SetActive(false);
         }
 
 
