@@ -18,18 +18,21 @@ public class AreaInteract : MonoBehaviour
     public GameObject textoPuerta;
     private bool noAparece;
     public GameObject textoCaja;
+    public GameObject textoLlave;
     private void Start()
     {
        puerta = FindObjectOfType<PuertaUno>();
        llaves = FindObjectOfType<Llave>();
        textoPuerta.SetActive(false);
        textoCaja.SetActive(false);
+        textoLlave.SetActive(false);
     }
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.E) && llave1 == true && puerta != null && puertaUno == true)
         {
             Debug.Log("La tomo");
+            textoLlave.SetActive(false);
             puerta.abre = true;
         }
 
@@ -40,6 +43,7 @@ public class AreaInteract : MonoBehaviour
             llaves.toma = true;
             noAparece = true;
         }
+
     }
 
     private void OnTriggerEnter(Collider other)
