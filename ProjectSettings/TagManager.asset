@@ -21,6 +21,9 @@ TagManager:
   - Nota
   - interracion
   - PuertaPrimeraPesadilla
+  - Llave
+  - CajaP1
+  - LlaveP1
   layers:
   - Default
   - TransparentFX

@@ -8,14 +8,18 @@ public class AreaInteract : MonoBehaviour
    public bool puedTomarMedicina;
    public ObjectInteract objetInter;
    public bool loToma;
-   private bool llame1;
+   private bool llave1;
 
     //public GameObject notas;
     public bool puedoTomarNota;
+    private GameObject llave;
 
     private void Update()
     {
-        
+        /*if(Input.GetKeyDown(KeyCode.E) && llave1 == true && llave != null)
+        {
+            llave.GetComponent<Llave>().toma = true;
+        }*/
     }
 
     private void OnTriggerEnter(Collider other)
@@ -39,12 +43,16 @@ public class AreaInteract : MonoBehaviour
 
         if (other.CompareTag("LlaveP1"))
         {
-            llame1 = true;
+            llave1 = true;        
+            other.gameObject.SetActive(false);
+
+           // other.GetComponent<Llave>().toma = true;
+            
         }
 
-        if (other.CompareTag("PuertaPrimeraPesadilla") && llame1 == true)
+        if (other.CompareTag("PuertaPrimeraPesadilla") && llave1 == true && Input.GetKeyDown(KeyCode.E))
         {
-            
+            other.gameObject.GetComponent<PuertaUno>().abre = true;
         }
 
 
@@ -80,6 +88,8 @@ public class AreaInteract : MonoBehaviour
         {
             puedoTomarNota = false;
         }
+
+        
     }
   
 }
