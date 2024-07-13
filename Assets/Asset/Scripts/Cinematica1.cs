@@ -1,17 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Playables;
 
-public class Cinematica : MonoBehaviour
+public class Cinematica1 : MonoBehaviour
 {
-
     [SerializeField] private float forwardOffset = 1;
     [SerializeField] private float verticalOffset = 0;
     [SerializeField] private Vector3 size = Vector3.one;
     [SerializeField] private LayerMask layerMask;
-     public PlayableDirector cinematica;
+    public GameObject caja;
+    public PlayableDirector cinematica;
 
     public float tiempoApaga;
     public bool poseeCinematica;
@@ -20,13 +19,12 @@ public class Cinematica : MonoBehaviour
     private bool puedoR;
 
     public GameObject objetos;
-    public GameObject texto;
-    public Animator textoD;
+
     // Start is called before the first frame update
     void Start()
     {
+        caja.SetActive(false);
 
-        texto.SetActive(false);
     }
 
     // Update is called once per frame
@@ -34,8 +32,8 @@ public class Cinematica : MonoBehaviour
     {
         ReproduceCinematicas();
 
-    if(Input.GetKeyDown(KeyCode.E) && puedoR == true)
-      {
+        if (Input.GetKeyDown(KeyCode.E) && puedoR == true)
+        {
             cinematica.Play();
             StartCoroutine(Apaga());
             StartCoroutine(ApagaObjeto());
@@ -66,29 +64,6 @@ public class Cinematica : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            texto.SetActive(true);
-        }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-
-        if (other.CompareTag("Player"))
-        {
-            //ReproduceTexto("InteractuarDesaparece");
-            texto.SetActive(false);
-        }
-
-    }
-
-    public void ReproduceTexto(string nombreA)
-    {
-        textoD.Play(nombreA);
-    }
-
 
     private void OnDrawGizmos()
     {
@@ -104,6 +79,7 @@ public class Cinematica : MonoBehaviour
     IEnumerator Apaga()
     {
         yield return new WaitForSeconds(tiempoApaga);
+        caja.SetActive(true);
         this.gameObject.SetActive(false);
         if (cinematica != null)
         {
@@ -115,11 +91,11 @@ public class Cinematica : MonoBehaviour
         if (poseeCinematica)
         {
             CinematicaListaPlayer = false;
-           // DataManager.data.cinematicaTermino = CinematicaListaPlayer; // Este
-                                                                        // Debug.Log("No se debe reproducir");
+            // DataManager.data.cinematicaTermino = CinematicaListaPlayer; // Este
+            // Debug.Log("No se debe reproducir");
         }
-    
-    
+
+
 
     }
 
@@ -127,7 +103,7 @@ public class Cinematica : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
         objetos.SetActive(false);
-        
+
 
 
 
@@ -148,5 +124,4 @@ public class Cinematica : MonoBehaviour
         }
 
     }
-
 }

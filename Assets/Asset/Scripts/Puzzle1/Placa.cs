@@ -6,7 +6,7 @@ public class Placa : MonoBehaviour
 {
     public Animator placa;
     public Animator puerta;
-
+    private bool ModoAbre;
 
     // Start is called before the first frame update
     void Start()
@@ -17,7 +17,19 @@ public class Placa : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            ModoAbre = true;
+           
+        }
+
+
+        if (ModoAbre == true)
+        {
+            ReproduceAnimacion("PlacaBaja");
+
+            ReproduceAnimacionDos("PuertaAbriendose");
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
