@@ -8,18 +8,31 @@ public class AreaInteract : MonoBehaviour
    public bool puedTomarMedicina;
    public ObjectInteract objetInter;
    public bool loToma;
-   private bool llave1;
+   public bool llave1;
 
     //public GameObject notas;
     public bool puedoTomarNota;
-    private GameObject llave;
-
+    private PuertaUno puerta;
+    private Llave llaves;
+    private bool puertaUno;
+    private void Start()
+    {
+       puerta = FindObjectOfType<PuertaUno>();
+       llaves = FindObjectOfType<Llave>();
+    }
     private void Update()
     {
-        /*if(Input.GetKeyDown(KeyCode.E) && llave1 == true && llave != null)
+        if(Input.GetKeyDown(KeyCode.E) && llave1 == true && puerta != null && puertaUno == true)
         {
-            llave.GetComponent<Llave>().toma = true;
-        }*/
+            Debug.Log("La tomo");
+            puerta.abre = true;
+        }
+
+        if (Input.GetKeyDown(KeyCode.E) && llave1 == true && llaves != null)
+        {
+            Debug.Log("Abrio");
+            llaves.toma = true;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -43,16 +56,18 @@ public class AreaInteract : MonoBehaviour
 
         if (other.CompareTag("LlaveP1"))
         {
-            llave1 = true;        
-            other.gameObject.SetActive(false);
-
+            llave1 = true;
+            //other.gameObject.SetActive(false);
+            Debug.Log("Se Acerco");
            // other.GetComponent<Llave>().toma = true;
             
         }
 
-        if (other.CompareTag("PuertaPrimeraPesadilla") && llave1 == true && Input.GetKeyDown(KeyCode.E))
+        if (other.CompareTag("PuertaPrimeraPesadilla")  && llave1 == true )
         {
-            other.gameObject.GetComponent<PuertaUno>().abre = true;
+            puertaUno = true;
+            //other.gameObject.GetComponent<PuertaUno>().abre = true;
+            Debug.Log("Abre Puerta");
         }
 
 
@@ -89,7 +104,23 @@ public class AreaInteract : MonoBehaviour
             puedoTomarNota = false;
         }
 
-        
+        if (other.CompareTag("LlaveP1"))
+        {
+            llave1 = false;
+            //other.gameObject.SetActive(false);
+
+            // other.GetComponent<Llave>().toma = true;
+
+        }
+
+        if (other.CompareTag("PuertaPrimeraPesadilla") && llave1 == true)
+        {
+            puertaUno = false;
+            //other.gameObject.GetComponent<PuertaUno>().abre = true;
+            Debug.Log("Abre Puerta");
+        }
+
+
     }
   
 }

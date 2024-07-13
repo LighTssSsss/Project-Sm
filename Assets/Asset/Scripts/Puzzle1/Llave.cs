@@ -16,7 +16,7 @@ public class Llave : MonoBehaviour
     {
         if(toma == true)
         {
-           // this.gameObject.SetActive(false);
+            this.gameObject.SetActive(false);
         }
     }
 }
