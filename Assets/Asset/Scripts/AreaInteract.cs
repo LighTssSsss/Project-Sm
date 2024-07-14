@@ -9,6 +9,7 @@ public class AreaInteract : MonoBehaviour
    public ObjectInteract objetInter;
    public bool loToma;
    public bool llave1;
+   public EventoSonido sonidos;
 
     //public GameObject notas;
     public bool puedoTomarNota;
@@ -26,6 +27,7 @@ public class AreaInteract : MonoBehaviour
     {
        puerta = FindObjectOfType<PuertaUno>();
        llaves = FindObjectOfType<Llave>();
+       sonidos = FindObjectOfType<EventoSonido>();
        textoPuerta.SetActive(false);
        textoCaja.SetActive(false);
        textoLlave.SetActive(false);
@@ -38,6 +40,7 @@ public class AreaInteract : MonoBehaviour
         {
             Debug.Log("La tomo");
             textoLlave.SetActive(false);
+            sonidos.SonidoLlave();
             puerta.abre = true;
         }
 

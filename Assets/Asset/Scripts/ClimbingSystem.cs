@@ -10,7 +10,8 @@ public class ClimbingSystem : MonoBehaviour
     public CheckerEnviroment check;
     //bool playerInAction;
     public Animator animator;
-   
+    public EventoSonido eventoS;
+
 
 
     [Header("Parkour Action Area")]
@@ -27,6 +28,7 @@ public class ClimbingSystem : MonoBehaviour
     {
         movement = GetComponent<MoveAndAnimatorController>();
         character = GetComponent<CharacterController>();
+        eventoS = FindObjectOfType<EventoSonido>();
     }
 
     private void FixedUpdate()
@@ -104,7 +106,7 @@ public class ClimbingSystem : MonoBehaviour
         character.enabled = false;
         character.detectCollisions = false;
         animator.applyRootMotion = true;
-
+        eventoS.SonidoSaltoSorteo();
 
         CompareTargetParameter compareTargetParameter = null;
 

@@ -2,6 +2,7 @@ using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -106,7 +107,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
     private MoveableObject moveObject;
     public AreaInteract areaInt;
     private HealthSystem healthSyst;
-    
+    public EventoSonido eventoSo;
 
     [Header("Trajectory")]
     [SerializeField] private LineRenderer lineRenderer;
@@ -163,6 +164,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         moveObject = GetComponent<MoveableObject>();
         healthSyst = GetComponent<HealthSystem>();
         physicalM = GetComponent<PhysicalMove>();
+        eventoSo = FindObjectOfType<EventoSonido>();
 
 
         /*
@@ -653,6 +655,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         {
             tomoLaNota = true;
             notas.SetActive(true);
+            eventoSo.SonidoPapelTomando();
             //speed = 0;
         }
 
@@ -662,6 +665,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             tomoLaNota = false;
             notas.SetActive(false);
             Time.timeScale = 1;
+            eventoSo.SonidoPapelTomando();
             speed = 2;
         }
 
