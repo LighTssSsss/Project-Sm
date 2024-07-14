@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0aa553e83f37054ebb1208cd23d5a67, type: 3}
   m_Name: Adios
   m_EditorClassIdentifier: 
-  informacion: Adios
+  informacion: "No toques la carne putrefacta sino quieres morir, si chocas con ella
+    deje un botiqu\xEDn cerca de la reja para que lo uses y te cures de su putrefacci\xF3n.
+    atte: Amy"

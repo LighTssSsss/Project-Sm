@@ -10,7 +10,8 @@ public class Recoverhealth : MonoBehaviour
   
     private void Awake()
     {
-        health = FindFirstObjectByType<HealthSystem>();
+       // health = FindFirstObjectByType<HealthSystem>();
+        health = FindObjectOfType<HealthSystem>();
      
     }
 
@@ -18,7 +19,9 @@ public class Recoverhealth : MonoBehaviour
     {
         if(health.recupera == true)
         {
-            health.GetComponent<HealthSystem>().SetRecoverHealth(healthRecover * recoverAmount);
+            //health.GetComponent<HealthSystem>().SetRecoverHealth(healthRecover * recoverAmount);
+            float recuperaValue = healthRecover * recoverAmount;
+            health.SetRecoverHealth(recuperaValue);
             health.recupera = false;
             Destroy(this.gameObject);
         }
