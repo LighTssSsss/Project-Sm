@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0aa553e83f37054ebb1208cd23d5a67, type: 3}
   m_Name: ComoEstas
   m_EditorClassIdentifier: 
-  informacion: Como Estas
+  informacion: "Solo le digo al que lee esto, VETE de aqu\xED."

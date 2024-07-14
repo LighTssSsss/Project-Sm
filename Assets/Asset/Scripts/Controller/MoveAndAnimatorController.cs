@@ -207,6 +207,10 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             return;
         }
 
+        if(tomoLaNota == true)
+        {
+            Time.timeScale = 0;
+        }
         // Vector3 moveDir = Quaternion.Euler(0f,angl)
 
 
@@ -221,12 +225,15 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         {
              physicalM.velocity = new Vector3(currentMovement.x, physicalM.velocity.y, currentMovement.z);
              isrun = false;
-             characterController.Move(physicalM.velocity * Time.deltaTime);
+           
+                characterController.Move(physicalM.velocity * Time.deltaTime);
+            
+             
 
              //characterController.Move(currentMovement * Time.deltaTime); 
         }
 
-        if (isSprint && isCrouchPressed == false )
+        if (isSprint && isCrouchPressed == false && tomoLaNota == false )
         {
             
             currentRunMovement *= multiplierSprint;
@@ -646,7 +653,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         {
             tomoLaNota = true;
             notas.SetActive(true);
-            speed = 0;
+            //speed = 0;
         }
 
 
@@ -654,6 +661,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         {
             tomoLaNota = false;
             notas.SetActive(false);
+            Time.timeScale = 1;
             speed = 2;
         }
 

@@ -19,13 +19,15 @@ public class AreaInteract : MonoBehaviour
     private bool noAparece;
     public GameObject textoCaja;
     public GameObject textoLlave;
+    public GameObject textoHoja;
     private void Start()
     {
        puerta = FindObjectOfType<PuertaUno>();
        llaves = FindObjectOfType<Llave>();
        textoPuerta.SetActive(false);
        textoCaja.SetActive(false);
-        textoLlave.SetActive(false);
+       textoLlave.SetActive(false);
+       textoHoja.SetActive(false);
     }
     private void Update()
     {
@@ -63,6 +65,7 @@ public class AreaInteract : MonoBehaviour
         if (other.CompareTag("Nota"))
         {
             puedoTomarNota = true;
+            textoHoja.SetActive(true);
         }
 
         if (other.CompareTag("LlaveP1"))
@@ -119,6 +122,7 @@ public class AreaInteract : MonoBehaviour
         if (other.CompareTag("Nota"))
         {
             puedoTomarNota = false;
+            textoHoja.SetActive(false);
         }
 
         if (other.CompareTag("LlaveP1"))
