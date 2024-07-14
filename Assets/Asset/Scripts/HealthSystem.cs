@@ -8,6 +8,12 @@ public class HealthSystem : MonoBehaviour
     public float health;
     public bool recupera;
     public Image healthDamage;
+    public GameObject murio;
+
+    private void Start()
+    {
+        murio.SetActive(false);
+    }
 
     private void Update()
     {
@@ -16,6 +22,9 @@ public class HealthSystem : MonoBehaviour
         if(health <= 0)
         {
             Destroy(gameObject);
+            Time.timeScale = 0;
+            Cursor.lockState = CursorLockMode.None;
+            murio.SetActive(true);
         }
 
     }
@@ -46,5 +55,14 @@ public class HealthSystem : MonoBehaviour
         Color imageColor = Color.white;
         imageColor.a = transparency;
         healthDamage.color = imageColor;
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if(hit.gameObject.tag == "Vacio")
+        {
+            health = 0;
+        }
+        
     }
 }
