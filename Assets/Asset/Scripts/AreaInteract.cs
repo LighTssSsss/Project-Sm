@@ -20,6 +20,8 @@ public class AreaInteract : MonoBehaviour
     public GameObject textoCaja;
     public GameObject textoLlave;
     public GameObject textoHoja;
+    public GameObject textoBotiquin;
+    public HealthSystem health;
     private void Start()
     {
        puerta = FindObjectOfType<PuertaUno>();
@@ -28,6 +30,7 @@ public class AreaInteract : MonoBehaviour
        textoCaja.SetActive(false);
        textoLlave.SetActive(false);
        textoHoja.SetActive(false);
+       textoBotiquin.SetActive(false);
     }
     private void Update()
     {
@@ -56,9 +59,10 @@ public class AreaInteract : MonoBehaviour
             objetInter = other.GetComponent<ObjectInteract>();
         }
 
-        if (other.CompareTag("Medicine"))
+        if (other.CompareTag("Medicine") && health.health < 80f)
         {
             puedTomarMedicina = true;
+            textoBotiquin.SetActive(true);
             //Debug.Log("Medicina");
         }
 
@@ -91,6 +95,8 @@ public class AreaInteract : MonoBehaviour
         }
 
 
+
+
     }
 
    
@@ -116,6 +122,7 @@ public class AreaInteract : MonoBehaviour
         if (other.CompareTag("Medicine"))
         {
             puedTomarMedicina = false;
+            textoBotiquin.SetActive(false);
         }
 
 
