@@ -52,13 +52,13 @@ public class EventoSonido : MonoBehaviour
 
     public void SonidoRejaAbriendose()
     {
-        soundManager.SeleccionAudio(7, 0.02f);
+        soundManager.SeleccionAudio(7, 0.06f);
     }
 
 
     public void SonidoPresionBajando()
     {
-        soundManager.SeleccionAudio(8, 0.01f);
+        soundManager.SeleccionAudio(8, 0.03f);
     }
 
     public void SonidoMedicina()
@@ -68,6 +68,6 @@ public class EventoSonido : MonoBehaviour
 
     public void SonidoAgachado()
     {
-        soundManager.SeleccionAudio(10, 0.05f);
+        soundManager.SeleccionAudio(10, 0.2f);
     }
 }

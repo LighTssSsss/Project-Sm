@@ -39,7 +39,7 @@ public class HealthSystem : MonoBehaviour
 
     public void SetRecoverHealth(float recover)
     {
-        if(health < 85f)
+        if(health < 95f)
         {
             this.health += recover;
         }

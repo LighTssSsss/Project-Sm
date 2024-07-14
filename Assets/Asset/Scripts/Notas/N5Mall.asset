@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0aa553e83f37054ebb1208cd23d5a67, type: 3}
   m_Name: N5Mall
   m_EditorClassIdentifier: 
-  informacion: 'La gente se ha vuelto loca, ha venido al centro comercial a robar
-    objetos. atte: Desconocido'
+  informacion: 'La gente se ha vuelto loca, ha venido al centro comercial con la
+    misma idea que nosotros. atte: Desconocido'

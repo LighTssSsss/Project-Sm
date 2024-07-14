@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Moverse : MonoBehaviour
 {
+    public GameObject moverse;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,14 +21,14 @@ public class Moverse : MonoBehaviour
 
     IEnumerator Aparece()
     {
-        yield return new WaitForSeconds(45);
-        this.gameObject.SetActive(true);
+        yield return new WaitForSeconds(44);
+        moverse.SetActive(true);
     }
 
 
     IEnumerator Desaparece()
     {
         yield return new WaitForSeconds(49);
-        this.gameObject.SetActive(false);
+        moverse.SetActive(false);
     }
 }

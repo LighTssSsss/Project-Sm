@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0aa553e83f37054ebb1208cd23d5a67, type: 3}
   m_Name: N4Pesadilla
   m_EditorClassIdentifier: 
-  informacion: 'Amy, se cayo del puente, estoy completamente solo y esto me esta
-    volviendo loco. atte: Jhon.'
+  informacion: "Amy se cayo del puente y Mike desapareci\xF3, estoy completamente
+    solo y esto me esta volviendo loco. atte: Jhon."
