@@ -642,7 +642,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
         }
 
-        if (isInteractPressed && checks.pushInteract == false && areaInt.puedTomarMedicina == true && areaInt != null && healthSyst.health <= 80)
+        if (isInteractPressed && checks.pushInteract == false && areaInt.puedTomarMedicina == true && areaInt != null && healthSyst.health <= 95)
         {
             // Animacion de tomar
             healthSyst.recupera = true;

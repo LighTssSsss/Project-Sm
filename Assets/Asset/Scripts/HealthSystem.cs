@@ -9,12 +9,12 @@ public class HealthSystem : MonoBehaviour
     public bool recupera;
     public Image healthDamage;
     public GameObject murio;
-    public EventoSonido eventoSonid;
+    public EventoSonido eventoSonidos;
 
 
     private void Awake()
     {
-        eventoSonid = FindObjectOfType<EventoSonido>();
+        //eventoSonidos = FindObjectOfType<EventoSonido>();
     }
 
     private void Start()
@@ -31,7 +31,7 @@ public class HealthSystem : MonoBehaviour
             Destroy(gameObject);
             Time.timeScale = 0;
             Cursor.lockState = CursorLockMode.None;
-            eventoSonid.SonidoDano();
+            eventoSonidos.SonidoDano();
             murio.SetActive(true);
         }
 
@@ -42,6 +42,7 @@ public class HealthSystem : MonoBehaviour
         if(health < 95f)
         {
             this.health += recover;
+            
         }
 
         if(health > 100f)
@@ -55,7 +56,7 @@ public class HealthSystem : MonoBehaviour
     public void SetDamageHealth(float damage)
     {
         this.health -= damage;
-        eventoSonid.SonidoDano();
+        eventoSonidos.SonidoDano();
     }
 
     public void HealthDamagFeedback()

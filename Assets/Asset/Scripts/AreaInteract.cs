@@ -52,6 +52,11 @@ public class AreaInteract : MonoBehaviour
             noAparece = true;
         }
 
+        if(Input.GetKeyDown(KeyCode.E) && puedTomarMedicina == true)
+        {
+            textoBotiquin.SetActive(false);
+        }
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -62,7 +67,7 @@ public class AreaInteract : MonoBehaviour
             objetInter = other.GetComponent<ObjectInteract>();
         }
 
-        if (other.CompareTag("Medicine") && health.health < 80f)
+        if (other.CompareTag("Medicine") && health.health <= 95f)
         {
             puedTomarMedicina = true;
             textoBotiquin.SetActive(true);
