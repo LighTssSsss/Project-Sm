@@ -164,7 +164,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         moveObject = GetComponent<MoveableObject>();
         healthSyst = GetComponent<HealthSystem>();
         physicalM = GetComponent<PhysicalMove>();
-        eventoSo = FindObjectOfType<EventoSonido>();
+      //  eventoSo = FindObjectOfType<EventoSonido>();
 
 
         /*

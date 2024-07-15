@@ -21,10 +21,12 @@ public class VuelveMenu : MonoBehaviour
     public GameObject objetos;
     public GameObject texto;
     public Animator textoD;
+    public MoveAndAnimatorController move;
     // Start is called before the first frame update
     void Start()
     {
-
+        move = FindObjectOfType<MoveAndAnimatorController>();
+       
         texto.SetActive(false);
     }
 
@@ -35,6 +37,7 @@ public class VuelveMenu : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E) && puedoR == true)
         {
+            move.enabled = false;
             cinematica.Play();
             StartCoroutine(Apaga());
             StartCoroutine(ApagaObjeto());
@@ -103,6 +106,7 @@ public class VuelveMenu : MonoBehaviour
     IEnumerator Apaga()
     {
         yield return new WaitForSeconds(tiempoApaga);
+        move.enabled = true;
         SceneManager.LoadScene(0);
        // this.gameObject.SetActive(false);
         if (cinematica != null)

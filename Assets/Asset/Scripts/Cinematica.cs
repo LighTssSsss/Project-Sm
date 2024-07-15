@@ -18,14 +18,16 @@ public class Cinematica : MonoBehaviour
     public bool tengoCinematica = true;
     private bool CinematicaListaPlayer;
     private bool puedoR;
+    private bool puedoHacerlo;
 
     public GameObject objetos;
     public GameObject texto;
     public Animator textoD;
+    public MoveAndAnimatorController move;
     // Start is called before the first frame update
     void Start()
     {
-
+        move = FindObjectOfType<MoveAndAnimatorController>();
         texto.SetActive(false);
     }
 
@@ -34,9 +36,10 @@ public class Cinematica : MonoBehaviour
     {
         ReproduceCinematicas();
 
-    if(Input.GetKeyDown(KeyCode.E) && puedoR == true)
+    if(Input.GetKeyDown(KeyCode.E) && puedoR == true && puedoHacerlo == true)
       {
             cinematica.Play();
+            move.enabled = false;
             StartCoroutine(Apaga());
             StartCoroutine(ApagaObjeto());
         }
@@ -71,6 +74,7 @@ public class Cinematica : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             texto.SetActive(true);
+            puedoHacerlo = true;
         }
     }
     private void OnTriggerExit(Collider other)
@@ -79,6 +83,7 @@ public class Cinematica : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             //ReproduceTexto("InteractuarDesaparece");
+            puedoHacerlo = false;
             texto.SetActive(false);
         }
 
@@ -104,6 +109,7 @@ public class Cinematica : MonoBehaviour
     IEnumerator Apaga()
     {
         yield return new WaitForSeconds(tiempoApaga);
+        move.enabled = true;
         this.gameObject.SetActive(false);
         if (cinematica != null)
         {

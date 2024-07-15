@@ -7,11 +7,13 @@ public class Llave : MonoBehaviour
     public bool toma;
     public GameObject texto;
     public EventoSonido sonidos;
+    public GameObject luz;
     // Start is called before the first frame update
     void Start()
     {
         texto.SetActive(false);
-        sonidos = FindObjectOfType<EventoSonido>();
+        luz.SetActive(true);
+        //sonidos = FindObjectOfType<EventoSonido>();
     }
 
     // Update is called once per frame
@@ -20,6 +22,7 @@ public class Llave : MonoBehaviour
         if (toma == true)
         {
             sonidos.SonidoLlave();
+            luz.SetActive(false);
             this.gameObject.SetActive(false);
         }
     }

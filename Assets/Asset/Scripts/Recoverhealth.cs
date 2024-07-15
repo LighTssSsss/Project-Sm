@@ -14,7 +14,7 @@ public class Recoverhealth : MonoBehaviour
     {
        // health = FindFirstObjectByType<HealthSystem>();
         health = FindObjectOfType<HealthSystem>();
-        sonidos = FindObjectOfType<EventoSonido>();
+        //sonidos = FindObjectOfType<EventoSonido>();
         texto.SetActive(false);
     }
 

@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0aa553e83f37054ebb1208cd23d5a67, type: 3}
   m_Name: NMallInicial
   m_EditorClassIdentifier: 
-  informacion: "Jhon y Amy se le ocurrio la \"brillante\" idea de saquear el centro
-    comercial con Mike, pero esto a\xFAn no llega. atte: Desconocido"
+  informacion: "A Jhon y Amy se le ocurrio la \"brillante\" idea de saquear el centro
+    comercial con Mike, pero esto a\xFAn no llega. Atte: Desconocido"

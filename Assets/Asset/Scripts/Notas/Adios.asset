@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0aa553e83f37054ebb1208cd23d5a67, type: 3}
   m_Name: Adios
   m_EditorClassIdentifier: 
-  informacion: "No toques la carne putrefacta sino quieres morir. Si por accidente
-    la tocas, deje un botiqu\xEDn cerca de la reja para que lo uses. atte: Amy"
+  informacion: "No toques esa cosa putrefacta, sino quieres provocarte un dolor.
+    Si por accidente la tocas, dej\xE9 un botiqu\xEDn con algunas cosas que te permitir\xE1n
+    curarte 2 veces, este se encuentra cerca de la reja. Atte: Amy"
