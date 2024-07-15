@@ -21,7 +21,7 @@ public class ObjectBroke : MonoBehaviour
                 Destroy(this.gameObject, 0.6f);
             }
 
-            if (collision.gameObject.CompareTag("Walls"))
+            else if (collision.gameObject.CompareTag("Wall"))
             {
                 //  Debug.Log("Reproduce Sonido");
                 SoundPlay();
