@@ -8,12 +8,14 @@ public class Recoverhealth : MonoBehaviour
     [SerializeField] private float healthRecover;
     public EventoSonido sonidos;
     private HealthSystem health;
-  
+    public GameObject texto;
+
     private void Awake()
     {
        // health = FindFirstObjectByType<HealthSystem>();
         health = FindObjectOfType<HealthSystem>();
         sonidos = FindObjectOfType<EventoSonido>();
+        texto.SetActive(false);
     }
 
     private void Update()
@@ -22,6 +24,7 @@ public class Recoverhealth : MonoBehaviour
         {
             //health.GetComponent<HealthSystem>().SetRecoverHealth(healthRecover * recoverAmount);
             sonidos.SonidoMedicina();
+            texto.SetActive(false);
             float recuperaValue = healthRecover * recoverAmount;
             health.SetRecoverHealth(recuperaValue);
             health.recupera = false;

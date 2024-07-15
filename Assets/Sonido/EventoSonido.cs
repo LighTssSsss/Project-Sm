@@ -70,4 +70,9 @@ public class EventoSonido : MonoBehaviour
     {
         soundManager.SeleccionAudio(10, 0.2f);
     }
+
+    public void SonidoAgarrar()
+    {
+        soundManager.SeleccionAudio(11, 0.8f);
+    }
 }

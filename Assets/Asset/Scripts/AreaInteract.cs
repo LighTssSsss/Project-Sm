@@ -65,6 +65,7 @@ public class AreaInteract : MonoBehaviour
         {
             puedoTomarlo = true;
             objetInter = other.GetComponent<ObjectInteract>();
+            Debug.Log("PuedeTomarlo");
         }
 
         if (other.CompareTag("Medicine") && health.health <= 95f)

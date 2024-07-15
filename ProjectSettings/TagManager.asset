@@ -25,6 +25,7 @@ TagManager:
   - CajaP1
   - LlaveP1
   - Vacio
+  - Wall
   layers:
   - Default
   - TransparentFX
