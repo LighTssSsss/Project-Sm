@@ -25,6 +25,7 @@ public class Recoverhealth : MonoBehaviour
             //health.GetComponent<HealthSystem>().SetRecoverHealth(healthRecover * recoverAmount);
             sonidos.SonidoMedicina();
             texto.SetActive(false);
+            transform.position = new Vector3(transform.position.x, 8f, transform.position.z);
             float recuperaValue = healthRecover * recoverAmount;
             health.SetRecoverHealth(recuperaValue);
             health.recupera = false;
