@@ -8,8 +8,12 @@ public class Menu : MonoBehaviour
     public Animator fade;
 
     // Start is called before the first frame update
-   
 
+    private void Start()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
     public void Comenzar()
     {
         Time.timeScale = 1;

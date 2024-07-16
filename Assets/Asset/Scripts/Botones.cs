@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.ShaderData;
+//using static UnityEditor.ShaderData;
 using UnityEngine.SceneManagement;
 
 public class Botones : MonoBehaviour
