@@ -186,6 +186,8 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         isMoveCrouchHash = Animator.StringToHash("isMoveCrouch");
         isPushHash = Animator.StringToHash("isPushing");
         isPushMoveHash = Animator.StringToHash("isPushWalk");
+        isFallingHash = Animator.StringToHash("isFalling");
+        isLandingHash = Animator.StringToHash("isLanding");
 
         SubscribeInput();
 
@@ -213,6 +215,8 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         {
             Time.timeScale = 0;
         }
+
+       
         // Vector3 moveDir = Quaternion.Euler(0f,angl)
 
 
@@ -695,7 +699,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             
             isLanding = true;
             isFallingg = true;
-            //Debug.Log("Esta cayendo");
+           // Debug.Log("Esta cayendo");
               
             animator.SetBool(isFallingHash, true);
            /* animator.SetBool(isWalkingHash, false);

@@ -68,7 +68,7 @@ public class ClimbingSystem : MonoBehaviour
 
       
         
-        if (movement.isJumpPressed && !movement.playerInAction && check.obstacleCollision == true && !movement.playerHaging && !movement.inParkour && check.notJumpAction == false)
+        if (movement.isJumpPressed && !movement.playerInAction && check.obstacleCollision == true && !movement.playerHaging && !movement.inParkour && check.notJumpAction == false && movement.isJumping == false)
         {
 
             //Solo hacia adelante
