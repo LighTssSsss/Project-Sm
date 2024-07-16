@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0aa553e83f37054ebb1208cd23d5a67, type: 3}
   m_Name: NotaGasolina01
   m_EditorClassIdentifier: 
-  informacion: "Tengo que escapar de aqu\xED. Atte: Mike"
+  informacion: 'Tengo que salir de este lugar. Atte: Mike'

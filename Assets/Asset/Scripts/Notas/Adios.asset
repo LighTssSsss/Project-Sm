@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0aa553e83f37054ebb1208cd23d5a67, type: 3}
   m_Name: Adios
   m_EditorClassIdentifier: 
-  informacion: "No toques esa cosa putrefacta, sino quieres provocarte un dolor.
+  informacion: "No toques esa cosa sino quieres provocarte un dolor inimaginable.
     Si por accidente la tocas, dej\xE9 un botiqu\xEDn con algunas cosas que te permitir\xE1n
     curarte, este se encuentra cerca de la reja. Atte: Amy"
