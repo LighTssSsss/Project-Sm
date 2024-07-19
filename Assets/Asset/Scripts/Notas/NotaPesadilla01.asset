@@ -10,7 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a0aa553e83f37054ebb1208cd23d5a67, type: 3}
-  m_Name: NMallInicial
+  m_Name: NotaPesadilla01
   m_EditorClassIdentifier: 
-  informacion: "A Jhon y Amy se le ocurri\xF3 la \"brillante\" idea de saquear el
-    centro comercial con Mike, pero este a\xFAn no llega. Atte: Desconocido"
+  informacion: "No toques esa cosa, sino quieres provocarte un dolor inimaginable.
+    Si por accidente la tocas, dej\xE9 un botiqu\xEDn con algunas cosas que te permitir\xE1n
+    curarte, este se encuentra cerca de la reja. Atte: Amy"

@@ -10,7 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a0aa553e83f37054ebb1208cd23d5a67, type: 3}
-  m_Name: N6Mall
+  m_Name: NotaGasolina02
   m_EditorClassIdentifier: 
-  informacion: 'Amy, Jhon y Mike se encuentran buscando suministros, yo me encuentro
-    haciendo de guardia de algunas de sus cosas. Atte: Desconocido'
+  informacion: "Al que lea esto, solo le digo que se vaya de aqu\xED. Atte: Mike"

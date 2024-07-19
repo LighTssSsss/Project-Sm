@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a0aa553e83f37054ebb1208cd23d5a67, type: 3}
-  m_Name: N7Mall
+  m_Name: NotaMall03
   m_EditorClassIdentifier: 
-  informacion: "No pensabamos que esa leyenda fuera real, sino esa cosa no estar\xEDa
-    jugando con nosotros y alimentandose del pueblo. Atte: Desconocido."
+  informacion: 'Amy, Jhon y Mike se encuentran buscando suministros, yo me encuentro
+    haciendo de guardia de algunas de sus cosas. Atte: Desconocido'
