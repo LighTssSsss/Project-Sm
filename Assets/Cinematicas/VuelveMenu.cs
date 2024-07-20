@@ -17,6 +17,8 @@ public class VuelveMenu : MonoBehaviour
     public bool tengoCinematica = true;
     private bool CinematicaListaPlayer;
     private bool puedoR;
+    private bool puedoHacerlo;
+
 
     public GameObject objetos;
     public GameObject texto;
@@ -35,7 +37,7 @@ public class VuelveMenu : MonoBehaviour
     {
         ReproduceCinematicas();
 
-        if (Input.GetKeyDown(KeyCode.E) && puedoR == true)
+        if (Input.GetKeyDown(KeyCode.E) && puedoR == true && puedoHacerlo == true)
         {
             move.enabled = false;
             cinematica.Play();
@@ -73,6 +75,7 @@ public class VuelveMenu : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             texto.SetActive(true);
+            puedoHacerlo = true;
         }
     }
     private void OnTriggerExit(Collider other)
@@ -82,6 +85,7 @@ public class VuelveMenu : MonoBehaviour
         {
             //ReproduceTexto("InteractuarDesaparece");
             texto.SetActive(false);
+            puedoHacerlo = false;
         }
 
     }
