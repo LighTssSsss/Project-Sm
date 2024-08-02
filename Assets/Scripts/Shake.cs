@@ -22,14 +22,16 @@ public class Shake : MonoBehaviour
         if(duracionActualShake > 0)
         {
             Vector3 randomOffset = Random.insideUnitSphere * intensidadShake;
-            transform.localPosition = posicionInicial + randomOffset;
+            transform.localPosition = Vector3.Lerp(transform.localPosition, posicionInicial + randomOffset, Time.deltaTime * 10);
 
             duracionActualShake -= Time.deltaTime;
         }
 
         else
         {
-            transform.localPosition = posicionInicial;
+            //transform.localPosition = posicionInicial;
+            transform.localPosition = Vector3.Lerp(transform.localPosition, posicionInicial, Time.deltaTime * 10);
+
         }
     }
 

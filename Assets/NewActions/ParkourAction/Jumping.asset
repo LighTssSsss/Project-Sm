@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animationName: Jumping
   barrierTag: 
-  minimumHeight: 0.2
-  maximumHeight: 0.5
+  minimumHeight: 0
+  maximumHeight: 0
   lookAtObstacle: 1
   parkourActionDelay: 0
   allowTargetMatching: 1

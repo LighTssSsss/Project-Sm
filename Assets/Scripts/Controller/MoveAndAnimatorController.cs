@@ -527,7 +527,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
 
                 characterController.center = new Vector3(0, 1.26f, -0.04f);
-                characterController.radius = 0.2716253f;
+                characterController.radius = 0.35f;
                 characterController.height = 2.18f;
             }
 
