@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public GameObject musica;
-    public HealthSystem health;
+    public VidaJugador health;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         
-        if(health.health <= 0)
+        if(health.vidas <= 0)
         {
             musica.SetActive(false);
         }

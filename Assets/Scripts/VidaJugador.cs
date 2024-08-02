@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Vida : MonoBehaviour
+public class VidaJugador : MonoBehaviour
 {
     public float vidas;
     public bool recupera;
@@ -12,10 +12,7 @@ public class Vida : MonoBehaviour
     public EventoSonido eventoSonidos;
     public Shake efectoShake;
 
-    private void Awake()
-    {
-        //eventoSonidos = FindObjectOfType<EventoSonido>();
-    }
+   
 
     private void Start()
     {
@@ -26,7 +23,7 @@ public class Vida : MonoBehaviour
     {
         PantallaDano();
 
-        if(vidas <= 0)
+        if (vidas <= 0)
         {
             Destroy(gameObject);
             Time.timeScale = 0;
@@ -39,21 +36,21 @@ public class Vida : MonoBehaviour
 
     public void RecuperaVida(float recuperar)
     {
-        if(vidas < 95f)
+        if (vidas < 95f)
         {
             this.vidas += recuperar;
-            
+
         }
 
-        if(vidas > 100f)
+        if (vidas > 100f)
         {
             vidas = 100f;
         }
-       
+
         recupera = false;
     }
 
-    public void SetDanoVida(float dano)
+    public void SetDanoVidaJugador(float dano)
     {
         this.vidas -= dano;
         efectoShake.EfectoShake();
@@ -65,15 +62,15 @@ public class Vida : MonoBehaviour
         float transparencia = 1f - (vidas / 100);
         Color imagenColor = Color.white;
         imagenColor.a = transparencia;
-     
+
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if(hit.gameObject.tag == "Vacio")
+        if (hit.gameObject.tag == "Vacio")
         {
             vidas = 0;
         }
-        
+
     }
 }

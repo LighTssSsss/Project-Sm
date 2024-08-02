@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class ObstacleEnter : MonoBehaviour
 {
-    [SerializeField] private float forwardOffset = 1;
-    [SerializeField] private float verticalOffset = 0;
-    [SerializeField] private Vector3 size = Vector3.one;
-    [SerializeField] private LayerMask layerMask;
-    [SerializeField] private bool canDamage = true;
-    [SerializeField] private float damage;
+    [SerializeField] private float posicionVerticalAbajo = 1;
+    [SerializeField] private float posicionVerticalArriba = 0;
+    [SerializeField] private Vector3 ancho = Vector3.one;
+    [SerializeField] private LayerMask capaDano;
+    [SerializeField] private bool puedoDanar = true;
+    [SerializeField] private float dano;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,28 +19,26 @@ public class ObstacleEnter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 center = transform.position + (transform.forward * forwardOffset);
-        center.y += verticalOffset;
+        Vector3 center = transform.position + (transform.forward * posicionVerticalAbajo);
+        center.y += posicionVerticalArriba;
 
-        Collider[] colliders = Physics.OverlapBox(center, size, transform.rotation, layerMask);
+        Collider[] colliders = Physics.OverlapBox(center, ancho, transform.rotation, capaDano);
 
-        foreach(Collider player in colliders)
+        foreach (Collider player in colliders)
         {
             if (player == null)
             {
                 return;
-                //Debug.Log(" Se detecto que es nulo");
+               
             }
 
-            // Debug.Log(" Se detecto el choque con Player");
 
-            HealthSystem healthSystem = player.GetComponent<HealthSystem>();
-            if (healthSystem != null)
+            VidaJugador vidas = player.GetComponent<VidaJugador>();
+            if (vidas != null)
             {
-                if (canDamage)
+                if (puedoDanar)
                 {
-                    Debug.Log("Hace daño");
-                    healthSystem.SetDamageHealth(damage);
+                    vidas.SetDanoVidaJugador(dano);
                     StartCoroutine(Damage());
                 }
             }
@@ -56,15 +54,15 @@ public class ObstacleEnter : MonoBehaviour
     {
         Gizmos.color = Color.red;
 
-        Vector3 center = transform.position + (transform.forward * forwardOffset);
-        center.y += verticalOffset;
-        Gizmos.DrawWireCube(center, size);
+        Vector3 center = transform.position + (transform.forward * posicionVerticalAbajo);
+        center.y += posicionVerticalArriba;
+        Gizmos.DrawWireCube(center, ancho);
     }
 
     IEnumerator Damage()
     {
-        canDamage = false;
-        yield return new WaitForSeconds(4f);
-        canDamage = true;
+        puedoDanar = false;
+        yield return new WaitForSeconds(2f);
+        puedoDanar = true;
     }
 }

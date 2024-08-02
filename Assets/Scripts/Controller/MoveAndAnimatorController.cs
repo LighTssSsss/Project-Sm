@@ -106,7 +106,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
     private ClimbingSystem climb;
     private MoveableObject moveObject;
     public AreaInteract areaInt;
-    private HealthSystem healthSyst;
+    private VidaJugador vida;
     public EventoSonido eventoSo;
 
     [Header("Trajectory")]
@@ -162,7 +162,7 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         checks = GetComponent<CheckerEnviroment>();
         climb = GetComponent<ClimbingSystem>();
         moveObject = GetComponent<MoveableObject>();
-        healthSyst = GetComponent<HealthSystem>();
+        vida = GetComponent<VidaJugador>();
         physicalM = GetComponent<PhysicalMove>();
       //  eventoSo = FindObjectOfType<EventoSonido>();
 
@@ -646,10 +646,10 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
         }
 
-        if (isInteractPressed && checks.pushInteract == false && areaInt.puedTomarMedicina == true && areaInt != null && healthSyst.health <= 95)
+        if (isInteractPressed && checks.pushInteract == false && areaInt.puedTomarMedicina == true && areaInt != null && vida.vidas <= 95)
         {
             // Animacion de tomar
-            healthSyst.recupera = true;
+            vida.recupera = true;
             areaInt.puedTomarMedicina = false;
            
         }

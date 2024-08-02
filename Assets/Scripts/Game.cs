@@ -11,7 +11,7 @@ public class Game : MonoBehaviour
     PlayerInputs playerInput;
     public static bool estaPausado;
     public GameObject pausa;
-    public HealthSystem health;
+    public VidaJugador vidaJugador;
     // Start is called before the first frame update
     
     private void OnEnable()
@@ -26,8 +26,8 @@ public class Game : MonoBehaviour
 
     private void Awake()
     {
-        Instance  = this;
-        health.GetComponent<HealthSystem>();
+        Instance = this;
+        vidaJugador.GetComponent<VidaJugador>();
         playerInput = new PlayerInputs();
         playerInput.Game.Pausa.started += OnPausa;
         playerInput.Game.Pausa.canceled -= OnPausa;
@@ -36,7 +36,7 @@ public class Game : MonoBehaviour
   
     void OnPausa(InputAction.CallbackContext context)
     {
-        if (context.ReadValueAsButton() && health.health >= 1 )
+        if (context.ReadValueAsButton() && vidaJugador.vidas >= 1 )
         {
             Toggle();
         }
@@ -58,7 +58,7 @@ public class Game : MonoBehaviour
         }
         else
         {
-            Debug.Log("presiono");
+          
             Time.timeScale = 1;
             Cursor.lockState = CursorLockMode.Locked;
             pausa.SetActive(false);

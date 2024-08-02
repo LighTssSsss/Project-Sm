@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Vida : MonoBehaviour
+public class HealthSystem : MonoBehaviour
 {
-    public float vidas;
+    public float health;
     public bool recupera;
     public Image sangre;
     public GameObject murio;
@@ -24,9 +24,9 @@ public class Vida : MonoBehaviour
 
     private void Update()
     {
-        PantallaDano();
+        HealthDamagFeedback();
 
-        if(vidas <= 0)
+        if(health <= 0)
         {
             Destroy(gameObject);
             Time.timeScale = 0;
@@ -37,42 +37,42 @@ public class Vida : MonoBehaviour
 
     }
 
-    public void RecuperaVida(float recuperar)
+    public void SetRecoverHealth(float recover)
     {
-        if(vidas < 95f)
+        if(health < 95f)
         {
-            this.vidas += recuperar;
+            this.health += recover;
             
         }
 
-        if(vidas > 100f)
+        if(health > 100f)
         {
-            vidas = 100f;
+            health = 100f;
         }
        
         recupera = false;
     }
 
-    public void SetDanoVida(float dano)
+    public void SetDamageHealth(float damage)
     {
-        this.vidas -= dano;
+        this.health -= damage;
         efectoShake.EfectoShake();
         eventoSonidos.SonidoDano();
     }
 
-    public void PantallaDano()
+    public void HealthDamagFeedback()
     {
-        float transparencia = 1f - (vidas / 100);
-        Color imagenColor = Color.white;
-        imagenColor.a = transparencia;
-     
+        float transparency = 1f - (health / 100);
+        Color imageColor = Color.white;
+        imageColor.a = transparency;
+       // sangre.color = imageColor;
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         if(hit.gameObject.tag == "Vacio")
         {
-            vidas = 0;
+            health = 0;
         }
         
     }
