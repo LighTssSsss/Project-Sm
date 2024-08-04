@@ -21,5 +21,5 @@ MonoBehaviour:
   allowTargetMatching: 1
   comparedBodyPart: 4
   compareStartTime: 0.0315
-  compareEndTime: 0.1
-  comparePositionWeight: {x: 0, y: 0, z: 0}
+  compareEndTime: 0.3
+  comparePositionWeight: {x: 5, y: -0.1, z: 0.1}
