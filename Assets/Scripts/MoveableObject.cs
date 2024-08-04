@@ -4,19 +4,20 @@ using UnityEngine;
 
 public class MoveableObject : MonoBehaviour
 {
-    public float pushForce;
-    private CheckerEnviroment check;
-    public MoveAndAnimatorController move;
-    [SerializeField] private AreaInteract areint;
-    [SerializeField] Vector3 pushdir;
-    [SerializeField] private CharacterController ch;
-    public bool push;
+    public float fuerzaEmpuje;
+    private CheckerEnviroment checkeo;
+    public MoveAndAnimatorController movimiento;
+    [SerializeField] private AreaInteract areaInteraccion;
+    [SerializeField] Vector3 direccionDeEmpuje;
+    public bool estoyEmpujandolo;
+    // [SerializeField] private CharacterController controlador;
+
 
     private void Awake()
     {
-        check = GetComponent<CheckerEnviroment>();
-        move = GetComponent<MoveAndAnimatorController>();
-        ch = GetComponent<CharacterController>();
+        checkeo = GetComponent<CheckerEnviroment>();
+        movimiento = GetComponent<MoveAndAnimatorController>();
+       // controlador = GetComponent<CharacterController>();
     }
 
 
@@ -28,20 +29,10 @@ public class MoveableObject : MonoBehaviour
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        Rigidbody body = hit.collider.attachedRigidbody;
-
-      /*  if(body != null && check.pushInteract == true && move.pushObject)
-        {
-            Vector3 forceDirection = hit.transform.position - transform.position;
-            forceDirection.y = 0;
-            forceDirection.Normalize();
-            // rigg.AddForceAtPosition(forceDirection * pushForce, transform.position, ForceMode.Impulse);
-            rigg.AddForce(forceDirection * pushForce, ForceMode.Impulse);
+        Rigidbody cuerpo = hit.collider.attachedRigidbody;
 
 
-        }*/
-
-        if(body == null || body.isKinematic)
+        if(cuerpo == null || cuerpo.isKinematic)
         {
             return;
         }
@@ -52,21 +43,20 @@ public class MoveableObject : MonoBehaviour
         }
         
         
-        if (check.pushInteract == true && move.pushObject && areint.loToma == false)
+        if (checkeo.estaEmpujando == true && movimiento.empujandoObjetos && areaInteraccion.loToma == false)
         {
-           
-            pushdir = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
-            //body.velocity = pushDir * pushPower;
+
+            direccionDeEmpuje = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
             Vector3 collisionPoint = hit.point;
-            
-            body.AddForceAtPosition(pushdir * pushForce, collisionPoint, ForceMode.Impulse);
-            push = true;
+
+            cuerpo.AddForceAtPosition(direccionDeEmpuje * fuerzaEmpuje, collisionPoint, ForceMode.Impulse);
+            estoyEmpujandolo = true;
         }
 
 
         else
         {
-            push = false;
+            estoyEmpujandolo = false;
         }
         
 

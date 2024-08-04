@@ -26,6 +26,7 @@ TagManager:
   - LlaveP1
   - Vacio
   - Wall
+  - Parkour1
   layers:
   - Default
   - TransparentFX
@@ -37,7 +38,7 @@ TagManager:
   - Player
   - Collisions
   - Obstacles
-  - Climb
+  - Escalada
   - InteractPush
   - InteractObject
   - Enemy

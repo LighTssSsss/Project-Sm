@@ -2,7 +2,6 @@ using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-//using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -11,44 +10,44 @@ using UnityEngine.TextCore.Text;
 
 public partial class MoveAndAnimatorController : MonoBehaviour
 {
-    public CharacterController characterController;
-    public CollisionHead colisionHead;
-    PlayerInputs playerInputs;
+    public CharacterController controladorPersonaje;
+    public CollisionHead cabezaColision;
+    private PlayerInputs playerInputs;
     public Animator animator;
-    public float speed;
-    public PhysicalMove physicalM;
+    public float velocidadCorrer;
+    public PhysicalMove movimientoFisico;
 
-    int isWalkingHash;
-    int isRunnigHash;
-    int isSprintigHash;
-    int isJumpingHash;
-    int isFallingHash;
-    int isLandingHash;
-    int isCrouchHash;
-    int isMoveCrouchHash;
-    int isPushHash;
-    int isPushMoveHash;
-    int isDropHash;
+    private int isWalkingHash;
+    private int isRunnigHash;
+    private int isSprintigHash;
+    private int isJumpingHash;
+    private int isFallingHash;
+    private int isLandingHash;
+    private int isCrouchHash;
+    private int isMoveCrouchHash;
+    private int isPushHash;
+    private int isPushMoveHash;
+    private int isDropHash;
 
-    Vector2 currentMovementInput;
-    Vector3 currentMovement;
-    Vector3 currentRunMovement;
-    Transform cameraObject;
+    private Vector2 currentMovementInput;
+    private Vector3 currentMovement;
+    private Vector3 currentRunMovement;
+    private Transform cameraObject;
 
     public bool isFallingg;
     public bool isClimbing;
-    bool isSprintTime;
-    bool isSprint;
-    bool isJump;
-    bool isCrouch;
-    bool push;
-    bool interactPush;
-    bool dropObject;
-    bool isLanding;
-    bool isMovementPressed;
-    bool isRunPressed;
-    bool isTrajectoryPressed;
-    bool isActionPushin;
+    private  bool isSprintTime;
+    private bool isSprint;
+    private bool isJump;
+    private bool isCrouch;
+    private bool push;
+    private bool interactPush;
+    private bool dropObject;
+    private bool isLanding;
+    private bool isMovementPressed;
+    private bool isRunPressed;
+    private bool isTrajectoryPressed;
+    private bool isActionPushin;
    
 
     public bool inParkour;
@@ -64,75 +63,66 @@ public partial class MoveAndAnimatorController : MonoBehaviour
     public bool isJumping = false;
     public bool playerHaging { get; set; }
 
-    public bool isPush;
-    public bool inPersecution;
-    public bool sprintUnlock;
-    public float pushForce;
-    public float rotationFactorPerFrame;
-    public float runMultiplier;
-    public float multiplierSprint;
-    public float maxRayDistance;
-    public float timeSprint;
+    public bool empujando;
+    public bool enPersecucion;
+    public bool sprintLiberado;
+    public float fuerzaEmpuje;
+    public float factorRotacionPorFrame;
+    public float multiplicadorDeCorrer;
+    public float multiplicadorSprint;
+    public float distanciaMaximaRayo;
+    private float tiempoSprint;
 
 
-    Quaternion requiredRotation;
+    private Quaternion requiredRotation;
+   
 
-    [Header("Gravity Setting")] 
-    [SerializeField] private float gravity = -9.81f;
-    [SerializeField] private float gravityMultiplier = 3.0f;
-    [SerializeField] private float maxFallGravity = -10;
-
-
-    [Header("Jump")]
-    [SerializeField] private float jumpPower;
-    [SerializeField] private float jumpCooldown;
-     private float velocityG;
-    //public float timeInAir;
-    //public float minTimeInAirForFall;
-    public float landingAnimationDuration;
-    public bool canJump = true;
-    bool isrun;
+    [Header("Salto")]
+    [SerializeField] private float poderSalto = 3.2f;
+    [SerializeField] private float cooldownSalto = 1f;
+    public float duracionLandingAnimacion = 1f;
+    public bool puedoSaltar = true;
+    private bool estaCorriendo;
 
 
-    [Header("Fall and Land")]
-    public LayerMask groundLayer;
-    public float minFallHeightForAnimation;
+    [Header("Caida y Parada")]
+    public LayerMask capaSuelo;
+    public float minimaAlturaCaidaParaAnimacion;
 
 
 
-    //private EnviromentChecker checkers;
-    [Header("References")]
-    private CheckerEnviroment checks;
-    private ClimbingSystem climb;
-    private MoveableObject moveObject;
-    public AreaInteract areaInt;
+  
+    [Header("Referencias")]
+    private CheckerEnviroment checkeos;
+    private MoveableObject movimientoObjeto;
+    public AreaInteract areaInterracion;
     private VidaJugador vida;
     public EventoSonido eventoSo;
 
-    [Header("Trajectory")]
-    [SerializeField] private LineRenderer lineRenderer;
-    [SerializeField] private Transform releasePosition;
-    [SerializeField] private LayerMask collisionMask;
-    [SerializeField] private int lineSegmentCount = 20;
-    private List<Vector3> linePoint = new List<Vector3>();
+    [Header("Trayectoria de lanzamiento objeto")]
+    [SerializeField] private LineRenderer linea;
+    [SerializeField] private Transform posicionDeLanzamiento;
+    [SerializeField] private LayerMask capaDeColision;
+    [SerializeField] private int segmentoDeLineas = 20;
+    private List<Vector3> lineaDePuntos = new List<Vector3>();
 
-    [Header("Display Controls")]
+    [Header("Controles Mostrados")]
     [SerializeField]
     [Range(10, 100)]
-    private int linePoints = 25;
+    private int puntosLineas = 25;
     [SerializeField]
     [Range(0.01f, 0.25f)]
-    private float timeBetweenPoint = 0.1f;
-    private float throwStrength = 10f;
+    private float tiempoEntrePuntos = 0.1f;
+    private float fuerzaDeLanzamiento = 10f;
 
-    [Header("Variable references")]
-    public bool pushObject;
-    public Transform cam;
-    public float forceLauch;
+    [Header("Variable de referencias")]
+    public bool empujandoObjetos;
+    public Transform camara;
+    public float fuerzaLanzamiento;
 
 
-    [Header("Blend Tree")]
-    public float clampValue;
+    [Header("Animacion Arbol")]
+    public float valor;
     public float velocidad = 0.0f;
     public float aceleracion = 0.1f;
     public float desaceleracion = 0.5f;
@@ -157,29 +147,13 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         Time.timeScale = 1;
         Cursor.lockState = CursorLockMode.Locked;
         playerInputs = new PlayerInputs();
-        characterController = GetComponent<CharacterController>();
+        controladorPersonaje = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
-        checks = GetComponent<CheckerEnviroment>();
-        climb = GetComponent<ClimbingSystem>();
-        moveObject = GetComponent<MoveableObject>();
+        checkeos = GetComponent<CheckerEnviroment>();     
+        movimientoObjeto = GetComponent<MoveableObject>();
         vida = GetComponent<VidaJugador>();
-        physicalM = GetComponent<PhysicalMove>();
-      //  eventoSo = FindObjectOfType<EventoSonido>();
-
-
-        /*
-        isWalkingHash = Animator.StringToHash("isWalking");
-        isRunnigHash = Animator.StringToHash("isRunning");
-        isSprintigHash = Animator.StringToHash("isSprinting");
-        isJumpingHash = Animator.StringToHash("isJumping");
-        isFallingHash = Animator.StringToHash("isFalling");
-        isLandingHash = Animator.StringToHash("isLanding");
-        isCrouchHash = Animator.StringToHash("isCrounch");
-        isMoveCrouchHash = Animator.StringToHash("isMoveCrouch");
-        isPushHash = Animator.StringToHash("isPush");
-        isPushMoveHash = Animator.StringToHash("isPushMove");
-        
-        */
+        movimientoFisico = GetComponent<PhysicalMove>();
+     
 
         isJumpingHash = Animator.StringToHash("isJumping");
         isCrouchHash = Animator.StringToHash("isCrounch");
@@ -217,38 +191,36 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         }
 
        
-        // Vector3 moveDir = Quaternion.Euler(0f,angl)
+       
 
 
-        if (isRunPressed && checks.pushInteract == false && inParkour == false && moveObject.push == false && isCrouchPressed == false && colisionHead.obstaculoencima == false && isCrouchPressed == false)
+        if (isRunPressed && checkeos.estaEmpujando == false && inParkour == false && movimientoObjeto.estoyEmpujandolo == false && isCrouchPressed == false && cabezaColision.obstaculoencima == false && isCrouchPressed == false)
         {
-              physicalM.velocity = new Vector3(currentRunMovement.x, physicalM.velocity.y, currentRunMovement.z);
-              isrun = true;
-              characterController.Move(physicalM.velocity * Time.deltaTime);
+            movimientoFisico.velocidad = new Vector3(currentRunMovement.x, movimientoFisico.velocidad.y, currentRunMovement.z);
+            estaCorriendo = true;
+            controladorPersonaje.Move(movimientoFisico.velocidad * Time.deltaTime * velocidadCorrer);
         }
 
         else
         {
-             physicalM.velocity = new Vector3(currentMovement.x, physicalM.velocity.y, currentMovement.z);
-             isrun = false;
-           
-                characterController.Move(physicalM.velocity * Time.deltaTime);
-            
-             
+            movimientoFisico.velocidad = new Vector3(currentMovement.x, movimientoFisico.velocidad.y, currentMovement.z);
+            estaCorriendo = false;
 
-             //characterController.Move(currentMovement * Time.deltaTime); 
+            controladorPersonaje.Move(movimientoFisico.velocidad * Time.deltaTime);
+                        
+
         }
 
         if (isSprint && isCrouchPressed == false && tomoLaNota == false )
         {
             
-            currentRunMovement *= multiplierSprint;
+            currentRunMovement *= multiplicadorSprint;
         }
 
         
         if (!playerInAction)
         {
-            characterController.Move(currentMovement * Time.deltaTime);
+            controladorPersonaje.Move(currentMovement * Time.deltaTime);
         }
 
         
@@ -260,121 +232,93 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
         //Cambiar el current movement en la direccion donde este viendo la caja
 
-        if(isPush == false)
+        if(empujando == false)
         {
             currentMovement = cameraForward * currentMovementInput.y + cameraObject.right * currentMovementInput.x;
             currentMovement.Normalize();
-           // Debug.Log("Desbloqueo");
+         
         }
 
-        if (isPush)
+        if (empujando)
         {
             currentMovement = transform.forward * currentMovementInput.y;
 
             currentMovement.Normalize();
-            //Debug.Log("Bloqueo");
+           
         }
                                     
-        currentRunMovement = currentMovement * runMultiplier;
+        currentRunMovement = currentMovement * multiplicadorSprint;
            
-        if(isTrajectoryPressed == true && areaInt.loToma == true)
+        if(isTrajectoryPressed == true && areaInterracion.loToma == true)
         {
-            DrawProjection();
+            DibujarLinea();
            
         }
 
         else
         {
-            lineRenderer.enabled = false;
+            linea.enabled = false;
            
         }
-      
-        CheckGrounded();      
-        HandleRotation();      
-        HandleAnimation();
-        HandleJump();
+
+        CheckeoSuelo();
+        ManejoRotacion();
+        ManejoAnimaciones();
+        ManejoDeSalto();
 
        
 
     }
 
 
-    private void HandleJump()
+    private void ManejoDeSalto()
     {
 
-        if (!isJumping && isJumpPressed && physicalM.canJumps == true && checks.obstacleCollision == false && isClimbing == false && isActionPushin == false && isCrouchPressed == false && colisionHead.obstaculoencima == false)
+        if (!isJumping && isJumpPressed && movimientoFisico.puedoSaltar == true && checkeos.colisionConObstaculo == false && isClimbing == false && isActionPushin == false && isCrouchPressed == false && cabezaColision.obstaculoencima == false)
         {
             animator.SetBool(isJumpingHash, true);
             isJumpAnimation = true;
-            canJump = false;    
+            puedoSaltar = false;    
             isJumping = true;
-            StartCoroutine(WaitJump(1f));
-            physicalM.Jump(jumpPower);
+            StartCoroutine(EsperarSalto(1f));
+            movimientoFisico.Jump(poderSalto);
             Debug.Log("Salto");
         }
 
-       else if (isJumping && !isJumpPressed && physicalM.isGrounded)
+       else if (isJumping && !isJumpPressed && movimientoFisico.estaEnSuelo)
         {
             animator.SetBool(isJumpingHash, false);
-            //isJumping = false;
             isJumpAnimation = false;
-            checks.obstacleCollision = false;
-           // physicalM.canJumps = false;
-            // canJump = true;
+            checkeos.colisionConObstaculo = false;
             Debug.Log("Aterrizó");
         }
 
-        else if (isJumping == false && physicalM.isGrounded && isJumpPressed)
+        else if (isJumping == false && movimientoFisico.estaEnSuelo && isJumpPressed)
         {
             animator.SetBool(isJumpingHash, false);
             isJumpAnimation = false;
         }
 
-        else if (isJumping == false && physicalM.isGrounded && !isMovementPressed && !isRunPressed)
+        else if (isJumping == false && movimientoFisico.estaEnSuelo && !isMovementPressed && !isRunPressed)
         {
             animator.SetBool(isJumpingHash, false);
             isJumpAnimation = false;
         }
 
-       
-
-
-
-        /* if (isJumping && !isJumpPressed || isJumpPressed && !physicalM.isGrounded)
-         {
-             isJumping = false; // El jugador ya no está en el aire
-            // 
-             isJumpAnimation = false;          
-            // canJump = true;
-             checks.obstacleCollision = false;
-
-         }
-
-         else if(isJumping == false && physicalM.isGrounded)
-         {
-             animator.SetBool(isJumpingHash, false);
-             //StartCoroutine(WaitJump(jumpCooldown));
-         }
-
-         else if (isJumping == false && physicalM.isGrounded && !isMovementPressed && !isRunPressed) 
-         {
-             animator.SetBool(isJumpingHash, false);
-
-         }*/
 
     }
  
-    private IEnumerator WaitJump(float delay)
+    private IEnumerator EsperarSalto(float delay)
     {
         yield return new WaitForSeconds(delay);
         animator.SetBool(isJumpingHash, false);
-        canJump = true;
-        isJumping = false;      
-        physicalM.canJumps = true;
+        puedoSaltar = true;
+        isJumping = false;
+        movimientoFisico.puedoSaltar = true;
         isLanding = false;
     }
 
-    void HandleRotation()
+    private void ManejoRotacion()
     {
        
         Vector3 positionLookAt;
@@ -383,10 +327,10 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         positionLookAt.z = currentMovement.z;
         Quaternion currentRotation = transform.rotation;
 
-        if (isMovementPressed && !inParkour && moveObject.push == false  && isPush == false)
+        if (isMovementPressed && !inParkour && movimientoObjeto.estoyEmpujandolo == false  && empujando == false)
         {
             Quaternion targetRotation = Quaternion.LookRotation(positionLookAt);
-            transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, rotationFactorPerFrame * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, factorRotacionPorFrame * Time.deltaTime);
           
 
         }
@@ -396,70 +340,54 @@ public partial class MoveAndAnimatorController : MonoBehaviour
     }
 
 
-    void HandleAnimation()
+    void ManejoAnimaciones()
     {
-       /* bool isWalking = animator.GetBool(isWalkingHash);
-        bool isRunning = animator.GetBool(isRunnigHash);
-        bool isSprinting = animator.GetBool(isSprintigHash);
-        bool isCrouchMovement = animator.GetBool(isMoveCrouchHash);*/
         bool isCrouchMovement = animator.GetBool(isMoveCrouchHash);
 
-        if (isMovementPressed /*&& !isWalking*/ && isFallingg == false && isRunPressed == false )
-        {
-            //animator.SetBool(isWalkingHash, true);
-            //animator.SetFloat("Velocidad", 0.06f);    
+        if (isMovementPressed  && isFallingg == false && isRunPressed == false )
+        {   
             velocidad += Time.deltaTime * aceleracion;
-            clampValue = Mathf.Lerp(clampValue, 0.59f, Time.deltaTime * aceleracion);
-            velocidad = Mathf.Clamp(velocidad, 0, clampValue);
+            valor = Mathf.Lerp(valor, 0.59f, Time.deltaTime * aceleracion);
+            velocidad = Mathf.Clamp(velocidad, 0, valor);
             animator.SetFloat("Velocidad", velocidad);
 
 
-            timeSprint = 0;
+            tiempoSprint = 0;
         }
 
         else 
         {
-            // animator.SetBool(isWalkingHash, false);
-            // animator.SetFloat("Velocidad", 0.05f);
 
             velocidad -= Time.deltaTime * desaceleracion;
             velocidad = Mathf.Clamp(velocidad, 0, 1f);
             animator.SetFloat("Velocidad", velocidad);
-          
 
-
-            //timeSprint = 0;
         }
 
 
-        if (isMovementPressed && isRunPressed /*&& !isRunning*/ && isFallingg == false && isCrouchPressed == false && inPersecution == false)
+        if (isMovementPressed && isRunPressed  && isFallingg == false && isCrouchPressed == false && enPersecucion == false)
         {
-            // animator.SetBool(isRunnigHash, true);
 
-           // timeSprint += Time.deltaTime;
             velocidad += Time.deltaTime * aceleracion;
-            clampValue = Mathf.Lerp(clampValue, 0.8f, Time.deltaTime * aceleracion);
-            velocidad = Mathf.Clamp(velocidad, 0, clampValue);
+            valor = Mathf.Lerp(valor, 0.8f, Time.deltaTime * aceleracion);
+            velocidad = Mathf.Clamp(velocidad, 0, valor);
             animator.SetFloat("Velocidad", velocidad);
             
            
         }
 
-        else if ((isMovementPressed || !isRunPressed) /*&& isRunning*/ && velocidad > 1.0f && velocidad <= 0.1f)
+        else if ((isMovementPressed || !isRunPressed)  && velocidad > 1.0f && velocidad <= 0.1f)
         {
             velocidad -= Time.deltaTime * desaceleracion;
-            clampValue = Mathf.Lerp(clampValue, 0.59f, Time.deltaTime * desaceleracion);
-            velocidad = Mathf.Clamp(velocidad, 0, clampValue);
+            valor = Mathf.Lerp(valor, 0.59f, Time.deltaTime * desaceleracion);
+            velocidad = Mathf.Clamp(velocidad, 0, valor);
             animator.SetFloat("Velocidad", velocidad);
-           
-            //animator.SetBool(isRunnigHash, false);
-          
+                     
 
         }
 
-        else if ((!isMovementPressed || !isRunPressed) /*&& isRunning*/ && velocidad > 1.0f)
-        {
-            //animator.SetBool(isRunnigHash, false);         
+        else if ((!isMovementPressed || !isRunPressed) && velocidad > 1.0f)
+        {       
             velocidad -= Time.deltaTime * desaceleracion;
             velocidad = Mathf.Clamp(velocidad, 0, 1f);
             animator.SetFloat("Velocidad", velocidad);
@@ -469,78 +397,64 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
 
 
-        if (isMovementPressed /*&& timeSprint >= 2  && !isSprinting*/ && isFallingg == false && isCrouchPressed == false && inPersecution == true)
+        if (isMovementPressed  && isFallingg == false && isCrouchPressed == false && enPersecucion == true)
         {
-            timeSprint = 2;
-            clampValue = Mathf.Lerp(clampValue, 1.5f, Time.deltaTime * desaceleracion);
-            velocidad = Mathf.Clamp(velocidad, 0, clampValue);
+            tiempoSprint = 2;
+            valor = Mathf.Lerp(valor, 1.5f, Time.deltaTime * desaceleracion);
+            velocidad = Mathf.Clamp(velocidad, 0, valor);
             animator.SetFloat("Velocidad", velocidad);
-            //animator.SetBool(isSprintigHash, true);
 
             isSprint = true;
         }
 
-        else if ((!isMovementPressed || !isRunPressed) && timeSprint <= 0 && velocidad > 1.0f/*&& isSprinting*/)
+        else if ((!isMovementPressed || !isRunPressed) && tiempoSprint <= 0 && velocidad > 1.0f)
         {
             velocidad -= Time.deltaTime * desaceleracion;
             velocidad = Mathf.Clamp(velocidad, 0, 1f);
             animator.SetFloat("Velocidad", velocidad);
-            //animator.SetBool(isSprintigHash, false);
         }
 
-        
-
-        if (isRunPressed && isCrouchPressed == false && colisionHead.obstaculoencima == false && sprintUnlock == true)
-        {
-            //timeSprint += Time.deltaTime;
-
-        }
 
 
         else
         {
-           // timeSprint = 0;
+           
             isSprint = false;
         }
 
-        
 
-        if(timeSprint >= 2)
-        {
-           // timeSprint = 3;
-        }
 
-        if (isCrouchPressed && isFallingg == false && isRunPressed == false && isrun == false && isPush == false)
+        if (isCrouchPressed && isFallingg == false && isRunPressed == false && estaCorriendo == false && empujando == false)
         {
             animator.SetBool(isCrouchHash, true);
-            characterController.center = new Vector3(0, 0.58f, 0);
-            characterController.radius = 0.1846104f;
-            characterController.height = 1.043544f;
+            controladorPersonaje.center = new Vector3(0, 0.58f, 0);
+            controladorPersonaje.radius = 0.1846104f;
+            controladorPersonaje.height = 1.043544f;
             
         }
 
          else
         {
-            if(colisionHead.obstaculoencima == false)
+            if(cabezaColision.obstaculoencima == false)
             {
                 animator.SetBool(isCrouchHash, false);
 
 
-                characterController.center = new Vector3(0, 1.26f, -0.04f);
-                characterController.radius = 0.35f;
-                characterController.height = 2.18f;
+                controladorPersonaje.center = new Vector3(0, 1.26f, -0.04f);
+                controladorPersonaje.radius = 0.35f;
+                controladorPersonaje.height = 2.18f;
             }
 
             
         }
 
-        if(!isMovementPressed && colisionHead.obstaculoencima == true)
+        if(!isMovementPressed && cabezaColision.obstaculoencima == true)
         {
             animator.SetBool(isCrouchHash, true);
             animator.SetBool(isMoveCrouchHash, false);
         }
 
-        if (isCrouchPressed && isMovementPressed && !isCrouchMovement || isMovementPressed && colisionHead.obstaculoencima == true)
+        if (isCrouchPressed && isMovementPressed && !isCrouchMovement || isMovementPressed && cabezaColision.obstaculoencima == true)
         {
             animator.SetBool(isMoveCrouchHash, true);
         }
@@ -552,55 +466,48 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
         }
 
-        else if(isMovementPressed && colisionHead.obstaculoencima == false && !isCrouchPressed && !isRunPressed)
+        else if(isMovementPressed && cabezaColision.obstaculoencima == false && !isCrouchPressed && !isRunPressed)
         {
             animator.SetBool(isCrouchHash, false);
             animator.SetBool(isMoveCrouchHash, false);
             animator.SetFloat("Velocidad", velocidad);
-            /*animator.SetBool(isWalkingHash, true);*/
         }
 
-        else if (isMovementPressed && colisionHead.obstaculoencima == false && !isCrouchPressed && isRunPressed)
+        else if (isMovementPressed && cabezaColision.obstaculoencima == false && !isCrouchPressed && isRunPressed)
         {
             animator.SetBool(isCrouchHash, false);
             animator.SetBool(isMoveCrouchHash, false);
             velocidad = 0.79f;
             animator.SetFloat("Velocidad", velocidad);
-            /*animator.SetBool(isWalkingHash, true);*/
         }
 
-        else if (isMovementPressed && colisionHead.obstaculoencima == false && !isCrouchPressed)
+        else if (isMovementPressed && cabezaColision.obstaculoencima == false && !isCrouchPressed)
         {
             animator.SetBool(isCrouchHash, false);
             animator.SetBool(isMoveCrouchHash, false);
             animator.SetFloat("Velocidad", velocidad);
-            /*animator.SetBool(isWalkingHash, false);
-            animator.SetBool(isRunnigHash, false);*/
+
         }
 
 
-
-
-        if (isInteractPressed && checks.pushInteract && areaInt.loToma == false)
+        if (isInteractPressed && checkeos.estaEmpujando && areaInterracion.loToma == false)
         {
             animator.SetBool(isPushHash, true);
-            //playerInAction = true;
             isActionPushin = true;
 
-            if (isMovementPressed && areaInt.loToma == false)
+            if (isMovementPressed && areaInterracion.loToma == false)
             {
                 animator.SetBool(isPushMoveHash, true);
-                isPush = true;
+                empujando = true;
               
-                pushObject = true;
-               // isActionPushin = true;
+                empujandoObjetos = true;
 
             }
 
             else
             {
                 animator.SetBool(isPushMoveHash, false);
-                pushObject = false;
+                empujandoObjetos = false;
                
             }
 
@@ -612,65 +519,65 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         {
             animator.SetBool(isPushHash, false);
             animator.SetBool(isPushMoveHash, false);
-            pushObject = false;
+            empujandoObjetos = false;
             playerInAction = false;
             isActionPushin = false;
-            moveObject.push = false;
-            isPush = false;
+            movimientoObjeto.estoyEmpujandolo = false;
+            empujando = false;
         }
 
-        if (isInteractPressed && areaInt != null && checks.pushInteract == false && areaInt.puedoTomarlo == true  && areaInt.objetInter.loTiene == false)
+        if (isInteractPressed && areaInterracion != null && checkeos.estaEmpujando == false && areaInterracion.puedoTomarlo == true  && areaInterracion.objetInter.loTiene == false)
         {
-            areaInt.objetInter.tomo = true;
-            areaInt.loToma = true;
-            moveObject.enabled = false;
+            areaInterracion.objetInter.tomo = true;
+            areaInterracion.loToma = true;
+            movimientoObjeto.enabled = false;
         }
 
-        if(isDropPressed && areaInt.objetInter != null &&  areaInt.objetInter.loTiene == true )
+        if(isDropPressed && areaInterracion.objetInter != null && areaInterracion.objetInter.loTiene == true )
         {
-            areaInt.objetInter.tomo = false;
-            areaInt.objetInter.losuelta = true;
-            areaInt.loToma = false;
-            areaInt.puedoTomarlo = false;
-            moveObject.enabled = true;
+            areaInterracion.objetInter.tomo = false;
+            areaInterracion.objetInter.losuelta = true;
+            areaInterracion.loToma = false;
+            areaInterracion.puedoTomarlo = false;
+            movimientoObjeto.enabled = true;
           
         }
 
-        if(isReleasePressed && areaInt.objetInter != null && areaInt.objetInter.loTiene == true)
+        if(isReleasePressed && areaInterracion.objetInter != null && areaInterracion.objetInter.loTiene == true)
         {
-           
-            ReleaseObject();
+
+            LanzarObjeto();
             isTrajectoryPressed = false;
-            moveObject.enabled = true;
+            movimientoObjeto.enabled = true;
            
 
         }
 
-        if (isInteractPressed && checks.pushInteract == false && areaInt.puedTomarMedicina == true && areaInt != null && vida.vidas <= 95)
+        if (isInteractPressed && checkeos.estaEmpujando == false && areaInterracion.puedTomarMedicina == true && areaInterracion != null && vida.vidas <= 95)
         {
             // Animacion de tomar
             vida.recupera = true;
-            areaInt.puedTomarMedicina = false;
+            areaInterracion.puedTomarMedicina = false;
            
         }
 
         //Aqui Notas
-        if(isInteractPressed && areaInt.puedoTomarNota == true && tomoLaNota == false)
+        if(isInteractPressed && areaInterracion.puedoTomarNota == true && tomoLaNota == false)
         {
             tomoLaNota = true;
             notas.SetActive(true);
             eventoSo.SonidoPapelTomando();
-            //speed = 0;
+           
         }
 
 
-        if (isDropPressed && areaInt.puedoTomarNota == true && tomoLaNota == true)
+        if (isDropPressed && areaInterracion.puedoTomarNota == true && tomoLaNota == true)
         {
             tomoLaNota = false;
             notas.SetActive(false);
             Time.timeScale = 1;
             eventoSo.SonidoPapelTomando();
-            speed = 2;
+            velocidadCorrer = 2;
         }
 
 
@@ -681,55 +588,49 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
     
 
-    IEnumerator DisableLandingAnimation(float delay)
+    IEnumerator DesactivarAnimacionCaida(float delay)
     {
         yield return new WaitForSeconds(delay);
         animator.SetBool(isLandingHash, false);
     }
 
-    private void CheckGrounded()
+    private void CheckeoSuelo()
     {
         RaycastHit hit;
-         bool isGrounded = Physics.Raycast(transform.position, Vector3.down, out hit, maxRayDistance, groundLayer);
+         bool isGrounded = Physics.Raycast(transform.position, Vector3.down, out hit, distanciaMaximaRayo, capaSuelo);
        
-        Debug.DrawRay(transform.position, Vector3.down * maxRayDistance, Color.red);
+        Debug.DrawRay(transform.position, Vector3.down * distanciaMaximaRayo, Color.red);
 
         if (isGrounded && hit.distance > 3.5f)
         {
             
             isLanding = true;
             isFallingg = true;
-           // Debug.Log("Esta cayendo");
               
             animator.SetBool(isFallingHash, true);
-           /* animator.SetBool(isWalkingHash, false);
-            animator.SetBool(isRunnigHash, false);
-            animator.SetBool(isSprintigHash, false);
-            animator.SetBool(isWalkingHash, false);
-            animator.SetBool(isRunnigHash, false);*/
             animator.SetBool(isJumpingHash, false);
         }
 
-        if (isFallingg == true && physicalM.isGrounded == true && hit.distance <= 0.5f)
+        if (isFallingg == true && movimientoFisico.estaEnSuelo == true && hit.distance <= 0.5f)
         {
             animator.SetBool(isFallingHash, false);
             animator.SetBool(isLandingHash, true);
             isFallingg = false;
             isLanding = false;
 
-            StartCoroutine(DisableLandingAnimation(landingAnimationDuration));
+            StartCoroutine(DesactivarAnimacionCaida(duracionLandingAnimacion));
         }
     }
 
 
-    public IEnumerator PerformAction(string AnimationName, CompareTargetParameter ctp = null, Quaternion RequiredRotation = new Quaternion(), bool LookAtObstacle = false, float ParkourActionDelay = 0f)
+    public IEnumerator RealizaAccion (string AnimationName, CompareTargetParameter ctp = null, Quaternion RequiredRotation = new Quaternion(), bool LookAtObstacle = false, float ParkourActionDelay = 0f)
     {
 
         animator.CrossFadeInFixedTime(AnimationName, 0.2f);
         
         playerInAction = true;
-        characterController.enabled = false;
-        characterController.detectCollisions = false;
+        controladorPersonaje.enabled = false;
+        controladorPersonaje.detectCollisions = false;
 
         animator.applyRootMotion = true;
 
@@ -741,11 +642,11 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName(AnimationName))
         {
-            Debug.Log("Animation Name is Incorrect");
+            Debug.Log("Nombre de animacion incorrecta");
         }
 
-        //yield return new WaitForSeconds(animationState.length);
-        float rotateStartTime = (ctp != null) ? ctp.startTime : 0f;
+      
+        float rotateStartTime = (ctp != null) ? ctp.comienzo : 0f;
 
 
         float timerCounter = 0f;
@@ -760,12 +661,14 @@ public partial class MoveAndAnimatorController : MonoBehaviour
             //Hace que el jugador mire directo al obsatculo donde hace parkour
             if (LookAtObstacle && normalizedTimerCounter > rotateStartTime)
             {
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, RequiredRotation, rotationFactorPerFrame * Time.deltaTime);
+               
+                // esto esta afuera
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, RequiredRotation, factorRotacionPorFrame * Time.deltaTime);
             }
 
             if (ctp != null)
             {
-                CompareTarget(ctp);
+                CompararObjetivo(ctp);
             }
 
 
@@ -783,39 +686,31 @@ public partial class MoveAndAnimatorController : MonoBehaviour
         // movement.SetControl(true);
 
         playerInAction = false;
-        characterController.enabled = true;
-        characterController.detectCollisions = true;
+        controladorPersonaje.enabled = true;
+        controladorPersonaje.detectCollisions = true;
         animator.applyRootMotion = false;
 
-
+       
     }
 
 
 
-    void CompareTarget(CompareTargetParameter compareTargetParameter)
+    void CompararObjetivo(CompareTargetParameter compareTargetParameter)
     {
-        animator.MatchTarget(compareTargetParameter.position, transform.rotation, compareTargetParameter.bodyPart, new MatchTargetWeightMask((compareTargetParameter.positionWeight), 0), compareTargetParameter.startTime, compareTargetParameter.endTime);
+        animator.MatchTarget(compareTargetParameter.posicion, transform.rotation, compareTargetParameter.parteDelCuerpo, new MatchTargetWeightMask((compareTargetParameter.posicionAcho), 0), compareTargetParameter.comienzo, compareTargetParameter.final);
     }
 
    
 
 
 
-    public void SetControl(bool hasControl)
+    public void Control(bool hasControl)
     {
         this.playerControl = hasControl;
-       // characterController.enabled = hasControl;
+      
         
         if (!hasControl)
         {
-            /* animator.SetBool(isWalkingHash, false);
-             animator.SetBool(isJumpingHash, false);
-             animator.SetBool(isRunnigHash, false);
-             animator.SetBool(isWalkingHash, false);
-             animator.SetBool(isFallingHash, false);
-             animator.SetBool(isLandingHash, false);
-             animator.SetBool(isCrouchHash, false)*/
-
             animator.SetFloat("Velocidad", 0f);
             animator.SetBool(isFallingHash, false);
             animator.SetBool(isLandingHash, false);
@@ -827,67 +722,67 @@ public partial class MoveAndAnimatorController : MonoBehaviour
 
     public void EnableCC(bool enabled)
     {
-        characterController.enabled = enabled;
+        controladorPersonaje.enabled = enabled;
     }
 
-    public void ResetRequiredRotation()
+    public void ResetarPosicionRequerida()
     {
         requiredRotation = transform.rotation;
     }
 
 
-    private void DrawProjection()
+    private void DibujarLinea()
     {
-        lineRenderer.enabled = true;
-        lineRenderer.positionCount = Mathf.CeilToInt(linePoints / timeBetweenPoint) + 1;
+        linea.enabled = true;
+        linea.positionCount = Mathf.CeilToInt(puntosLineas / tiempoEntrePuntos) + 1;
 
-        Vector3 startPosition = releasePosition.position;
-        Vector3 startvelocity = throwStrength * cam.transform.forward; // añadir division object.mass
+        Vector3 startPosition = posicionDeLanzamiento.position;
+        Vector3 startvelocity = fuerzaDeLanzamiento * camara.transform.forward; // añadir division object.mass
         int i = 0;
-        lineRenderer.SetPosition(i, startPosition);
+        linea.SetPosition(i, startPosition);
 
-        for(float time = 0; time < linePoints; time += timeBetweenPoint)
+        for(float time = 0; time < puntosLineas; time += tiempoEntrePuntos)
         {
             i++;
             Vector3 point = startPosition + time * startvelocity;
             point.y = startPosition.y + startvelocity.y * time + (Physics.gravity.y / 2f * time * time);
 
-            lineRenderer.SetPosition(i, point);
+            linea.SetPosition(i, point);
 
-            Vector3 lastPosition = lineRenderer.GetPosition(i - 1);
+            Vector3 lastPosition = linea.GetPosition(i - 1);
 
-            if(Physics.Raycast(lastPosition,(point - lastPosition).normalized, out RaycastHit hit, (point - lastPosition).magnitude, collisionMask))
+            if(Physics.Raycast(lastPosition,(point - lastPosition).normalized, out RaycastHit hit, (point - lastPosition).magnitude, capaDeColision))
             {
-                lineRenderer.SetPosition(i, hit.point);
-                lineRenderer.positionCount = i + 1;
+                linea.SetPosition(i, hit.point);
+                linea.positionCount = i + 1;
                 return;
             }
         }
     }
 
     
-    private void ReleaseObject()
-    {      
-        areaInt.objetInter.losuelta = true;
-        areaInt.objetInter.rigidObject.isKinematic = false;
-        areaInt.objetInter.rigidObject.freezeRotation = false;
-        areaInt.objetInter.objects.transform.SetParent(null);
-        areaInt.objetInter.rigidObject.angularVelocity = Vector3.zero;
-        areaInt.objetInter.rigidObject.AddForce(cam.transform.forward * throwStrength, ForceMode.Impulse);
-        areaInt.objetInter.objectBroke.isRelease = true;
-        areaInt.loToma = false;
-        areaInt.puedoTomarlo = false;
+    private void LanzarObjeto()
+    {
+        areaInterracion.objetInter.losuelta = true;
+        areaInterracion.objetInter.rigidObject.isKinematic = false;
+        areaInterracion.objetInter.rigidObject.freezeRotation = false;
+        areaInterracion.objetInter.objects.transform.SetParent(null);
+        areaInterracion.objetInter.rigidObject.angularVelocity = Vector3.zero;
+        areaInterracion.objetInter.rigidObject.AddForce(camara.transform.forward * fuerzaDeLanzamiento, ForceMode.Impulse);
+        areaInterracion.objetInter.objectBroke.isRelease = true;
+        areaInterracion.loToma = false;
+        areaInterracion.puedoTomarlo = false;
     }
 
 }
 
 public class CompareTargetParameter
 {
-    public Vector3 position;
-    public AvatarTarget bodyPart;
-    public Vector3 positionWeight;
-    public float startTime;
-    public float endTime;
+    public Vector3 posicion;
+    public AvatarTarget parteDelCuerpo;
+    public Vector3 posicionAcho;
+    public float comienzo;
+    public float final;
 
 }
 

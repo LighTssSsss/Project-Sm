@@ -35,7 +35,7 @@ public class UnlockSprint : MonoBehaviour
             MoveAndAnimatorController moveSystem = player.GetComponent<MoveAndAnimatorController>();
             if (moveSystem != null)
             {
-               moveSystem.sprintUnlock = true;
+               moveSystem.sprintLiberado = true;
             }
 
             else

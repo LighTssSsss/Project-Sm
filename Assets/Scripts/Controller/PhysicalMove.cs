@@ -5,49 +5,49 @@ using UnityEngine;
 public class PhysicalMove : MonoBehaviour
 {
     
-    [SerializeField] private CharacterController controller;
-    [SerializeField] private CheckerEnviroment check;
-    [SerializeField] private float jumpGravity = 1;
-    [SerializeField] private float fallingGravity = 3;
-    [SerializeField] private float maxFallVelocity = -10; 
+    [SerializeField] private CharacterController controlador;
+    [SerializeField] private CheckerEnviroment checkeo;
+    [SerializeField] private float gravedadSalto = 1;
+    [SerializeField] private float gravedaCaida = 3;
+    [SerializeField] private float velocidadMaximaCaida = -10; 
 
-    public bool canJumps;
-    public bool isGrounded;
-    public Vector3 velocity;
-    private float disableGroundDetection;
+    public bool puedoSaltar;
+    public bool estaEnSuelo;
+    public Vector3 velocidad;
+    private float desactivarDeteccionSuelo;
     
     // Start is called before the first frame update
     void Start()
     {
-        canJumps = true;
+        puedoSaltar = true;
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        float gravityScale = fallingGravity;
+        float gravityScale = gravedaCaida;
 
-        if (controller.velocity.y >= 0) gravityScale = jumpGravity; 
+        if (controlador.velocity.y >= 0) gravityScale = gravedadSalto; 
         
-        if (isGrounded == true && disableGroundDetection == 0 && check.obstacleCollision == false)
+        if (estaEnSuelo == true && desactivarDeteccionSuelo == 0 && checkeo.colisionConObstaculo == false)
         {
-            velocity.y = 0;
-            canJumps = true;
+            velocidad.y = 0;
+            puedoSaltar = true;
            
             // Debug.Log("Puede");
         }
 
         else
         {
-            velocity.y += Physics.gravity.y * gravityScale * Time.deltaTime;
-            canJumps = false;
+            velocidad.y += Physics.gravity.y * gravityScale * Time.deltaTime;
+            puedoSaltar = false;
 
-            disableGroundDetection -= Time.deltaTime;
-            disableGroundDetection = Mathf.Max(0, disableGroundDetection);
+            desactivarDeteccionSuelo -= Time.deltaTime;
+            desactivarDeteccionSuelo = Mathf.Max(0, desactivarDeteccionSuelo);
         }
-       
-         velocity.y = Mathf.Max(velocity.y, maxFallVelocity);
+
+        velocidad.y = Mathf.Max(velocidad.y, velocidadMaximaCaida);
     }
 
 
@@ -56,12 +56,12 @@ public class PhysicalMove : MonoBehaviour
     public void Jump(float force)
     {
         
-        if (canJumps == false) return;
-        
-        velocity.y = force;
-        canJumps = false;
-        
-        disableGroundDetection = 0.2f;
+        if (puedoSaltar == false) return;
+
+        velocidad.y = force;
+        puedoSaltar = false;
+
+        desactivarDeteccionSuelo = 0.2f;
         
     }
 
@@ -69,7 +69,7 @@ public class PhysicalMove : MonoBehaviour
     {
         if (other.gameObject.tag == "Ground")
         {
-            isGrounded = true;
+            estaEnSuelo = true;
         }
     }
 
@@ -77,7 +77,7 @@ public class PhysicalMove : MonoBehaviour
     {
         if (other.gameObject.tag == "Ground")
         {
-            isGrounded = false;
+            estaEnSuelo = false;
         }
     }
 }

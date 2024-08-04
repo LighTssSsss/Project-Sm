@@ -27,7 +27,7 @@ public class ParkourSystem : MonoBehaviour
         if (movement.isJumpPressed)
         {
             ObstacleInfo hitData = check.CheckObstacle();
-            if (check.obstacleCollision == true)
+            if (check.colisionConObstaculo == true)
             {
 
                 StartCoroutine(Clibimg());

@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 40c715ea7052f7d40a277027e618acd5, type: 3}
-  m_Name: Jumping
+  m_Name: Escalada
   m_EditorClassIdentifier: 
-  animationName: Jumping
+  animationName: Climb Up
   barrierTag: 
-  minimumHeight: 0
-  maximumHeight: 0
+  minimumHeight: 2
+  maximumHeight: 3
   lookAtObstacle: 1
-  parkourActionDelay: 0
+  parkourActionDelay: 0.6
   allowTargetMatching: 1
-  comparedBodyPart: 3
-  compareStartTime: 0.65
-  compareEndTime: 0.96
-  comparePositionWeight: {x: 0, y: 1, z: 0}
+  comparedBodyPart: 5
+  compareStartTime: 0.052
+  compareEndTime: 0.51
+  comparePositionWeight: {x: 0, y: 5, z: 2.5}

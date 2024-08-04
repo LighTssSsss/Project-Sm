@@ -3,86 +3,53 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 using UnityEngine.InputSystem;
+using Unity.Mathematics;
 
 public class ClimbingSystem : MonoBehaviour
 {
-    // public EnviromentChecker enviromentCheckers;
-    public CheckerEnviroment check;
-    //bool playerInAction;
+    public CheckerEnviroment checkeo;  
     public Animator animator;
     public EventoSonido eventoS;
 
 
 
-    [Header("Parkour Action Area")]
-    public List<NewParkour> newParkours;
+    [Header("Acciones de Parkour")]
+    public List<NewParkour> Parkours;
 
 
-    private MoveAndAnimatorController movement;
-    private CharacterController character;
+    private MoveAndAnimatorController movimiento;
+    private CharacterController controlador;
 
     
     
 
     private void Awake()
     {
-        movement = GetComponent<MoveAndAnimatorController>();
-        character = GetComponent<CharacterController>();
+        movimiento = GetComponent<MoveAndAnimatorController>();
+        controlador = GetComponent<CharacterController>();
         eventoS = FindObjectOfType<EventoSonido>();
     }
 
-    private void FixedUpdate()
-    {
-        
-    }
-
+  
     private void Update()
     {
-
-        /* if (!movement.isJumping && movement.characterController.isGrounded && movement.isJumpPressed && movement.canJump && checker.forwarObstacle == true)
-         {
-             var hitData = enviromentCheckers.CheckObstacle();
-
-             if (hitData.hitFound)
-             {
-                 foreach(var action in newParkours)
-                 {
-                     if (action.CheckIfAvaible(hitData, transform))
-                     {
-                         StartCoroutine(PerformParkourAction(action));
-                         break;
-                     }
-                 }
-                // Debug.Log("Object founded" + hitData.hitInfo.transform.name);
-             }
-         }*/
-
-        /* var hitData = check.CheckObstacle();
-
-         if (hitData.hitFound)
-         {
-             Debug.Log("Objeto:" + hitData.hitInfo.transform.name);
-         }*/
-
-
-
-      
-        
-        if (movement.isJumpPressed && !movement.playerInAction && check.obstacleCollision == true && !movement.playerHaging && !movement.inParkour && check.notJumpAction == false && movement.isJumping == false)
+                
+        if (movimiento.isJumpPressed && !movimiento.playerInAction && checkeo.colisionConObstaculo == true && !movimiento.playerHaging && !movimiento.inParkour && checkeo.notJumpAction == false && movimiento.isJumping == false)
         {
 
             //Solo hacia adelante
-            //transform.rotation = Quaternion.LookRotation(Vector3.forward);
+
+           // transform.rotation = Quaternion.LookRotation(Vector3.forward);
                              
-            ObstacleInfo hitData = check.CheckObstacle();
+            ObstacleInfo hitData = checkeo.CheckObstacle();
 
        
-            foreach (NewParkour action in newParkours)
+            foreach (NewParkour action in Parkours)
                 {
                
                    if (action.CheckIfAvaible(hitData, transform))
                    {
-
+                    
                     StartCoroutine(PerformParkourAction(action));
                     break;
 
@@ -101,10 +68,10 @@ public class ClimbingSystem : MonoBehaviour
     IEnumerator PerformParkourAction(NewParkour action)
     {
 
-        //Quaternion forwardRotation = Quaternion.LookRotation(Vector3.forward);
-        movement.inParkour = true;
-        character.enabled = false;
-        character.detectCollisions = false;
+      //  Quaternion forwardRotation = Quaternion.LookRotation(Vector3.forward);
+        movimiento.inParkour = true;
+        controlador.enabled = false;
+        controlador.detectCollisions = false;
         animator.applyRootMotion = true;
         eventoS.SonidoSaltoSorteo();
 
@@ -114,25 +81,21 @@ public class ClimbingSystem : MonoBehaviour
         {
             compareTargetParameter = new CompareTargetParameter()
             {
-                position = action.comparePosition,
-                bodyPart = action.CompareBodyPart,
-                positionWeight = action.ComparePositionWeight,
-                startTime = action.CompareStartTime,
-                endTime = action.CompareEndTime,
+                posicion = action.comparePosition,
+                parteDelCuerpo = action.CompareBodyPart,
+                posicionAcho = action.ComparePositionWeight,
+                comienzo = action.CompareStartTime,
+                final = action.CompareEndTime,
             };
         }
 
-        yield return movement.PerformAction(action.AnimationName, compareTargetParameter, /*forwardRotation,*/ action.requiredRotation, action.LookAtObstacle, action.ParkourActionDelay);
+        yield return movimiento.RealizaAccion(action.AnimationName, compareTargetParameter, /*forwardRotation,*/ action.requiredRotation, action.LookAtObstacle, action.ParkourActionDelay);
 
-        character.enabled = true;
-        movement.inParkour = false;
-        character.detectCollisions = true;
+        controlador.enabled = true;
+        movimiento.inParkour = false;
+        controlador.detectCollisions = true;
         animator.applyRootMotion = false;
-
-
-        
-        
-       
+                      
     }
 
 
@@ -144,86 +107,7 @@ public class ClimbingSystem : MonoBehaviour
 
 
 
-    /* IEnumerator PerformParkourAction(NewParkour action)
-     {
+  
 
-         animator.CrossFade(action.AnimationName, 0.2f);
-
-         //playerInAction = true;
-         character.enabled = false;
-         character.detectCollisions = false;
-         animator.applyRootMotion = true;
-
-                     //movement.SetControl(false);
-
-         yield return null;
-
-         var animationState = animator.GetNextAnimatorStateInfo(0);
-
-         if (!animator.GetCurrentAnimatorStateInfo(0).IsName(action.AnimationName))
-         {
-             Debug.Log("Animation Name is Incorrect");
-         }
-
-         //yield return new WaitForSeconds(animationState.length);
-
-         float timerCounter = 0f;
-
-         while (timerCounter <= animationState.length)
-         {
-             timerCounter += Time.deltaTime;
-
-             //Make player to look towards the obstacle
-             if (action.LookAtObstacle)
-             {
-                 transform.rotation =  Quaternion.RotateTowards(transform.rotation, action.requiredRotation, movement.rotationFactorPerFrame * Time.deltaTime);
-             }
-
-             if (action.AlloTargetMatching)
-             {
-                 CompareTarget(action);
-             }
-
-
-             if(animator.IsInTransition(0) && timerCounter > 0.5f)
-             {
-                 break;
-             }
-
-
-             yield return null;
-         }
-
-         yield return new WaitForSeconds(action.ParkourActionDelay);
-
-        // movement.SetControl(true);
-         playerInAction = false;
-         character.enabled = true;
-         character.detectCollisions = true;
-         animator.applyRootMotion = false;
-
-
-     }*/
-
-
-
-
-    /*
-    IEnumerator Clibimg()
-    {
-
-        animator.CrossFade("Running Jump", 0.2f);
-        yield return null;
-
-
-        inAction = true;
-        animator.applyRootMotion = true;
-        characterC.enabled = false;
-        yield return new WaitForSeconds(animator.GetNextAnimatorStateInfo(0).length);
-
-        inAction = false;
-        animator.applyRootMotion = false;
-        characterC.enabled = true;
-    }*/
 
 }

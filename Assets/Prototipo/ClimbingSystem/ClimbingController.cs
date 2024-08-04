@@ -24,7 +24,7 @@ public class ClimbingController : MonoBehaviour
     {
         if (!mv.playerHaging)
         {
-            if (mv.isJumpPressed && !mv.playerInAction && ec.obstacleCollision == false)
+            if (mv.isJumpPressed && !mv.playerInAction && ec.colisionConObstaculo == false)
             {
                 if (ec.CheckClimbing(transform.forward, out RaycastHit climbInfo))
                 {
@@ -33,7 +33,7 @@ public class ClimbingController : MonoBehaviour
 
 
 
-                    mv.SetControl(false);
+                    mv.Control(false);
                     inOutValue = 0.236f;
                     upDownValue = 0.137f;
                     leftRightValue = 0.2f;
@@ -47,7 +47,7 @@ public class ClimbingController : MonoBehaviour
                 if (ec.ChechkDropClimbPoint(out RaycastHit DropHit))
                 {
                     currentClimbPoint = GetNearestClimbingPoint(DropHit.transform, DropHit.point);
-                    mv.SetControl(false);
+                    mv.Control(false);
 
                     //SethHandOffset
                     inOutValue = 0.16f;
@@ -176,16 +176,16 @@ public class ClimbingController : MonoBehaviour
 
         var compareParameters = new CompareTargetParameter()
         {
-            position = SetHandPosition(ledgePoint, hand, playerHandOffset),
-            bodyPart = hand,
-            positionWeight = Vector3.one,
-            startTime = compareStartTime,
-            endTime = compareEndTime
+            posicion = SetHandPosition(ledgePoint, hand, playerHandOffset),
+            parteDelCuerpo = hand,
+            posicionAcho = Vector3.one,
+            comienzo = compareStartTime,
+            final = compareEndTime
         };
 
         var requiredRotation = Quaternion.LookRotation(-ledgePoint.forward);
 
-        yield return mv.PerformAction(animationName, compareParameters, requiredRotation, true);
+        yield return mv.RealizaAccion(animationName, compareParameters, requiredRotation, true);
 
         mv.playerHaging = true;
     }
@@ -195,9 +195,7 @@ public class ClimbingController : MonoBehaviour
         var offSetValue = (playerhandOffset != null) ? playerhandOffset.Value : new Vector3(inOutValue, upDownValue, leftRightValue);
 
 
-       // inOutValue = 0.236f;
-        //upDownValue = 0.137f;
-        //leftRightValue = 0.2f;
+      
 
         var handDirection = (hand == AvatarTarget.RightHand) ? ledge.right : -ledge.right;
 
@@ -208,24 +206,24 @@ public class ClimbingController : MonoBehaviour
     IEnumerator Droped()
     {
         mv.playerHaging = false;
-        yield return mv.PerformAction("JumpWall1");
+        yield return mv.RealizaAccion("JumpWall1");
         mv.isLeavePressed = false;
-        mv.ResetRequiredRotation();
-        mv.SetControl(true);
+        mv.ResetarPosicionRequerida();
+        mv.Control(true);
     }
 
     IEnumerator ClimbToTop()
     {
         mv.playerHaging = false;
-        yield return mv.PerformAction("ClimbTop");
+        yield return mv.RealizaAccion("ClimbTop");
 
         mv.EnableCC(true);
 
         yield return new WaitForSeconds(0.5f);
 
 
-        mv.ResetRequiredRotation();
-        mv.SetControl(true);
+        mv.ResetarPosicionRequerida();
+        mv.Control(true);
     }
 
     ClimbingPoint GetNearestClimbingPoint(Transform dropClimbPoint, Vector3 hitPoint)

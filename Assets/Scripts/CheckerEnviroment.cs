@@ -6,38 +6,37 @@ using UnityEngine.Rendering;
 
 public class CheckerEnviroment : MonoBehaviour
 {
-    [Header("Check")]
-    public Vector3 rayOffset = new Vector3(0, 0.2f, 0);
-    public float raylenght = 0.9f;
-    public float heightRaylenght = 6f;
-    public float jumpRayLength = 6f;
-    public LayerMask obstacleLayer;
-    public float heightRayDistance;
-    public float rayLength = 5f;
-    public float rayLengthX = 1f;
+    [Header("Checkear")]
+    public Vector3 alturaRayoDeParkour = new Vector3(0, 0.2f, 0);
+    public float distanciaRayoParkour = 0.9f;
+    public float alturaRayoDistancia = 6f;
+    public LayerMask capaColisionParkour;
+    private float alturaDistanciaRayo;
+    private float distanciaRayo = 0.6f;
+    private float distanciaRayoX = 0.7f;
 
-    [Header("Climbing Check")]
-    [SerializeField] private float climbingRayLength = 1.6f;
-    [SerializeField] private LayerMask climbingLayer;
-    public int numberOfRays = 12;
+    [Header("checkear escalada y parkour")]
+    [SerializeField] private float escaladaRayoDistancia = 1.6f;
+    [SerializeField] private LayerMask escaladaCapa;
+   // public int numberOfRays = 12;
     public bool notJumpAction;
 
-    [Header("Touch or not object")]
-    public bool obstacleCollision;
-    public bool pushInteract;
-    public bool objectInteract;
-    public bool objectInHand;
+    [Header("Toco o no el objeto")]
+    public bool colisionConObstaculo;
+    public bool estaEmpujando;
+   // public bool interactuaConObjeto;
+   // public bool ObjetoEnMano;
 
     private void Update()
     {
-        Vector3 rayOrigin2 = transform.position + rayOffset;
+        Vector3 rayOrigin2 = transform.position + alturaRayoDeParkour;
 
         // Primer raycast para verificar obstáculos frente al jugador
-        bool hitFound = Physics.Raycast(rayOrigin2, transform.forward, raylenght, obstacleLayer);
+        bool hitFound = Physics.Raycast(rayOrigin2, transform.forward, distanciaRayoParkour, capaColisionParkour);
 
-        Debug.DrawRay(rayOrigin2, transform.forward * raylenght, (hitFound) ? Color.yellow : Color.green);
+        Debug.DrawRay(rayOrigin2, transform.forward * distanciaRayoParkour, (hitFound) ? Color.yellow : Color.green);
 
-        obstacleCollision = hitFound;
+        colisionConObstaculo = hitFound;
 
         CheckInteract();      
     }
@@ -46,22 +45,22 @@ public class CheckerEnviroment : MonoBehaviour
     {
         ObstacleInfo hitData = new ObstacleInfo();
 
-        Vector3 rayOrigin = transform.position + rayOffset;
-        hitData.hitFound = Physics.Raycast(rayOrigin, transform.forward, out hitData.hitInfo, raylenght, obstacleLayer);
+        Vector3 rayOrigin = transform.position + alturaRayoDeParkour;
+        hitData.hitFound = Physics.Raycast(rayOrigin, transform.forward, out hitData.hitInfo, distanciaRayoParkour, capaColisionParkour);
 
-        Debug.DrawRay(rayOrigin, transform.forward * raylenght, (hitData.hitFound) ? Color.red : Color.green);
+        Debug.DrawRay(rayOrigin, transform.forward * distanciaRayoParkour, (hitData.hitFound) ? Color.red : Color.green);
         //obstacleCollision = true;
 
         if (hitData.hitFound)
         {
           
-            Vector3 heighOrigin = hitData.hitInfo.point + Vector3.up * heightRaylenght;
-            hitData.heightHitFound = Physics.Raycast(heighOrigin, Vector3.down, out hitData.heightInfo, heightRaylenght, obstacleLayer);
-            Debug.DrawRay(heighOrigin,Vector3.down * heightRaylenght, (hitData.heightHitFound) ? Color.red : Color.green);
+            Vector3 heighOrigin = hitData.hitInfo.point + Vector3.up * alturaRayoDistancia;
+            hitData.heightHitFound = Physics.Raycast(heighOrigin, Vector3.down, out hitData.heightInfo, alturaRayoDistancia, capaColisionParkour);
+            Debug.DrawRay(heighOrigin,Vector3.down * alturaRayoDistancia, (hitData.heightHitFound) ? Color.red : Color.green);
 
             if (hitData.heightHitFound)
             {
-                heightRayDistance = Vector3.Distance(hitData.hitInfo.point, hitData.heightInfo.point);
+                distanciaRayo = Vector3.Distance(hitData.hitInfo.point, hitData.heightInfo.point);
                
             }
 
@@ -87,16 +86,16 @@ public class CheckerEnviroment : MonoBehaviour
         var climbOrigin = transform.position + Vector3.up * 1.5f;
         var climbOffset = new Vector3(0, 0.19f, 0);
 
-        for(int i = 0; i < numberOfRays; i++)
+       /* for(int i = 0; i < numberOfRays; i++)
         {
             Debug.DrawRay(climbOrigin + climbOffset * i, climbDirection,Color.blue);
 
-           if( Physics.Raycast(climbOrigin + climbOffset * i, climbDirection, out RaycastHit hit,  climbingRayLength, climbingLayer))
+           if( Physics.Raycast(climbOrigin + climbOffset * i, climbDirection, out RaycastHit hit, escaladaRayoDistancia, escaladaCapa))
             {
                 climbInfo = hit;
                 return true;
             }
-        }
+        }*/
 
         return false;
     }
@@ -108,7 +107,7 @@ public class CheckerEnviroment : MonoBehaviour
 
         var origin = transform.position + Vector3.down * 0.1f + transform.forward * 2f;
 
-        if(Physics.Raycast(origin, -transform.forward, out RaycastHit hit, 3, climbingLayer))
+        if(Physics.Raycast(origin, -transform.forward, out RaycastHit hit, 3, escaladaCapa))
         {
             DropHit = hit;
             return true;
@@ -122,19 +121,19 @@ public class CheckerEnviroment : MonoBehaviour
        
         RaycastHit hit ;
 
-        if (Physics.Raycast(rayOrigin, transform.forward, out hit, rayLength, LayerMask.GetMask("InteractPush")))
+        if (Physics.Raycast(rayOrigin, transform.forward, out hit, distanciaRayo, LayerMask.GetMask("InteractPush")))
         {
-          
-            pushInteract = true;
+
+            estaEmpujando = true;
            
         }
         else
         {
-            
-            pushInteract = false;
+
+            estaEmpujando = false;
         }
 
-        if (Physics.Raycast(rayOrigin, transform.forward, out hit, rayLength, LayerMask.GetMask("Walls")))
+        if (Physics.Raycast(rayOrigin, transform.forward, out hit, distanciaRayo, LayerMask.GetMask("Walls")))
         {
            
             notJumpAction = true;
@@ -142,7 +141,7 @@ public class CheckerEnviroment : MonoBehaviour
 
         }
 
-        else if (Physics.Raycast(rayOrigin, transform.right, out hit, rayLengthX, LayerMask.GetMask("Walls")))
+        else if (Physics.Raycast(rayOrigin, transform.right, out hit, distanciaRayoX, LayerMask.GetMask("Walls")))
         {
 
             notJumpAction = true;
@@ -150,7 +149,7 @@ public class CheckerEnviroment : MonoBehaviour
 
         }
 
-        else if (Physics.Raycast(rayOrigin, -transform.right, out hit, rayLengthX, LayerMask.GetMask("Walls")))
+        else if (Physics.Raycast(rayOrigin, -transform.right, out hit, distanciaRayoX, LayerMask.GetMask("Walls")))
         {
 
             notJumpAction = true;
@@ -164,11 +163,11 @@ public class CheckerEnviroment : MonoBehaviour
            
         }
     
-        Debug.DrawRay(rayOrigin, transform.forward * rayLength, (hit.collider != null) ? Color.yellow : Color.red);
+        Debug.DrawRay(rayOrigin, transform.forward * distanciaRayo, (hit.collider != null) ? Color.yellow : Color.red);
 
-        Debug.DrawRay(rayOrigin, transform.right * rayLengthX, (hit.collider != null) ? Color.yellow : Color.red);
+        Debug.DrawRay(rayOrigin, transform.right * distanciaRayoX, (hit.collider != null) ? Color.yellow : Color.red);
 
-        Debug.DrawRay(rayOrigin, -transform.right * rayLengthX, (hit.collider != null) ? Color.yellow : Color.red);
+        Debug.DrawRay(rayOrigin, -transform.right * distanciaRayoX, (hit.collider != null) ? Color.yellow : Color.red);
     }
 
 }
@@ -179,4 +178,6 @@ public struct ObstacleInfo
     public bool heightHitFound;
     public RaycastHit hitInfo;
     public RaycastHit heightInfo;
+
+    public Vector3 posicion;
 }
